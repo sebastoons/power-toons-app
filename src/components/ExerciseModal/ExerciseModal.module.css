@@ -1,0 +1,180 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modalContent {
+  background-color: #fefefe;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.modalTitle {
+  font-family: Tahoma;
+  margin: 0;
+  font-size: 1.4em;
+  color: #333;
+  font-weight: bold;
+}
+
+.modalBody {
+  font-family: Tahoma;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 0.9em;
+}
+
+.imageVideoContainer {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.exerciseMedia {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.videoWrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.descriptionSection {
+  flex: 2 1 300px;
+}
+
+.descriptionSection h3 {
+  color: #001ba3;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-family: Tahoma;
+  font-size: 1.15em;
+}
+
+.descriptionSection p,
+.descriptionSection ol {
+  color: #474747;
+  line-height: 1.7;
+}
+
+.descriptionSection ol {
+  padding-left: 20px;
+}
+
+.descriptionSection li {
+  margin-bottom: 8px;
+}
+
+.inputSection {
+  flex: 2 1 100px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.inputSection h3 {
+    font-family: Tahoma;
+  color: #001ba3;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 1.15em;
+}
+
+.inputGroup {
+  margin-bottom: 15px;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #444;
+  font-family: monospace;
+  font-size: 1.25em;
+}
+
+.inputGroup input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+  font-family: monospace;
+  transition: border-color 0.3s ease;
+}
+
+.inputGroup input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 25px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .modalBody {
+    flex-direction: column;
+  }
+  .imageVideoContainer,
+  .descriptionSection,
+  .inputSection {
+    flex: 1 1 100%; /* Take full width on small screens */
+  }
+  .modalContent {
+    max-width: 95%;
+  }
+}

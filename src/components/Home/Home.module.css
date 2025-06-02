@@ -1,0 +1,83 @@
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+/* ESTILOS MODIFICADOS PARA EL TÍTULO */
+.title {
+  font-family: 'Segoe UI'; /* Usaremos una fuente moderna y profesional */
+  font-size: 3em; /* Un tamaño más grande para que destaque */
+  font-weight: 800; /* Extra-bold para mayor impacto */
+  color: #abc5df; /* Un color oscuro pero moderno */
+  margin-bottom: 80px;
+  text-align: center;
+  letter-spacing: 1px; /* Un poco de espaciado entre letras */
+  text-shadow: 2px 5px 9px rgba(0, 0, 0, 0.2); /* Sutil sombra para profundidad */
+  background: linear-gradient(45deg, #0055af, #54a7ff); /* Degradado de fondo para las letras */
+  -webkit-background-clip: text; /* Clip de fondo al texto */
+  background-clip: text;
+  -webkit-text-fill-color: transparent; /* Hace que el texto sea transparente para ver el degradado */
+  animation: bounceIn 1s ease-out; /* Animación de entrada */
+}
+
+/* Opcional: Si el degradado no funciona en todos los navegadores,
+   o si prefieres un color sólido vibrante: */
+/*
+.title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3.8em;
+  font-weight: 800;
+  color: #007bff; // Un azul vibrante
+  margin-bottom: 40px;
+  text-align: center;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  animation: bounceIn 1s ease-out;
+}
+*/
+
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 800px; /* Limitar ancho para pantallas grandes */
+}
+
+/* Definición de la animación */
+@keyframes bounceIn {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+    transform: scale3d(.3, .3, .3);
+  }
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+    -webkit-transform: scale3d(.9, .9, .9);
+    transform: scale3d(.9, .9, .9);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+    -webkit-transform: scale3d(.97, .97, .97);
+    transform: scale3d(.97, .97, .97);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}

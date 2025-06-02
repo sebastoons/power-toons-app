@@ -1,0 +1,56 @@
+.card {
+  border-radius: 8px;
+  overflow: hidden; /* Importante para que la imagen respete el border-radius */
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Alineamos al inicio para dejar espacio abajo al título */
+  position:relative; /* Para posicionar el título */
+  padding-bottom: 100%; /* Truco para mantener una relación de aspecto 1:1 (cuadrado) */
+  height: 0; /* Necesario con padding-bottom para el truco */
+  width: 100%; /* Ocupa el ancho disponible en la cuadrícula */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cardImage {
+  position: absolute; /* Para que la imagen ocupe todo el espacio del "padding-bottom" */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* La imagen cubre todo el espacio sin deformarse, recortando si es necesario */
+}
+
+.cardTitle {
+  font-family: monospace;
+  font-size: 1.1em;
+  font-weight: bold; /* Negrita para que destaque */
+  color: #efefef; /* Texto blanco para contrastar con la imagen */
+  text-align: center;
+  padding: 10px 5px; /* Más padding para el título */
+  background-color: rgba(41, 41, 41, 0.8); /* Fondo semitransparente para mejor legibilidad */
+  position: absolute; /* Lo posicionamos sobre la imagen */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin-bottom: 0; /* Resetear margen inferior */
+  z-index: 1; /* Asegura que el título esté por encima de la imagen */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra de texto para destacar */
+}
+
+/* Opcional: Si prefieres el título debajo de la imagen */
+/*.cardTitle {*/
+/* font-size: 1.2em;*/
+/* color: #333;*/
+/* text-align: center;*/
+/* padding: 10px 15px;*/
+/* margin-top: 10px;*/
+/*}*/

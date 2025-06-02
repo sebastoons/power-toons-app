@@ -1,0 +1,32 @@
+import React from 'react';
+import Card from '../Shared/Card/Card';
+import Button from '../Shared/Button/Button';
+import styles from './ExerciseList.module.css';
+import { exercises } from '../../data/exercisesData';
+
+const ExerciseList = ({ muscleGroupId, onSelectExercise, onBack }) => {
+  const selectedExercises = exercises[muscleGroupId] || [];
+
+  return (
+    <div className={styles.exerciseListContainer}>
+      <Button onClick={onBack}>Volver Atrás</Button>
+      <h2 className={styles.title}>Ejercicios de {muscleGroupId.charAt(0).toUpperCase() + muscleGroupId.slice(1)}</h2>
+      {selectedExercises.length === 0 ? (
+        <p>No hay ejercicios disponibles para este grupo muscular.</p>
+      ) : (
+        <div className={styles.cardGrid}>
+          {selectedExercises.map(exercise => (
+            <Card
+              key={exercise.id}
+              title={exercise.name}
+              image={exercise.image}
+              onClick={() => onSelectExercise(exercise)}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ExerciseList;
