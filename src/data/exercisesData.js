@@ -1,25 +1,25 @@
 export const exerciseCategories = [
-  { id: 'exercises', name: 'EJERCICIOS', image: './public/img/ejer.webp' },
+  { id: 'exercises', name: 'EJERCICIOS', image: '/img/ejer.webp' },
 ];
-
+c
 export const exerciseTypes = [
-  { id: 'rugby', name: 'RUGBY', image: './public/img/rugby.JPG' },
-  { id: 'crossfit', name: 'CROSSFIT', image: './public/img/cross.JFIF' },
-  { id: 'gym', name: 'GYM', image: './public/img/gym.webp' },
-  { id: 'home', name: 'CASA', image: './public/img/casa.JFIF' },
-  { id: 'yoga', name: 'YOGA', image: './public/img/yoga.JPG' },
+  { id: 'rugby', name: 'RUGBY', image: '/img/rugby.JPG' },
+  { id: 'crossfit', name: 'CROSSFIT', image: '/img/cross.JFIF' },
+  { id: 'gym', name: 'GYM', image: '/img/gym.webp' },
+  { id: 'home', name: 'CASA', image: '/img/casa.JFIF' },
+  { id: 'yoga', name: 'YOGA', image: '/img/yoga.JPG' },
 ];
 
 export const muscleGroups = [
-  { id: 'chest', name: 'PECHO', image: './public/img/gym/pecho.JPG' },
-  { id: 'biceps', name: 'BICEPS', image: './public/img/gym/bicep.JPG' },
-  { id: 'triceps', name: 'TRICEPS', image: './public/img/gym/tricep.JPG' },
-  { id: 'abs', name: 'ABDOMINALES', image: './public/img//gym/abd.JPG' },
-  { id: 'quads', name: 'CUADRICEPS', image: './public/img/gym/cuadri.JPG' },
-  { id: 'glutes', name: 'GLUTEOS', image: './public/img/gym/gluteo2.JPG' },
-  { id: 'legs', name: 'PIERNAS', image: './public/img/gym/piernas2.JPG' },
-  { id: 'back', name: 'ESPALDA', image: './public/img/gym/espalda2.JPG' },
-  { id: 'hombro', name: 'HOMBROS', image: './public/img/gym/hombros.JPG' },
+  { id: 'chest', name: 'PECHO', image: '/img/gym/pecho.JPG' },
+  { id: 'biceps', name: 'BICEPS', image: '/img/gym/bicep.JPG' },
+  { id: 'triceps', name: 'TRICEPS', image: '/img/gym/tricep.JPG' },
+  { id: 'abs', name: 'ABDOMINALES', image: '/img//gym/abd.JPG' },
+  { id: 'quads', name: 'CUADRICEPS', image: '/img/gym/cuadri.JPG' },
+  { id: 'glutes', name: 'GLUTEOS', image: '/img/gym/gluteo2.JPG' },
+  { id: 'legs', name: 'PIERNAS', image: '/img/gym/piernas2.JPG' },
+  { id: 'back', name: 'ESPALDA', image: '/img/gym/espalda2.JPG' },
+  { id: 'hombro', name: 'HOMBROS', image: '/img/gym/hombros.JPG' },
 ];
 
 export const exercises = {
@@ -27,8 +27,8 @@ export const exercises = {
     {
       id: 'bicep-curl',
       name: 'CURL DE BICEPS CON MANCUERNAS',
-      image: './public/img/gym/biceps/curl_mancuernasjpg.JPG',
-      gif: './public/img/gym/biceps/curl_mancuernas.gif', // Ejemplo de GIF
+      image: '/img/gym/biceps/curl_mancuernasjpg.JPG',
+      gif: '/img/gym/biceps/curl_mancuernas.gif', // Ejemplo de GIF
       description: [
         'El curl de bíceps es muy efectivo para desarrollar el músculo bíceps braquial, logrando brazos más fuertes y definidos.', 
         'Se puede realizar utilizando diferentes implementos como mancuernas, barras o bandas, adaptándose a distintos niveles de habilidad y preferencias.',
