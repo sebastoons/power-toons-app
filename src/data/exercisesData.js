@@ -1,7 +1,7 @@
 export const exerciseCategories = [
   { id: 'exercises', name: 'EJERCICIOS', image: '/img/ejer.webp' },
 ];
-c
+
 export const exerciseTypes = [
   { id: 'rugby', name: 'RUGBY', image: '/img/rugby.JPG' },
   { id: 'crossfit', name: 'CROSSFIT', image: '/img/cross.JFIF' },
