@@ -1,3 +1,11 @@
+html, body {
+  box-sizing: border-box; /* Asegura que padding y border no aumenten el ancho total */
+}
+
+*, *::before, *::after {
+  box-sizing: inherit; /* Hereda box-sizing para todos los elementos */
+}
+
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;

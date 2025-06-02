@@ -7,7 +7,9 @@ import { exerciseTypes } from '../../data/exercisesData';
 const ExerciseTypes = ({ onSelectType, onBack }) => {
   return (
     <div className={styles.exerciseTypesContainer}>
-      <Button onClick={onBack}>Volver Atrás</Button>
+      <div className={styles.buttonContainer}> {/* Nuevo contenedor para el botón */}
+        <Button onClick={onBack}>Volver Atrás</Button>
+      </div>
       <h2 className={styles.title}>Tipos de Ejercicios</h2>
       <div className={styles.cardGrid}>
         {exerciseTypes.map(type => (

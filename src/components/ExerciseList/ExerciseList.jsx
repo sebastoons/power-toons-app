@@ -9,7 +9,9 @@ const ExerciseList = ({ muscleGroupId, onSelectExercise, onBack }) => {
 
   return (
     <div className={styles.exerciseListContainer}>
-      <Button onClick={onBack}>Volver Atrás</Button>
+      <div className={styles.buttonContainer}> {/* Nuevo contenedor para el botón */}
+        <Button onClick={onBack}>Volver Atrás</Button>
+      </div>
       <h2 className={styles.title}>Ejercicios de {muscleGroupId.charAt(0).toUpperCase() + muscleGroupId.slice(1)}</h2>
       {selectedExercises.length === 0 ? (
         <p>No hay ejercicios disponibles para este grupo muscular.</p>
