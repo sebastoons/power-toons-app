@@ -10,8 +10,9 @@
 .logo {
   max-width: 250px; /* Tamaño máximo del ancho del logo */
   height: auto; /* Mantiene la proporción de la imagen */
-  margin-bottom: 80px; /* Mismo margen inferior que el título anterior */
+  margin-bottom: 10px; /* Mismo margen inferior que el título anterior */
   animation: bounceIn 1s ease-out; /* Mantenemos la misma animación de entrada */
+  margin-top: -20px;
 }
 
 .cardGrid {
