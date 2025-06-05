@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'Power Toons - Tu App de Fitness',
-        short_name: 'Power Toons',
+        name: 'StrongToons - Tu App de Fitness',
+        short_name: 'StrongToons',
         description: 'Aplicación de fitness con ejercicios y seguimiento.',
         theme_color: '#007bff',
         background_color: '#ffffff',
