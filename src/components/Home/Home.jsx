@@ -6,7 +6,8 @@ import { exerciseCategories } from '../../data/exercisesData';
 const Home = ({ onSelectCategory }) => {
   return (
     <div className={styles.homeContainer}>
-      <h1 className={styles.title}>Power Toons</h1>
+      {/* Referenciamos el logo directamente desde la carpeta public */}
+      <img src="/3.svg" alt="Logo" className={styles.logo} /> 
       <div className={styles.cardGrid}>
         {exerciseCategories.map(category => (
           <Card
