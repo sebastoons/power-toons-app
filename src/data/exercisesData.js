@@ -60,7 +60,7 @@ export const exercises = {
     {
       id: 'curl-martillo',
       name: 'CURL MARTILLO CON MANCUERNAS',
-      image: '/img/gym/biceps/curl_martillojpg.JPEG',
+      image: '/img/gym/biceps/curl_martillojpg.jpg',
       gif: '/img/gym/biceps/curl_martillo.gif',
       description: ['El curl de bíceps con agarre martillo es una de las variantes más conocidas del curl de bíceps.',
                    'Ejecutarlo es sumamente sencillo puesto que solo cambia la posición de nuestras muñecas.',
