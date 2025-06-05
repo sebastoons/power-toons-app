@@ -26,7 +26,7 @@ export const exercises = {
   biceps: [
     {
       id: 'bicep-curl',
-      name: 'CURL DE BICEPS CON MANCUERNAS',
+      name: 'CURL CON MANCUERNAS DE PIE',
       image: '/img/gym/biceps/curl_mancuernasjpg.JPG',
       gif: '/img/gym/biceps/curl_mancuernas.gif', // Ejemplo de GIF
       description: [
@@ -40,6 +40,22 @@ export const exercises = {
         'Baja lentamente las mancuernas a la posición inicial..',
       ],
       videoLink: 'https://www.youtube.com/embed/e9nzjkmPRXY?feature=share', // Ejemplo de video de YouTube
+    },
+    {
+      id: 'curl-barra-z',
+      name: 'CURL BARRA Z DE PIE',
+      image: '/img/gym/biceps/curl_barra_zpng.png',
+      gif: '/img/gym/biceps/curl_barra_z.gif',
+      description: ['Es un ejercicio básico para ganar fuerza y músculo en los brazos.',
+                    'La curvatura de la barra Z nos ayuda a trabajar las dos cabezas del bíceps (braquial y el braquiorradial), y el agarre curvo nos ayuda a prevenir lesiones en las muñecas.',
+                    'Por eso es un ejercicio básico en tu rutina de entrenamiento.',
+      ],
+      steps: [
+        'Colócate de pie con la barra sujetada con las palmas hacia arriba.',
+        'Sube la barra hasta contraer al máximo los bíceps (fase concéntrica) sin mover los codos hacia al frente',
+        'Baja la barra lentamente (fase excéntrica) hasta llegar a la posición inicial, exhala al bajar, y repetir.',
+      ],
+      videoLink: 'https://www.youtube.com/embed/no-dXip-rJM',
     },
     {
       id: 'hammer-curl',
