@@ -1,5 +1,3 @@
-// src/components/CrossfitList/CrossfitList.jsx
-
 import React from 'react';
 import Card from '../Shared/Card/Card'; // Ajusta la ruta si es necesario (es la correcta: ../Shared/Card/Card)
 import Button from '../Shared/Button/Button'; // Ajusta la ruta si es necesario (es la correcta: ../Shared/Button/Button)
@@ -17,7 +15,7 @@ const CrossfitList = ({ onSelectExercise, onBack }) => {
       <div className={styles.buttonContainer}>
         <Button onClick={onBack}>Volver Atrás</Button>
       </div>
-      <h2 className={styles.title}>Ejercicios de Crossfit</h2>
+      <h2 className={styles.title}>EJERCICIOS CROSSFIT</h2>
       {sortedCrossfitExercises.length === 0 ? (
         <p>No hay ejercicios disponibles para Crossfit.</p>
       ) : (

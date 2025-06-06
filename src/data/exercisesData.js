@@ -78,8 +78,8 @@ export const exercises = {
     {
       id: 'press-banca-plano-barra',
       name: 'PRESS BANCA PLANO CON BARRA',
-      image: '/img/gym/pecho/press_banca_planoj.jpg',
-      gif: '/img/gym/pecho/cpress_banca_planog.gif',
+      image: '/img/gym/pecho/press_banca_planoj.JPG',
+      gif: '/img/gym/pecho/press_banca_planog.gif',
       description: ['El press banca es el ejercicio de fuerza por excelencia y uno de los tres de las competiciones de powerlifting junto a la sentadilla y el peso muerto.',
                    'Se trata de un elemento básico para este tipo de entrenamiento pero, aunque se trate de un ejercicio esencial, es muy fácil caer en error a la hora de hacerlo.',
       ],
