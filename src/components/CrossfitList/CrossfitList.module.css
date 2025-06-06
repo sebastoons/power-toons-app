@@ -1,0 +1,25 @@
+/* src/components/CrossfitList/CrossfitList.module.css */
+
+.crossfitListContainer {
+    padding: 20px;
+    text-align: center;
+}
+
+.buttonContainer {
+    margin-bottom: 20px;
+    text-align: left; /* Para que el botón "Volver Atrás" quede a la izquierda */
+}
+
+.title {
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.cardGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    max-width: 900px; /* Ajusta según el diseño de tu app */
+    margin: 0 auto;
+}
