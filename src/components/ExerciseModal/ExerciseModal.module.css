@@ -178,3 +178,47 @@
     max-width: 95%;
   }
 }
+
+.variantsSection {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.variantsSection h3 {
+    color: #555;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.variantLinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center; /* Centra los botones de variantes */
+}
+
+.variantButton {
+    /* Estilos para que los botones de variantes parezcan enlaces */
+    background: none;
+    border: 1px solid #007bff; /* Un borde para distinguirlos */
+    color: #007bff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.variantButton:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.backToMainButtonContainer {
+    margin-bottom: 20px;
+    text-align: center; /* Centra el botón de volver al principal */
+}
