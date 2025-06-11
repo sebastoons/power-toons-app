@@ -1,3 +1,5 @@
+/* src/components/ExerciseModal/ExerciseModal.module.css */
+
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -17,12 +19,14 @@
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  max-width: 90%;
+  width: 90%;
+  max-width: 1200px;
   max-height: 90vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   position: relative;
+  box-sizing: border-box;
 }
 
 .modalHeader {
@@ -35,27 +39,56 @@
 }
 
 .modalTitle {
-  font-family: Tahoma;
+  font-family: Tahoma, sans-serif;
   margin: 0;
   font-size: 1.4em;
   color: #333;
   font-weight: bold;
 }
 
+/* --- ESTILOS PRINCIPALES DE COLUMNAS --- */
 .modalBody {
-  font-family: Tahoma;
+  font-family: Tahoma, sans-serif;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  gap: 30px; /* Espacio entre la columna izquierda y la derecha */
   font-size: 0.9em;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 5px;
 }
 
+.leftColumn {
+  flex: 0 0 380px; /* Ancho fijo para la columna de imagen/video y variantes */
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espacio entre el video/gif y la sección de variantes */
+  align-items: center;
+  padding-right: 15px;
+  border-right: 1px solid #eee;
+}
+
+.rightColumn {
+  flex: 1; /* La columna derecha ocupará el espacio restante */
+  display: flex;
+  /* --- CAMBIO AQUÍ: Ahora la rightColumn también usará flexbox para sus sub-columnas --- */
+  gap: 20px; /* Espacio entre Descripción/Pasos y Registro de Progreso */
+}
+
+/* --- NUEVO ESTILO PARA LA SUB-COLUMNA DERECHA --- */
+.descriptionAndSteps {
+    flex: 1; /* Ocupará todo el espacio disponible dentro de rightColumn, si se necesita */
+    min-width: 300px; /* Para asegurar que no se comprima demasiado */
+}
+/* --- FIN DE NUEVO ESTILO --- */
+
+
 .imageVideoContainer {
-  flex: 1 1 300px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
+  margin-bottom: 0;
 }
 
 .exerciseMedia {
@@ -81,10 +114,11 @@
   left: 0;
   width: 100%;
   height: 100%;
+  border: none;
 }
 
 .descriptionSection {
-  flex: 2 1 300px;
+  margin-bottom: 0; /* Asegura que no haya margen extra aquí, el gap del descriptionAndSteps controlará el espacio */
 }
 
 .descriptionSection h3 {
@@ -92,7 +126,7 @@
   margin-top: 0;
   margin-bottom: 10px;
   font-weight: bold;
-  font-family: Tahoma;
+  font-family: Tahoma, sans-serif;
   font-size: 1.15em;
 }
 
@@ -111,15 +145,16 @@
 }
 
 .inputSection {
-  flex: 2 1 100px;
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 8px;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  flex: 0 0 250px; /* Ancho fijo para el registro de progreso. Ajusta según sea necesario */
+  /* O puedes usar un porcentaje: flex: 0 0 35%; */
 }
 
 .inputSection h3 {
-    font-family: Tahoma;
+  font-family: Tahoma, sans-serif;
   color: #001ba3;
   margin-top: 0;
   margin-bottom: 15px;
@@ -164,61 +199,98 @@
   padding-top: 20px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .modalBody {
-    flex-direction: column;
-  }
-  .imageVideoContainer,
-  .descriptionSection,
-  .inputSection {
-    flex: 1 1 100%; /* Take full width on small screens */
-  }
-  .modalContent {
-    max-width: 95%;
-  }
-}
-
+/* ESTILOS COMPACTOS PARA LAS VARIANTES */
 .variantsSection {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .variantsSection h3 {
-    color: #555;
-    margin-bottom: 15px;
-    font-size: 1.1em;
+  color: #555;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
 .variantLinks {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center; /* Centra los botones de variantes */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-start;
+  margin-top: 0px;
 }
 
 .variantButton {
-    /* Estilos para que los botones de variantes parezcan enlaces */
-    background: none;
-    border: 1px solid #007bff; /* Un borde para distinguirlos */
-    color: #007bff;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9em;
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  color: #555;
+  padding: 3px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.75em;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .variantButton:hover {
-    background-color: #007bff;
-    color: white;
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
 }
 
 .backToMainButtonContainer {
-    margin-bottom: 20px;
-    text-align: center; /* Centra el botón de volver al principal */
+  margin-top: 15px;
+  margin-bottom: 0;
+  text-align: left;
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) { /* Ajusta el breakpoint si es necesario */
+    .modalBody {
+        flex-direction: column; /* Apila las columnas principales en pantallas medianas/pequeñas */
+        gap: 20px;
+    }
+    .leftColumn {
+        flex: none;
+        width: 100%;
+        min-width: unset;
+        border-right: none;
+        padding-right: 0;
+    }
+    .rightColumn {
+        flex: none; /* También apila la columna derecha en pantallas pequeñas */
+        width: 100%;
+        flex-direction: column; /* Apila la descripción y el progreso en vertical en móvil */
+        gap: 20px; /* Espacio entre ellos en móvil */
+    }
+    .modalContent {
+        max-width: 95%;
+        padding: 20px;
+    }
+    .modalTitle {
+        font-size: 1.2em;
+    }
+    .variantsSection h3 {
+        font-size: 0.8em;
+    }
+    .variantButton {
+        font-size: 0.7em;
+        padding: 2px 6px;
+    }
+    .inputSection {
+        flex: none; /* Quita el flex fijo del input section en móvil */
+        width: 100%;
+    }
 }
