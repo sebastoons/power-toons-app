@@ -80,20 +80,22 @@ export const crossfitExercises = [
     // --- NUEVO: Variantes para BURPEES ---
     variants: [
       {
-        id: 'burpees-no-pushup',
-        name: 'BURPEES SIN FLEXIÓN',
-        image: '/img/crossfit/burpees_no_pushup.jpg', // Nueva imagen
-        gif: '/img/crossfit/burpees_no_pushup.gif', // Nuevo GIF
+        id: 'hspu',
+        name: 'HANDSTAND PUSH UP',
+        image: '/img/cross/hspu.jpg', // Nueva imagen
+        gif: '/img/cross/hspug.gif', // Nuevo GIF
         description: [
-          'Esta es una versión modificada del burpee original, ideal para principiantes o para sesiones de alta repetición.',
-          'Se reduce la dificultad al eliminar la flexión de brazos, manteniendo la intensidad cardiovascular.',
+          'El Handstand Push Up es un ejercicio que no puede ser olvidado en el área del CrossFit y es clave para trabajar la fuerza y la resistencia muscular.',
+          'Los atletas de este área suelen trabajar en mejorar su técnica de flexiones verticales para poder realizar un gran número de repeticiones sin cansarse rápidamente.',
         ],
         steps: [
-          'Comienza de pie, agáchate y coloca las manos en el suelo.',
-          'Impulsa los pies hacia atrás a la posición de plancha alta.',
-          'Salta con los pies hacia las manos y levántate rápidamente, terminando con un salto y aplauso por encima de la cabeza.',
+          'El Handstand Push Up es un ejercicio que no puede ser olvidado en el área del CrossFit y es clave para trabajar la fuerza y la resistencia muscular.',
+          'Después, deberás impulsar tu cuerpo para hacer el pino y soportar todo el peso sobre tus brazos. Puedes ayudarte de una pared para colocarte en la posición inicial, apoyándote en ella hasta conseguir el equilibrio.',
+          'Una vez consigas dominar el equilibrio de tu cuerpo, se realiza una flexión de los brazos manteniendo los codos hacia dentro. ',
+          'Al realizar el paso anterior, debes llevar tu cuerpo suavemente hacia delante. Así, podrás mantener tu cuerpo equilibrado.',
+          'Por último, comienza a estirar los brazos, manteniendo la posición de los codos hacia adentro,  con el abdomen apretado, empuja hacia arriba.',
         ],
-        videoLink: 'https://www.youtube.com/embed/no-dXip-rJM5',
+        videoLink: 'https://www.youtube.com/embed/XmcgQYfcXZc',
       },
       {
         id: 'burpees-box-jump',
