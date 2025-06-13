@@ -10,7 +10,7 @@ const MuscleGroups = ({ onSelectGroup, onBack }) => {
       <div className={styles.buttonContainer}> {/* Nuevo contenedor para el botón */}
         <Button onClick={onBack}>Volver Atrás</Button>
       </div>
-      <h2 className={styles.title}>Grupos Musculares (Gym)</h2>
+      <h2 className={styles.title}>GRUPOS MUSCULARES</h2>
       <div className={styles.cardGrid}>
         {muscleGroups.map(group => (
           <Card

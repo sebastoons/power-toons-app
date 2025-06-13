@@ -51,7 +51,7 @@
   font-family: Tahoma, sans-serif;
   display: flex;
   gap: 30px; /* Espacio entre la columna izquierda y la derecha */
-  font-size: 0.9em;
+  font-size: 0.8em;
   flex-grow: 1;
   overflow-y: auto;
   padding-right: 5px;

@@ -62,21 +62,19 @@ export const crossfitExercises = [
   {
     id: 'burpees',
     name: 'BURPEES',
-    image: '/img/crossfit/burpees.jpg',
-    gif: '/img/crossfit/burpees.gif',
+    image: '/img/cross/9.png',
+    gif: '/img/cross/burpees.gif',
     description: [
-      'El burpee es un ejercicio de cuerpo completo muy popular en CrossFit, que combina una sentadilla, una plancha, una flexión y un salto.',
-      'Es excelente para mejorar la resistencia cardiovascular, la fuerza muscular y la agilidad.',
+      'Los burpees consisten en un ejercicio con movimientos compuestos, lo que significa que al realizarlos se activan diversos grupos musculares.',
+      'Los pectorales, tríceps, hombros, cuádriceps, femorales, gemelos, abdominales y glúteos son los grandes beneficiados con este ejercicio.',
     ],
     steps: [
-      'Comienza de pie con los pies a la anchura de los hombros.',
-      'Agáchate y coloca las manos en el suelo frente a ti, a la altura de los hombros.',
-      'Impulsa los pies hacia atrás para adoptar una posición de plancha alta.',
-      'Realiza una flexión de brazos, llevando el pecho al suelo.',
-      'Impulsa los pies de nuevo hacia las manos, volviendo a la posición de sentadilla inicial.',
-      'Levántate rápidamente y realiza un salto vertical, aplaudiendo con las manos por encima de la cabeza.',
+      'La posición de inicio es en vertical con los pies a la altura de los hombro, a continuación haz una sentadilla hasta tocar el suelo con tus manos.',
+      'Sin despegar las manos del suelo, impulsa ambas piernas a la vez hasta quedarte en posición de plancha, después pasarás a realizar una flexión de pecho.',
+      'Al Realizar la flexión de pecho, haz el movimiento contrario al paso 2, impulsa ambas piernas acercando tus rodillas al pecho. Ya sólo te queda realizar el salto, salta tan alto como puedas y acaba en la posición inicial.',
+      'Si quieres aunmentar la dificultad más, al saltar, eleva tus rodillas al pecho.',
     ],
-    videoLink: 'https://www.youtube.com/watch?v=dZgBgkU6xT4',
+    videoLink: 'https://www.youtube.com/embed/auBLPXO8Fww',
     // --- NUEVO: Variantes para BURPEES ---
     variants: [
       {
@@ -114,6 +112,24 @@ export const crossfitExercises = [
         videoLink: 'https://www.youtube.com/embed/no-dXip-rJM6',
       },
     ],
+  },
+  {
+    id: 'hspu',
+        name: 'HANDSTAND PUSH UP',
+        image: '/img/cross/hspup.png', // Nueva imagen
+        gif: '/img/cross/hspug.gif', // Nuevo GIF
+        description: [
+          'El Handstand Push Up es un ejercicio que no puede ser olvidado en el área del CrossFit y es clave para trabajar la fuerza y la resistencia muscular.',
+          'Los atletas de este área suelen trabajar en mejorar su técnica de flexiones verticales para poder realizar un gran número de repeticiones sin cansarse rápidamente.',
+        ],
+        steps: [
+          'El Handstand Push Up es un ejercicio que no puede ser olvidado en el área del CrossFit y es clave para trabajar la fuerza y la resistencia muscular.',
+          'Después, deberás impulsar tu cuerpo para hacer el pino y soportar todo el peso sobre tus brazos. Puedes ayudarte de una pared para colocarte en la posición inicial, apoyándote en ella hasta conseguir el equilibrio.',
+          'Una vez consigas dominar el equilibrio de tu cuerpo, se realiza una flexión de los brazos manteniendo los codos hacia dentro. ',
+          'Al realizar el paso anterior, debes llevar tu cuerpo suavemente hacia delante. Así, podrás mantener tu cuerpo equilibrado.',
+          'Por último, comienza a estirar los brazos, manteniendo la posición de los codos hacia adentro,  con el abdomen apretado, empuja hacia arriba.',
+        ],
+        videoLink: 'https://www.youtube.com/embed/XmcgQYfcXZc',
   },
   // Agrega más ejercicios aquí si es necesario
 ];

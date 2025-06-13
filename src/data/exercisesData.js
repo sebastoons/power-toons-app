@@ -3,23 +3,23 @@ export const exerciseCategories = [
 ];
 
 export const exerciseTypes = [
-  { id: 'rugby', name: 'RUGBY', image: '/img/rugby.JPG' },
-  { id: 'crossfit', name: 'CROSSFIT', image: '/img/cross.JFIF' },
+  { id: 'rugby', name: 'RUGBY', image: '/img/rugby.jpg' },
+  { id: 'crossfit', name: 'CROSSFIT', image: '/img/cross.jpg' },
   { id: 'gym', name: 'GYM', image: '/img/gym.webp' },
-  { id: 'home', name: 'CASA', image: '/img/casa.JFIF' },
-  { id: 'yoga', name: 'YOGA', image: '/img/yoga.JPG' },
+  { id: 'home', name: 'CASA', image: '/img/casa.jpg' },
+  { id: 'yoga', name: 'YOGA', image: '/img/yoga.jpg' },
 ];
 
 export const muscleGroups = [
-  { id: 'chest', name: 'PECHO', image: '/img/gym/pecho.JPG' },
-  { id: 'biceps', name: 'BICEPS', image: '/img/gym/bicep.JPG' },
-  { id: 'triceps', name: 'TRICEPS', image: '/img/gym/tricep.JPG' },
-  { id: 'abs', name: 'ABDOMINALES', image: '/img//gym/abd.JPG' },
-  { id: 'quads', name: 'CUADRICEPS', image: '/img/gym/cuadri.JPG' },
-  { id: 'glutes', name: 'GLUTEOS', image: '/img/gym/gluteo2.JPG' },
-  { id: 'legs', name: 'PIERNAS', image: '/img/gym/piernas2.JPG' },
-  { id: 'back', name: 'ESPALDA', image: '/img/gym/espalda2.JPG' },
-  { id: 'hombro', name: 'HOMBROS', image: '/img/gym/hombros.JPG' },
+  { id: 'chest', name: 'PECHO', image: '/img/gym/1.png' },
+  { id: 'biceps', name: 'BICEPS', image: '/img/gym/bicep.jpg' },
+  { id: 'triceps', name: 'TRICEPS', image: '/img/gym/tricep.jpg' },
+  { id: 'abs', name: 'ABDOMINALES', image: '/img//gym/abd.jpg' },
+  { id: 'quads', name: 'CUADRICEPS', image: '/img/gym/cuadri.jpg' },
+  { id: 'glutes', name: 'GLUTEOS', image: '/img/gym/gluteo2.jpg' },
+  { id: 'legs', name: 'PIERNAS', image: '/img/gym/piernas2.jpg' },
+  { id: 'back', name: 'ESPALDA', image: '/img/gym/espalda2.jpg' },
+  { id: 'hombro', name: 'HOMBROS', image: '/img/gym/hombros.jpg' },
 ];
 
 export const exercises = {
@@ -27,7 +27,7 @@ export const exercises = {
     {
       id: 'bicep-curl',
       name: 'CURL CON MANCUERNAS DE PIE',
-      image: '/img/gym/biceps/curl_mancuernasjpg.JPG',
+      image: '/img/gym/biceps/curl_mancuernasjpg.jpg',
       gif: '/img/gym/biceps/curl_mancuernas.gif', // Ejemplo de GIF
       description: [
         'El curl de bíceps es muy efectivo para desarrollar el músculo bíceps braquial, logrando brazos más fuertes y definidos.', 
@@ -78,7 +78,7 @@ export const exercises = {
     {
       id: 'press-banca-plano-barra',
       name: 'PRESS BANCA PLANO CON BARRA',
-      image: '/img/gym/pecho/press_banca_planoj.JPG',
+      image: '/img/gym/pecho/press_banca_plano_barra.jpg',
       gif: '/img/gym/pecho/press_banca_planog.gif',
       description: ['El press banca es el ejercicio de fuerza por excelencia y uno de los tres de las competiciones de powerlifting junto a la sentadilla y el peso muerto.',
                    'Se trata de un elemento básico para este tipo de entrenamiento pero, aunque se trate de un ejercicio esencial, es muy fácil caer en error a la hora de hacerlo.',
@@ -93,6 +93,26 @@ export const exercises = {
         'Deja que la barra toque el pecho, extiende los brazos para levantar de nuevo la barra y contrae los pectorales en la parte alta del ejercicio.',
       ],
       videoLink: 'https://www.youtube.com/embed/ICaZxO7RmKs',
+    },
+    {
+      id: 'press-banca-inclinado-barra',
+      name: 'PRESS BANCA INCLINADO CON BARRA',
+      image: '/img/gym/pecho/press_banca_inclinado_barra.jpg',
+      gif: '/img/gym/pecho/press_banca_inclinado_barrag.gif',
+      description: ['El press de banca inclinado es una variante del press de banca y un ejercicio que se utiliza para fortalecer los músculos del pecho.',
+                    'Los hombros y los tríceps también se involucran indirectamente.',
+                    'Utilizar una inclinación te permitirá apuntar mejor a la parte superior del pecho, una parte rezagada para muchos levantadores.',
+      ],
+      steps: [
+        'Acuéstese sobre un banco inclinado y coloque las manos justo fuera del ancho de los hombros.',
+        'Coloque los omóplatos apretándolos juntos y empujándolos hacia el banco.',
+        'Respira profundamente y deja que tu observador te ayude con el despegue para mantener la tensión en la parte superior de la espalda.',
+        'Deje que el peso se asiente y asegúrese de que la parte superior de la espalda permanezca firme después del despegue.',
+        'Inhala y deja que la barra descienda lentamente desbloqueando los codos.',
+        'Baja la barra hasta la parte inferior del pecho/esternón, con los codos en un ángulo de unos 45 grados respecto al cuerpo',
+        'Deja que la barra toque el pecho, extiende los brazos para levantar de nuevo la barra y contrae los pectorales en la parte alta del ejercicio.',
+      ],
+      videoLink: 'https://www.youtube.com/embed/HImp2-LuihU',
     },
   ],
   // Agrega más ejercicios para otros grupos musculares

@@ -1,5 +1,3 @@
-// src/App.jsx
-
 import React, { useState } from 'react';
 import Home from './components/Home/Home';
 import ExerciseTypes from './components/ExerciseTypes/ExerciseTypes';

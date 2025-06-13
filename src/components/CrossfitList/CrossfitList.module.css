@@ -11,7 +11,7 @@
 .buttonContainer {
     width: 100%;
     max-width: 800px; /* Mismo max-width que el grid para alinear */
-    text-align: left; /* Alinea el botón a la izquierda dentro de su contenedor */
+    text-align: right; /* Alinea el botón a la izquierda dentro de su contenedor */
     margin-bottom: 20px;
 }
 
@@ -21,6 +21,8 @@
     margin-top: 20px;
     font-size: 2em;
     text-align: center;
+    font-family: verdana;
+    text-transform: Uppercase;
 }
 
 .cardGrid {

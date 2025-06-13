@@ -35,8 +35,8 @@
   font-weight: bold; /* Negrita para que destaque */
   color: #efefef; /* Texto blanco para contrastar con la imagen */
   text-align: center;
-  padding: 10px 5px; /* Más padding para el título */
-  background-color: rgba(41, 41, 41, 0.8); /* Fondo semitransparente para mejor legibilidad */
+  padding: 5px 5px; /* Más padding para el título */
+  background-color: rgba(41, 41, 41, 0.6); /* Fondo semitransparente para mejor legibilidad */
   position: absolute; /* Lo posicionamos sobre la imagen */
   bottom: 0;
   left: 0;
