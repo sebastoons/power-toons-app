@@ -1,17 +1,17 @@
 export const exerciseCategories = [
-  { id: 'exercises', name: 'EJERCICIOS', image: '/img/ejer.webp' },
+  { id: 'exercises', name: 'EJERCICIOS', image: '/img/ejer5.jpg' },
 ];
 
 export const exerciseTypes = [
   { id: 'rugby', name: 'RUGBY', image: '/img/rugby.jpg' },
-  { id: 'crossfit', name: 'CROSSFIT', image: '/img/cross.jpg' },
+  { id: 'crossfit', name: 'CROSSFIT', image: '/img/cros10.jpg' },
   { id: 'gym', name: 'GYM', image: '/img/gym.webp' },
   { id: 'home', name: 'CASA', image: '/img/casa.jpg' },
   { id: 'yoga', name: 'YOGA', image: '/img/yoga.jpg' },
 ];
 
 export const muscleGroups = [
-  { id: 'chest', name: 'PECHO', image: '/img/gym/1.png' },
+  { id: 'chest', name: 'PECHO', image: '/img/gym/pecho.jpg' },
   { id: 'biceps', name: 'BICEPS', image: '/img/gym/bicep.jpg' },
   { id: 'triceps', name: 'TRICEPS', image: '/img/gym/tricep.jpg' },
   { id: 'abs', name: 'ABDOMINALES', image: '/img//gym/abd.jpg' },
@@ -115,5 +115,40 @@ export const exercises = {
       videoLink: 'https://www.youtube.com/embed/HImp2-LuihU',
     },
   ],
+  triceps: [
+     {
+      id: 'Extensión-tríceps-polea-con-cuerda',
+      name: 'EXTENSION DE TRICEPS EN POLEA CON CUERDA',
+      image: '/img/gym/triceps/polea_cuerda.jpg',
+      gif: '/img/gym/triceps/polea_cuerdag.gif',
+      description: ['El ejercicio de extensión de tríceps en polea con cuerda (agarre neutro) ayuda a tonificar y fortalecer tus brazos, especialmente la parte posterior.',
+                    'Realizado en una máquina de gimnasio, este entrenamiento es ideal para lograr brazos definidos y fuertes.'
+      ],
+      steps: [
+        'Posiciónate frente a la máquina de polea, con los pies al ancho de los hombros.',
+        'Agarra la cuerda con un agarre neutro, es decir, las palmas de las manos mirándose entre sí.',
+        'Mantén los codos pegados a tu cuerpo y flexiona ligeramente las rodillas.',
+        'Exhala mientras extiendes tus brazos hacia abajo utilizando la fuerza de tus tríceps.',
+        'Inhala mientras regresas lentamente a la posición inicial, controlando el movimiento.',
+        'Repite este ejercicio durante el número de repeticiones y series recomendadas por tu entrenador.'
+      ],
+      videoLink: 'https://www.youtube.com/embed/Mkd-G0XpnR0',
+    },
+    {
+      id: 'patada-triceps-mancuerna',
+      name: 'PATADA TRICEPS CON MANCUERNA',
+      image: '/img/gym/triceps/patada_trasera.jpg',
+      gif: '/img/gym/triceps/patada_traserag.gif',
+      description: ['La patada de tríceps para muchos es un ejercicio que no puede faltar en ninguna sesión de entrenamiento de tríceps.',
+                    'Este ejercicio es muy efectivo si se realiza de la manera correcta, cosa que no siempre se logra y no son pocos los que realizan la patada de tríceps con malas posturas.'
+      ],
+      steps: [
+        'Apoyar tu pierna y brazo contrario al que vayas a utilizar en un banco, mantener la espalda recta durante todo el ejercicio.',
+        'Coge tu mancuerna con la mano que tienes libre, sujétala de forma neutral y mira al frente, exhala y utiliza el tríceps para levantar la pesa y dejar el brazo totalmente extendido.',
+        'Cuando lleves tu brazo hacia atrás intenta contraer el tríceps durante un tiempo determinado, después vuelve con el brazo a la posición inicial.'
+      ],
+      videoLink: 'https://www.youtube.com/embed/tZyWUViSqT4',
+    },
+  ]
   // Agrega más ejercicios para otros grupos musculares
 };
