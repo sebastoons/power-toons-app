@@ -17,11 +17,12 @@
 
 .cardGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
+  grid-template-columns: 1fr; /* Fuerza a que haya exactamente 1 columna vertical */
+  gap: 20px;
   width: 100%;
-  max-width: 800px; /* Limitar ancho para pantallas grandes */
+  max-width: 500px; /* Limitar ancho para que las tarjetas no se estiren demasiado en PC */
   padding: 0;
+  margin: 0 auto; /* Centra el contenedor en la pantalla */
 }
 
 /* Definición de la animación */
@@ -56,13 +57,5 @@
     opacity: 1;
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
-  }
-}
-
-/* Media query para pantallas más grandes (opcional, si quieres más columnas) */
-@media (min-width: 600px) {
-  .cardGrid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
   }
 }

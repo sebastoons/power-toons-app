@@ -3,12 +3,14 @@ import Home from './components/Home/Home';
 import ExerciseTypes from './components/ExerciseTypes/ExerciseTypes';
 import MuscleGroups from './components/MuscleGroups/MuscleGroups';
 import ExerciseList from './components/ExerciseList/ExerciseList';
-import CrossfitList from './components/CrossfitList/CrossfitList'; // ¡Nuevo import!
+import CrossfitList from './components/CrossfitList/CrossfitList'; 
 import ExerciseModal from './components/ExerciseModal/ExerciseModal';
+import ProgressDashboard from './components/ProgressDashboard/ProgressDashboard'; // ¡Nuevo import del Dashboard!
 import './App.css'; // Para estilos globales
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('home'); // 'home', 'exerciseTypes', 'muscleGroups', 'exerciseList', 'crossfitList'
+  // Añadimos 'dashboard' como una posible página
+  const [currentPage, setCurrentPage] = useState('home'); // 'home', 'exerciseTypes', 'muscleGroups', 'exerciseList', 'crossfitList', 'dashboard'
   const [selectedExerciseType, setSelectedExerciseType] = useState(null); // 'gym', 'rugby', 'crossfit', etc.
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState(null); // 'biceps', 'chest', etc.
   const [selectedExercise, setSelectedExercise] = useState(null); // Objeto del ejercicio para el modal
@@ -18,22 +20,23 @@ const App = () => {
     if (categoryId === 'exercises') {
       setCurrentPage('exerciseTypes');
     }
-    // Puedes expandir esto para otras categorías si las añades en Home
+  };
+
+  // ¡Nueva función para abrir el Dashboard!
+  const handleOpenDashboard = () => {
+    setCurrentPage('dashboard');
   };
 
   const handleSelectExerciseType = (typeId) => {
     setSelectedExerciseType(typeId);
     if (typeId === 'gym') {
       setCurrentPage('muscleGroups');
-    } else if (typeId === 'crossfit') { // ¡Maneja Crossfit aquí!
+    } else if (typeId === 'crossfit') { 
       setCurrentPage('crossfitList');
-      setSelectedMuscleGroup(null); // Asegúrate de limpiar cualquier grupo muscular seleccionado previamente
+      setSelectedMuscleGroup(null); 
     } else {
-      // Para otros tipos (Rugby, Casa, Yoga) que no tienen grupos musculares,
-      // puedes llevarlos a una lista de ejercicios directa (similar a CrossfitList)
-      // Por ahora, para simplificar y no romper tu lógica existente:
       alert(`Has seleccionado: ${typeId.charAt(0).toUpperCase() + typeId.slice(1)}. Implementar lista de ejercicios para este tipo.`);
-      setCurrentPage('home'); // Vuelve a Home o a ExerciseTypes
+      setCurrentPage('home'); 
     }
   };
 
@@ -59,16 +62,25 @@ const App = () => {
     } else if (currentPage === 'exerciseList') {
       setCurrentPage('muscleGroups');
       setSelectedMuscleGroup(null);
-    } else if (currentPage === 'crossfitList') { // ¡Maneja el botón de retroceso para Crossfit!
+    } else if (currentPage === 'crossfitList') { 
       setCurrentPage('exerciseTypes');
       setSelectedExerciseType(null);
+    } else if (currentPage === 'dashboard') { // ¡Manejo del retroceso desde el Dashboard!
+      setCurrentPage('home');
     }
   };
 
   return (
     <div className="App">
       {currentPage === 'home' && (
-        <Home onSelectCategory={handleSelectCategory} />
+        <Home 
+          onSelectCategory={handleSelectCategory} 
+          onOpenDashboard={handleOpenDashboard} // Pasamos la prop al Home
+        />
+      )}
+
+      {currentPage === 'dashboard' && ( // ¡Renderizamos el Dashboard!
+        <ProgressDashboard onBack={handleBack} />
       )}
 
       {currentPage === 'exerciseTypes' && (
@@ -87,7 +99,7 @@ const App = () => {
         />
       )}
 
-      {currentPage === 'crossfitList' && selectedExerciseType === 'crossfit' && ( // ¡Renderiza CrossfitList!
+      {currentPage === 'crossfitList' && selectedExerciseType === 'crossfit' && ( 
         <CrossfitList
           onSelectExercise={handleSelectExercise}
           onBack={handleBack}

@@ -7,50 +7,73 @@ import styles from './ExerciseModal.module.css';
 const ExerciseModal = ({ exercise, onClose }) => {
   const [currentDisplayExercise, setCurrentDisplayExercise] = useState(exercise);
 
-  const [week, setWeek] = useState('');
+  // Estados para el nuevo registro
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]); // Fecha de hoy por defecto
   const [kgLb, setKgLb] = useState('');
   const [reps, setReps] = useState('');
   const [sets, setSets] = useState('');
 
+  // Estado para el historial completo
+  const [history, setHistory] = useState([]);
+
   const localStorageKey = `exerciseData-${currentDisplayExercise.id}`;
 
+  // Cargar historial al abrir o cambiar de ejercicio
   useEffect(() => {
-    setWeek('');
-    setKgLb('');
-    setReps('');
-    setSets('');
-
     const savedData = localStorage.getItem(localStorageKey);
     if (savedData) {
       try {
-        const parsedData = JSON.parse(savedData);
-        setWeek(parsedData.week || '');
-        setKgLb(parsedData.kgLb || '');
-        setReps(parsedData.reps || '');
-        setSets(parsedData.sets || '');
+        setHistory(JSON.parse(savedData));
       } catch (error) {
         console.error("Error al parsear datos de localStorage:", error);
-        localStorage.removeItem(localStorageKey);
+        setHistory([]);
       }
+    } else {
+      setHistory([]);
     }
   }, [currentDisplayExercise.id, localStorageKey]);
-
-  useEffect(() => {
-    const dataToSave = { week, kgLb, reps, sets };
-    localStorage.setItem(localStorageKey, JSON.stringify(dataToSave));
-  }, [week, kgLb, reps, sets, localStorageKey]);
 
   useEffect(() => {
     setCurrentDisplayExercise(exercise);
   }, [exercise]);
 
+  // Función para guardar un nuevo registro en el historial
+  const handleAddRecord = () => {
+    if (!kgLb || !reps || !sets) {
+      alert("Por favor, completa peso, repeticiones y series.");
+      return;
+    }
 
-  const handleResetFields = () => {
-    setWeek('');
+    const newRecord = {
+      id: Date.now(), // ID único basado en la fecha actual
+      date,
+      kgLb,
+      reps,
+      sets
+    };
+
+    const updatedHistory = [...history, newRecord];
+    setHistory(updatedHistory);
+    localStorage.setItem(localStorageKey, JSON.stringify(updatedHistory));
+
+    // Limpiar campos después de guardar (mantenemos la fecha)
     setKgLb('');
     setReps('');
     setSets('');
-    localStorage.removeItem(localStorageKey);
+  };
+
+  // Función para eliminar un registro específico
+  const handleDeleteRecord = (idToRemove) => {
+    const updatedHistory = history.filter(record => record.id !== idToRemove);
+    setHistory(updatedHistory);
+    localStorage.setItem(localStorageKey, JSON.stringify(updatedHistory));
+  };
+
+  const handleResetFields = () => {
+    if(window.confirm("¿Estás seguro de borrar TODO el historial de este ejercicio?")) {
+      setHistory([]);
+      localStorage.removeItem(localStorageKey);
+    }
   };
 
   const handleSelectVariant = (variant) => {
@@ -74,7 +97,7 @@ const ExerciseModal = ({ exercise, onClose }) => {
         </div>
 
         <div className={styles.modalBody}>
-          {/* Contenedor de la columna izquierda (imagen/video y variantes) */}
+          {/* Columna Izquierda */}
           <div className={styles.leftColumn}>
             <div className={styles.imageVideoContainer}>
               {currentDisplayExercise.gif ? (
@@ -95,7 +118,7 @@ const ExerciseModal = ({ exercise, onClose }) => {
               )}
             </div>
 
-            {/* Sección de Variantes */}
+            {/* Variantes */}
             {exercise.variants && exercise.variants.length > 0 && !isVariantCurrentlyDisplayed && (
               <div className={styles.variantsSection}>
                 <h3>VARIANTES:</h3>
@@ -114,18 +137,16 @@ const ExerciseModal = ({ exercise, onClose }) => {
               </div>
             )}
 
-            {/* Botón para volver al ejercicio principal si estamos viendo una variante */}
             {isVariantCurrentlyDisplayed && (
               <div className={styles.backToMainButtonContainer}>
                 <Button onClick={handleBackToMainExercise} variant="tertiary">Volver al Ejercicio Principal</Button>
               </div>
             )}
-          </div> {/* CIERRE DEL leftColumn */}
+          </div>
 
-          {/* Contenedor de la columna derecha (Descripción, Paso a Paso y Registro de Progreso) */}
+          {/* Columna Derecha */}
           <div className={styles.rightColumn}>
-            {/* Nuevo div para agrupar Descripción y Paso a Paso */}
-            <div className={styles.descriptionAndSteps}> {/* <--- NUEVO CONTENEDOR */}
+            <div className={styles.descriptionAndSteps}>
                 <div className={styles.descriptionSection}>
                   <h3>DESCRIPCIÓN:</h3>
                   {Array.isArray(currentDisplayExercise.description) ? (
@@ -143,56 +164,60 @@ const ExerciseModal = ({ exercise, onClose }) => {
                     ))}
                   </ol>
                 </div>
-            </div> {/* <--- CIERRE DEL NUEVO CONTENEDOR descriptionAndSteps */}
+            </div>
 
+            {/* SECCIÓN DE REGISTRO MODIFICADA */}
             <div className={styles.inputSection}>
-              <h3>REGISTRO DE PROGRESO:</h3>
-              <div className={styles.inputGroup}>
-                <label htmlFor="week">Semana:</label>
-                <input
-                  type="text"
-                  id="week"
-                  value={week}
-                  onChange={(e) => setWeek(e.target.value)}
-                  placeholder="Ej: Semana 1"
-                />
+              <h3>NUEVO REGISTRO:</h3>
+              <div className={styles.inputForm}>
+                <div className={styles.inputGroup}>
+                  <label>Fecha:</label>
+                  <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+                </div>
+                <div className={styles.rowInputs}>
+                  <div className={styles.inputGroup}>
+                    <label>Peso:</label>
+                    <input type="text" value={kgLb} onChange={(e) => setKgLb(e.target.value)} placeholder="Ej: 20kg" />
+                  </div>
+                  <div className={styles.inputGroup}>
+                    <label>Sets:</label>
+                    <input type="number" value={sets} onChange={(e) => setSets(e.target.value)} placeholder="Ej: 4" />
+                  </div>
+                  <div className={styles.inputGroup}>
+                    <label>Reps:</label>
+                    <input type="number" value={reps} onChange={(e) => setReps(e.target.value)} placeholder="Ej: 10" />
+                  </div>
+                </div>
+                <Button onClick={handleAddRecord} variant="primary" className={styles.addRecordBtn}>Guardar Serie</Button>
               </div>
-              <div className={styles.inputGroup}>
-                <label htmlFor="kgLb">Kg/Lb:</label>
-                <input
-                  type="text"
-                  id="kgLb"
-                  value={kgLb}
-                  onChange={(e) => setKgLb(e.target.value)}
-                  placeholder="Ej: 10kg o 20lb"
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <label htmlFor="reps">Repeticiones:</label>
-                <input
-                  type="number"
-                  id="reps"
-                  value={reps}
-                  onChange={(e) => setReps(e.target.value)}
-                  placeholder="Ej: 12"
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <label htmlFor="sets">Series:</label>
-                <input
-                  type="number"
-                  id="sets"
-                  value={sets}
-                  onChange={(e) => setSets(e.target.value)}
-                  placeholder="Ej: 3"
-                />
+
+              <div className={styles.historySection}>
+                <h3>HISTORIAL:</h3>
+                {history.length === 0 ? (
+                  <p className={styles.noHistory}>No hay registros aún.</p>
+                ) : (
+                  <ul className={styles.historyList}>
+                    {/* Invertimos el array para ver el más reciente arriba */}
+                    {[...history].reverse().map(record => (
+                      <li key={record.id} className={styles.historyItem}>
+                        <div className={styles.historyData}>
+                          <span className={styles.historyDate}>{new Date(record.date).toLocaleDateString()}</span>
+                          <span className={styles.historyDetails}>
+                            {record.sets}x{record.reps} | {record.kgLb}
+                          </span>
+                        </div>
+                        <button onClick={() => handleDeleteRecord(record.id)} className={styles.deleteBtn}>🗑️</button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
-          </div> {/* CIERRE DEL rightColumn */}
-        </div> {/* Cierre de modalBody */}
+          </div>
+        </div>
 
         <div className={styles.modalFooter}>
-          <Button onClick={handleResetFields} variant="danger">Resetear Campos</Button>
+          <Button onClick={handleResetFields} variant="danger">Borrar Todo el Historial</Button>
           <Button onClick={onClose}>Cerrar</Button>
         </div>
       </div>

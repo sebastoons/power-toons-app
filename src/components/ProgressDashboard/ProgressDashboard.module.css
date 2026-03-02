@@ -1,0 +1,156 @@
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Verdana, sans-serif;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+}
+
+.title {
+  color: #333;
+  margin: 0;
+  font-size: 1.8em;
+  text-transform: uppercase;
+}
+
+/* Tarjetas Superiores */
+.summaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.summaryCard {
+  background: linear-gradient(135deg, #001ba3 0%, #0056ff 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 27, 163, 0.3);
+}
+
+.summaryCard h3 {
+  margin: 0 0 10px 0;
+  font-size: 0.85em;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+
+.statNumber {
+  font-size: 2.5em;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+/* Sección de Récords */
+.recordsSection {
+  width: 100%;
+}
+
+.sectionTitle {
+  color: #555;
+  font-size: 1.2em;
+  margin-bottom: 15px;
+  border-left: 4px solid #001ba3;
+  padding-left: 10px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  color: #777;
+  font-style: italic;
+}
+
+.recordsList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.recordCard {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recordCard:active {
+  transform: scale(0.98);
+}
+
+.recordHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 1px dashed #ddd;
+  padding-bottom: 8px;
+}
+
+.recordHeader h4 {
+  margin: 0;
+  color: #333;
+  font-size: 1em;
+}
+
+.dateBadge {
+  background-color: #eee;
+  color: #555;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 0.7em;
+  font-weight: bold;
+}
+
+.recordStats {
+  display: flex;
+  justify-content: space-around;
+}
+
+.statBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statLabel {
+  font-size: 0.7em;
+  color: #888;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.statValue {
+  font-size: 1.2em;
+  color: #001ba3;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+}

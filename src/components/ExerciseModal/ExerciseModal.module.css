@@ -294,3 +294,151 @@
         width: 100%;
     }
 }
+
+/* --- ESTILOS DE LA SECCIÓN DE REGISTRO DE PROGRESO --- */
+.inputSection {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  flex: 0 0 280px; 
+  display: flex;
+  flex-direction: column;
+}
+
+.inputSection h3 {
+  font-family: Tahoma, sans-serif;
+  color: #001ba3;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.inputForm {
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.rowInputs {
+  display: flex;
+  gap: 10px;
+}
+
+.inputGroup {
+  margin-bottom: 10px;
+  flex: 1;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #444;
+  font-family: monospace;
+  font-size: 1em;
+}
+
+.inputGroup input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.9em;
+  font-family: monospace;
+  transition: border-color 0.3s ease;
+}
+
+.inputGroup input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.addRecordBtn {
+  width: 100%;
+  margin-top: 5px;
+}
+
+/* HISTORIAL */
+.historySection {
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.noHistory {
+  color: #777;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+.historyList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.historyItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  border-left: 4px solid #001ba3;
+}
+
+.historyData {
+  display: flex;
+  flex-direction: column;
+}
+
+.historyDate {
+  font-size: 0.75em;
+  color: #666;
+  font-weight: bold;
+}
+
+.historyDetails {
+  font-size: 0.95em;
+  font-family: monospace;
+  color: #333;
+  font-weight: bold;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.deleteBtn:hover {
+  opacity: 1;
+}
+
+/* Resto del CSS que ya tenías */
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 25px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+/* ... (Mantén aquí los estilos de .variantsSection y @media que ya tenías en tu archivo original) ... */
+
+@media (max-width: 1024px) { 
+    .modalBody { flex-direction: column; gap: 20px; }
+    .leftColumn { flex: none; width: 100%; min-width: unset; border-right: none; padding-right: 0; }
+    .rightColumn { flex: none; width: 100%; flex-direction: column; gap: 20px; }
+    .modalContent { max-width: 95%; padding: 20px; }
+    .modalTitle { font-size: 1.2em; }
+    .inputSection { flex: none; width: 100%; box-sizing: border-box; }
+}

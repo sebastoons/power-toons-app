@@ -6,7 +6,6 @@ export const exerciseTypes = [
   { id: 'rugby', name: 'RUGBY', image: '/img/rugby.jpg' },
   { id: 'crossfit', name: 'CROSSFIT', image: '/img/cros10.jpg' },
   { id: 'gym', name: 'GYM', image: '/img/gym.webp' },
-  { id: 'home', name: 'CASA', image: '/img/casa.jpg' },
   { id: 'yoga', name: 'YOGA', image: '/img/yoga.jpg' },
 ];
 
@@ -81,7 +80,7 @@ export const exercises = {
       image: '/img/gym/pecho/press_banca_plano_barra.jpg',
       gif: '/img/gym/pecho/press_banca_planog.gif',
       description: ['El press banca es el ejercicio de fuerza por excelencia y uno de los tres de las competiciones de powerlifting junto a la sentadilla y el peso muerto.',
-                   'Se trata de un elemento básico para este tipo de entrenamiento pero, aunque se trate de un ejercicio esencial, es muy fácil caer en error a la hora de hacerlo.',
+                    'Se trata de un elemento básico para este tipo de entrenamiento pero, aunque se trate de un ejercicio esencial, es muy fácil caer en error a la hora de hacerlo.',
       ],
       steps: [
         'Mantén los pies bien apoyados en el suelo. Esto te proporciona una base estable, lo que te ayuda a mover más peso. Evita apoyar los pies sobre el banco, porque levantar los pies del suelo te restará estabilidad y aumentará el riesgo de lesión.',
@@ -150,5 +149,4 @@ export const exercises = {
       videoLink: 'https://www.youtube.com/embed/tZyWUViSqT4',
     },
   ]
-  // Agrega más ejercicios para otros grupos musculares
 };

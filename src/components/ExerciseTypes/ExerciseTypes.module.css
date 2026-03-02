@@ -8,8 +8,8 @@
 
 .buttonContainer { /* Nuevo estilo para el contenedor del botón */
   width: 100%;
-  max-width: 800px; /* Mismo max-width que el grid para alinear */
-  text-align: right; /* Alinea el botón a la izquierda dentro de su contenedor */
+  max-width: 500px; /* Alineado al nuevo ancho del grid */
+  text-align: right; /* Alinea el botón a la derecha dentro de su contenedor */
   margin-bottom: 20px;
 }
 
@@ -19,22 +19,16 @@
   margin-top: 20px;
   font-size: 2em;
   text-align: center;
-  font-family: verdana;
-  text-transform: Uppercase;
+  font-family: verdana, sans-serif; /* Se agregó fallback sans-serif por buenas prácticas */
+  text-transform: uppercase;
 }
 
 .cardGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
+  grid-template-columns: 1fr; /* Fuerza a 1 columna vertical */
+  gap: 20px;
   width: 100%;
-  max-width: 800px;
+  max-width: 500px; /* Limitar ancho para que las tarjetas no se estiren demasiado en PC */
   padding: 0;
-}
-
-@media (min-width: 600px) {
-  .cardGrid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-  }
+  margin: 0 auto;
 }
