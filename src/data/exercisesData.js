@@ -150,3 +150,31 @@ export const exercises = {
     },
   ]
 };
+// Añade esto al final de src/data/exercisesData.js
+export const apiMockData = [
+  {
+    id: "0025",
+    name: "PRESS DE BANCA",
+    gifUrl: "https://v2.exercisedb.io/image/R9Y-Q-w2jU5yW6",
+    target: "pectorals",
+    equipment: "barbell",
+    instructions: [
+      "Acuéstate en un banco plano con los pies apoyados en el suelo.",
+      "Sujeta la barra con un agarre ligeramente más ancho que el ancho de los hombros.",
+      "Baja la barra lentamente hasta el pecho.",
+      "Empuja la barra hacia arriba hasta que tus brazos estén completamente extendidos."
+    ]
+  },
+  {
+    id: "0047",
+    name: "APERTURAS CON MANCUERNAS",
+    gifUrl: "https://v2.exercisedb.io/image/f0s4mZpB-r3L2R",
+    target: "pectorals",
+    equipment: "dumbbell",
+    instructions: [
+      "Acuéstate en un banco plano sosteniendo dos mancuernas sobre tu pecho con los brazos casi rectos.",
+      "Baja lentamente los brazos hacia los lados hasta sentir un estiramiento en el pecho.",
+      "Vuelve a la posición inicial apretando los pectorales."
+    ]
+  }
+];
