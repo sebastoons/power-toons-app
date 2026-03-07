@@ -1,81 +1,93 @@
 // src/services/exerciseApi.js
-import { exercises as localOverrides, apiMockData } from '../data/exercisesData';
+import { exercises as localOverrides } from '../data/exercisesData';
 
-const API_KEY = 'e2ccc22303msh9d648d694bfa133p136815jsne468543d2e7d'; 
-const BASE_URL = 'https://exercisedb.p.rapidapi.com/exercises';
+const BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises.json';
+const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 
-// 🔥 INTERRUPTOR: Cambia a 'false' cuando la API te quite el bloqueo 429
-const USE_MOCK_DATA = true; 
+let cachedExercises = null;
 
-const options = {
-  method: 'GET',
-  headers: {
-    'X-RapidAPI-Key': API_KEY,
-    'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+const muscleMap = {
+  chest: ['chest'],
+  back: ['middle back', 'lower back', 'lats', 'traps'],
+  legs: ['quadriceps', 'hamstrings', 'calves', 'glutes'],
+  biceps: ['biceps'],
+  triceps: ['triceps'],
+  hombro: ['shoulders'],
+  abs: ['abdominals'],
+  quads: ['quadriceps'],
+  glutes: ['glutes']
+};
+
+// 🇪🇸 DICCIONARIO DE TRADUCCIÓN AUTOMÁTICA
+const diccionarios = {
+  musculos: {
+    'abdominals': 'ABDOMINALES', 'hamstrings': 'ISQUIOTIBIALES', 'calves': 'PANTORRILLAS',
+    'shoulders': 'HOMBROS', 'adductors': 'ADUCTORES', 'glutes': 'GLÚTEOS',
+    'quadriceps': 'CUÁDRICEPS', 'biceps': 'BÍCEPS', 'forearms': 'ANTEBRAZOS',
+    'obliques': 'OBLICUOS', 'triceps': 'TRÍCEPS', 'chest': 'PECHO',
+    'lower back': 'ESPALDA BAJA', 'traps': 'TRAPECIOS', 'middle back': 'ESPALDA MEDIA',
+    'lats': 'DORSALES', 'neck': 'CUELLO'
+  },
+  equipamiento: {
+    'body only': 'SÓLO PESO CORPORAL', 'machine': 'MÁQUINA', 'kettlebells': 'PESA RUSA',
+    'dumbbell': 'MANCUERNA', 'cable': 'POLEA', 'barbell': 'BARRA',
+    'bands': 'BANDAS ELÁSTICAS', 'medicine ball': 'BALÓN MEDICINAL',
+    'exercise ball': 'BALÓN SUIZO', 'e-z curl bar': 'BARRA Z', 'foam roll': 'RODILLO'
   }
 };
 
-const bodyPartMap = {
-  chest: 'chest',
-  back: 'back',
-  legs: 'upper legs', 
-  biceps: 'upper arms',
-  triceps: 'upper arms',
-  hombro: 'shoulders',
-  abs: 'waist',
-  quads: 'upper legs',
-  glutes: 'upper legs'
-};
-
 export const fetchExercisesByMuscle = async (muscleId) => {
-  const apiBodyPart = bodyPartMap[muscleId];
   const localData = localOverrides[muscleId] || [];
-  
-  if (!apiBodyPart) return localData;
+  const targetMuscles = muscleMap[muscleId];
+
+  if (!targetMuscles) return localData;
 
   try {
-    let apiData = [];
-
-    if (USE_MOCK_DATA) {
-      // Usamos los datos falsos para evitar el bloqueo 429
-      console.log("Modo de desarrollo: Usando datos de prueba locales.");
-      // Simulamos que la API nos responde filtrando solo el pecho por ahora
-      if(apiBodyPart === 'chest') {
-          apiData = apiMockData;
-      }
-    } else {
-      // Llamada real a la API
-      const response = await fetch(`${BASE_URL}/bodyPart/${apiBodyPart}?limit=20`, options);
-      if (!response.ok) {
-        throw new Error(`La API falló con código: ${response.status}`);
-      }
-      apiData = await response.json();
-      if (!Array.isArray(apiData)) {
-        throw new Error('La API no devolvió una lista de ejercicios válida.');
-      }
+    if (!cachedExercises) {
+      const response = await fetch(BASE_URL);
+      if (!response.ok) throw new Error("Error al descargar la base de datos");
+      cachedExercises = await response.json();
     }
 
-    let filteredApiData = apiData;
-    if (muscleId === 'biceps') {
-      filteredApiData = apiData.filter(ex => ex.target === 'biceps');
-    } else if (muscleId === 'triceps') {
-      filteredApiData = apiData.filter(ex => ex.target === 'triceps');
-    }
+    const filteredApiData = cachedExercises.filter(ex => {
+      return ex.primaryMuscles && ex.primaryMuscles.some(m => targetMuscles.includes(m));
+    });
 
-    const formattedApiExercises = filteredApiData.map(apiEx => ({
-      id: apiEx.id,
-      name: apiEx.name.toUpperCase(),
-      gif: apiEx.gifUrl,
-      image: apiEx.gifUrl, 
-      description: `Músculo objetivo principal: ${apiEx.target ? apiEx.target.toUpperCase() : 'N/A'}. Equipamiento: ${apiEx.equipment}.`,
-      steps: apiEx.instructions || [],
-      videoLink: null 
-    }));
+    const limitedData = filteredApiData.slice(0, 25);
 
+    const formattedApiExercises = limitedData.map(apiEx => {
+      const imgPath = apiEx.images && apiEx.images.length > 0 ? apiEx.images[0] : null;
+      const imageUrl = imgPath ? `${IMAGE_BASE_URL}${imgPath}` : null;
+
+      // Aplicamos la traducción al músculo y equipamiento
+      const equipamientoEn = apiEx.equipment ? apiEx.equipment : 'body only';
+      const musculoEn = apiEx.primaryMuscles && apiEx.primaryMuscles.length > 0 ? apiEx.primaryMuscles[0] : '';
+      
+      const equipamientoEs = diccionarios.equipamiento[equipamientoEn] || equipamientoEn.toUpperCase();
+      const musculoEs = diccionarios.musculos[musculoEn] || musculoEn.toUpperCase();
+
+      return {
+        id: apiEx.id,
+        apiNameOriginal: apiEx.name.replace(/_/g, ' ').toUpperCase(), // Guardamos el nombre en inglés
+        name: apiEx.name.replace(/_/g, ' ').toUpperCase(), // Nombre por defecto si no lo traduces
+        gif: imageUrl, 
+        image: imageUrl, 
+        description: `MÚSCULO PRINCIPAL: ${musculoEs} | EQUIPAMIENTO: ${equipamientoEs}.`,
+        steps: apiEx.instructions || [], // Estos vienen en inglés de la API
+        videoLink: null 
+      };
+    });
+
+    // LA MAGIA: Fusión con tus modificaciones manuales
     const finalExercises = formattedApiExercises.map(apiEx => {
       const localMatch = localData.find(localEx => localEx.id === apiEx.id);
       if (localMatch) {
-        return { ...apiEx, ...localMatch }; 
+        // Si tú le pones un nombre en español, lo junta: "ENGLISH NAME - NOMBRE ESPAÑOL"
+        const mergedName = localMatch.name 
+          ? `${apiEx.apiNameOriginal} - ${localMatch.name.toUpperCase()}` 
+          : apiEx.apiNameOriginal;
+          
+        return { ...apiEx, ...localMatch, name: mergedName }; 
       }
       return apiEx;
     });
@@ -89,7 +101,7 @@ export const fetchExercisesByMuscle = async (muscleId) => {
     return finalExercises;
 
   } catch (error) {
-    console.warn("Aviso: No se pudo cargar desde la API. Usando base de datos local.", error.message);
+    console.error("🚨 Error obteniendo ejercicios:", error);
     return localData; 
   }
 };

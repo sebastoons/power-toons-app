@@ -101,11 +101,12 @@
 .videoWrapper {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-  height: 0;
-  overflow: hidden;
+  max-width: 280px; /* 👈 Este es el tamaño. Si lo quieres más pequeño, bájalo a 200px */
+  aspect-ratio: 16 / 9; /* 👈 Mantiene el formato panorámico de YouTube perfectamente */
+  margin: 0 auto; /* 👈 Centra el reproductor bajo la imagen */
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .videoWrapper iframe {
