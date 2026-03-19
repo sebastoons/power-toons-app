@@ -8,7 +8,7 @@ const ExerciseTypes = ({ onSelectType, onBack }) => {
   return (
     <div className={styles.exerciseTypesContainer}>
       <div className={styles.buttonContainer}> {/* Nuevo contenedor para el botón */}
-        <Button onClick={onBack}>Volver Atrás</Button>
+        <Button onClick={onBack}>Volver</Button>
       </div>
       <h2 className={styles.title}>TIPOS DE EJERCICIOS</h2>
       <div className={styles.cardGrid}>

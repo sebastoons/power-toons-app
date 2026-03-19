@@ -7,6 +7,7 @@ import CrossfitList from './components/CrossfitList/CrossfitList';
 import ExerciseModal from './components/ExerciseModal/ExerciseModal';
 import ProgressDashboard from './components/ProgressDashboard/ProgressDashboard'; // ¡Nuevo import del Dashboard!
 import './App.css'; // Para estilos globales
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&family=Orbitron:wght@400..900&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&family=Tektur:wght@400..900&display=swap" rel="stylesheet"></link>
 
 const App = () => {
   // Añadimos 'dashboard' como una posible página

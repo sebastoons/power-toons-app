@@ -59,7 +59,6 @@ export const fetchExercisesByMuscle = async (muscleId) => {
       const imgPath = apiEx.images && apiEx.images.length > 0 ? apiEx.images[0] : null;
       const imageUrl = imgPath ? `${IMAGE_BASE_URL}${imgPath}` : null;
 
-      // Aplicamos la traducción al músculo y equipamiento
       const equipamientoEn = apiEx.equipment ? apiEx.equipment : 'body only';
       const musculoEn = apiEx.primaryMuscles && apiEx.primaryMuscles.length > 0 ? apiEx.primaryMuscles[0] : '';
       
@@ -68,12 +67,12 @@ export const fetchExercisesByMuscle = async (muscleId) => {
 
       return {
         id: apiEx.id,
-        apiNameOriginal: apiEx.name.replace(/_/g, ' ').toUpperCase(), // Guardamos el nombre en inglés
+        apiNameOriginal: apiEx.name.replace(/_/g, ' ').toUpperCase(), 
         name: apiEx.name.replace(/_/g, ' ').toUpperCase(), // Nombre por defecto si no lo traduces
         gif: imageUrl, 
         image: imageUrl, 
         description: `MÚSCULO PRINCIPAL: ${musculoEs} | EQUIPAMIENTO: ${equipamientoEs}.`,
-        steps: apiEx.instructions || [], // Estos vienen en inglés de la API
+        steps: apiEx.instructions || [], 
         videoLink: null 
       };
     });
@@ -82,12 +81,10 @@ export const fetchExercisesByMuscle = async (muscleId) => {
     const finalExercises = formattedApiExercises.map(apiEx => {
       const localMatch = localData.find(localEx => localEx.id === apiEx.id);
       if (localMatch) {
-        // Si tú le pones un nombre en español, lo junta: "ENGLISH NAME - NOMBRE ESPAÑOL"
-        const mergedName = localMatch.name 
-          ? `${apiEx.apiNameOriginal} - ${localMatch.name.toUpperCase()}` 
-          : apiEx.apiNameOriginal;
+        // 👇 AHORA SÍ: Si tú pusiste un nombre, usa SOLO el tuyo. Si no, usa el de la API.
+        const finalName = localMatch.name ? localMatch.name.toUpperCase() : apiEx.apiNameOriginal;
           
-        return { ...apiEx, ...localMatch, name: mergedName }; 
+        return { ...apiEx, ...localMatch, name: finalName }; 
       }
       return apiEx;
     });

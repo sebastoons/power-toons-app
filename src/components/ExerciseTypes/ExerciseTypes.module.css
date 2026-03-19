@@ -17,10 +17,12 @@
   color: #333;
   margin-bottom: 30px;
   margin-top: 20px;
-  font-size: 2em;
+  font-size: 1.6em;
   text-align: center;
-  font-family: verdana, sans-serif; /* Se agregó fallback sans-serif por buenas prácticas */
+  font-family: "Quantico"; /* Se agregó fallback sans-serif por buenas prácticas */
   text-transform: uppercase;
+  font-weight: bold;
+  text-shadow: 0 0 black;
 }
 
 .cardGrid {

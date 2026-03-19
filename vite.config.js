@@ -40,4 +40,8 @@ export default defineConfig({
       }
     })
   ],
+  // 👇 AQUÍ AGREGAMOS LA SOLUCIÓN PARA EL INSPECTOR DE CSS
+  css: {
+    devSourcemap: true,
+  }
 });

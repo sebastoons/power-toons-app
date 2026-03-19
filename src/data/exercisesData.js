@@ -72,7 +72,7 @@ export const exercises = {
       ]
     },
     {
-      id: 'butterfly', 
+      id: 'Butterfly', 
       name: 'MARIPOSAS EN MAQUINA', 
       //videoLink: 'https://www.youtube.com/embed/NUiGkrwVIEo?si=yAQNlZ0gza3ViImV', 
       image: '/img/gym/pecho/butterfly.jpg', 
@@ -85,6 +85,38 @@ export const exercises = {
         'Coloca los pies en el suelo y los codos y antebrazos en las almohadillas. Tus codos se deben flexionar en un ángulo de alrededor 90º.',
         'Contrae tus pectorales para juntar las almohadillas frente a tu pecho.',
         'Flexiona el pecho con fuerza en el momento del ejercicio en donde tus codos están juntos, luego vuelve a la posición inicial descendiendo el peso lentamente y manteniendo un estricto control del movimiento.'
+      ]
+    },
+    {
+      id: 'Decline_Dumbbell_Flyes', // Posible ID de la API para patada de tríceps
+      name: 'APERTURA CON MANCUERNAS DECLINADO',
+      image: '/img/gym/pecho/decline_dumbell_flyes.jpg',
+      gif: '/img/gym/pecho/decline_dumbell_flyesg.gif',
+      description: 'El ejercicio de aperturas con mancuernas en banco declinado es efectivo para trabajar la parte inferior de los músculos pectorales.',
+      steps: [
+        'Acuéstate en el banco con la cabeza más baja que las caderas.',
+        'Extiende los brazos por encima del pecho con una ligera flexión en los codos. ',
+        'Las mancuernas deben estar colocadas directamente sobre los hombros, con las palmas enfrentadas.',
+        'Baja las mancuernas en un amplio arco hacia los lados, manteniendo una ligera flexión en los codos durante todo el movimiento.',
+        'Continúa bajando las mancuernas hasta que los codos estén a la altura del pecho o ligeramente por debajo. Debes sentir un estiramiento en los músculos del pecho',
+        'Eleva las mancuernas en un arco amplio, manteniendo una ligera flexión en los codos.',
+        'Contrae los músculos del pecho en la parte superior del movimiento, llevando las mancuernas de vuelta a la posición inicial.'
+      ]
+    },
+    {
+      id: 'DECLINE_BARBELL_BENCH_PRESS', // Posible ID de la API para patada de tríceps
+      name: 'PRESS BANCA DECLINADO CON BARRA',
+      image: '/img/gym/pecho/DECLINE_BARBELL_BENCH_PRESS.jpg',
+      gif: '/img/gym/pecho/DECLINE_BARBELL_BENCH_PRESSG.gif',
+      description: 'El press de banca declinado es una variante del press de banca y se usa comúnmente para trabajar la parte inferior de los pectorales.',
+      steps: [
+        'Acuéstese en el banco declinado con la barra a la altura de la parte superior del pecho, sujetada con el soporte.',
+        'Retrae los omóplatos.',
+        'Extiende los brazos y sujeta la barra con las manos separadas al ancho de los hombros (o un poco más).',
+        'Baja la barra de forma uniforme y controlada por encima del pecho, evitando que los codos se abran demasiado hacia afuera.',
+        'Mantén los omóplatos juntos e inhala mientras bajas la barra.',
+        'Realice el movimiento ascendente de forma limpia y rápida, exhalando al mismo tiempo.',
+        'En la parte superior, mantén la tensión corporal, no extiendas completamente los brazos y repite el proceso',
       ]
     },
   ],
