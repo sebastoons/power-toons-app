@@ -4,6 +4,20 @@ import React, { useState, useEffect } from 'react';
 import Button from '../Shared/Button/Button';
 import styles from './ExerciseModal.module.css';
 
+// 🤖 MOTOR DE TRADUCCIÓN AUTOMÁTICA (API pública gratuita)
+const translateText = async (text) => {
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=es&dt=t&q=${encodeURIComponent(text)}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    // Google devuelve la traducción en un arreglo anidado, lo extraemos:
+    return data[0].map(item => item[0]).join('');
+  } catch (error) {
+    console.error("Error al traducir:", error);
+    return text; // Si falla el internet, muestra el texto original en inglés para que no se rompa
+  }
+};
+
 const ExerciseModal = ({ exercise, onClose }) => {
   const [currentDisplayExercise, setCurrentDisplayExercise] = useState(exercise);
 
@@ -11,12 +25,14 @@ const ExerciseModal = ({ exercise, onClose }) => {
   const [kgLb, setKgLb] = useState('');
   const [reps, setReps] = useState('');
   const [sets, setSets] = useState('');
-
   const [history, setHistory] = useState([]);
+
+  // Estados para la traducción mágica
+  const [translatedSteps, setTranslatedSteps] = useState([]);
+  const [isTranslating, setIsTranslating] = useState(false);
 
   const localStorageKey = `exerciseData-${currentDisplayExercise.id}`;
 
-  // PROTECCIÓN 1: Bloque Try/Catch envolviendo TODO el localStorage
   useEffect(() => {
     try {
       const savedData = localStorage.getItem(localStorageKey);
@@ -26,14 +42,35 @@ const ExerciseModal = ({ exercise, onClose }) => {
         setHistory([]);
       }
     } catch (error) {
-      console.error("Error al leer datos de localStorage (Posible restricción móvil):", error);
-      setHistory([]); // Fallback seguro
+      setHistory([]); 
     }
   }, [currentDisplayExercise.id, localStorageKey]);
 
   useEffect(() => {
     setCurrentDisplayExercise(exercise);
   }, [exercise]);
+
+  // EFECTO DE TRADUCCIÓN: Se ejecuta cada vez que abres un ejercicio
+  useEffect(() => {
+    const translateExerciseSteps = async () => {
+      const stepsToTranslate = currentDisplayExercise.steps;
+
+      if (stepsToTranslate && Array.isArray(stepsToTranslate) && stepsToTranslate.length > 0) {
+        setIsTranslating(true); // Encendemos el aviso de "Traduciendo..."
+        
+        // Traducimos cada paso simultáneamente
+        const translationPromises = stepsToTranslate.map(step => translateText(step));
+        const translatedResults = await Promise.all(translationPromises);
+        
+        setTranslatedSteps(translatedResults);
+        setIsTranslating(false); // Apagamos el aviso
+      } else {
+        setTranslatedSteps([]);
+      }
+    };
+
+    translateExerciseSteps();
+  }, [currentDisplayExercise]);
 
   const handleAddRecord = () => {
     if (!kgLb || !reps || !sets) {
@@ -52,11 +89,9 @@ const ExerciseModal = ({ exercise, onClose }) => {
     const updatedHistory = [...history, newRecord];
     setHistory(updatedHistory);
     
-    // PROTECCIÓN al guardar
     try {
       localStorage.setItem(localStorageKey, JSON.stringify(updatedHistory));
     } catch (e) {
-      console.error("No se pudo guardar en el celular. Almacenamiento lleno o bloqueado.", e);
       alert("Error: Tu navegador bloqueó el guardado del progreso.");
     }
 
@@ -82,19 +117,8 @@ const ExerciseModal = ({ exercise, onClose }) => {
     }
   };
 
-  const handleSelectVariant = (variant) => {
-    setCurrentDisplayExercise(variant);
-  };
-
-  const handleBackToMainExercise = () => {
-    setCurrentDisplayExercise(exercise);
-  };
-
   if (!exercise) return null;
 
-  const isVariantCurrentlyDisplayed = currentDisplayExercise.id !== exercise.id;
-
-  // PROTECCIÓN: Asegurarse de que history sea un array antes de hacer reverse().map()
   const safeHistory = Array.isArray(history) ? history : [];
 
   return (
@@ -108,7 +132,6 @@ const ExerciseModal = ({ exercise, onClose }) => {
         <div className={styles.modalBody}>
           <div className={styles.leftColumn}>
             <div className={styles.imageVideoContainer}>
-              {/* PROTECCIÓN 2: Mostrar medios solo si existen */}
               {currentDisplayExercise.gif ? (
                 <img src={currentDisplayExercise.gif} alt={currentDisplayExercise.name} className={styles.exerciseMedia} />
               ) : currentDisplayExercise.image ? (
@@ -127,64 +150,38 @@ const ExerciseModal = ({ exercise, onClose }) => {
                 </div>
               )}
             </div>
-
-            {currentDisplayExercise.variants && currentDisplayExercise.variants.length > 0 && !isVariantCurrentlyDisplayed && (
-              <div className={styles.variantsSection}>
-                <h3>VARIANTES:</h3>
-                <div className={styles.variantLinks}>
-                  {currentDisplayExercise.variants.map((variant) => (
-                    <Button
-                      key={variant.id}
-                      onClick={() => handleSelectVariant(variant)}
-                      variant="link"
-                      className={styles.variantButton}
-                    >
-                      {variant.name}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {isVariantCurrentlyDisplayed && (
-              <div className={styles.backToMainButtonContainer}>
-                <Button onClick={handleBackToMainExercise} variant="tertiary">Volver al Ejercicio Principal</Button>
-              </div>
-            )}
           </div>
 
           <div className={styles.rightColumn}>
             <div className={styles.descriptionAndSteps}>
                 <div className={styles.descriptionSection}>
                   
-                  {/* PROTECCIÓN 3: Si no hay descripción, no falla */}
                   {currentDisplayExercise.description && (
                     <>
-                      <h3>DESCRIPCIÓN:</h3>
-                      {Array.isArray(currentDisplayExercise.description) ? (
-                        currentDisplayExercise.description.map((paragraph, idx) => (
-                          <p key={idx}>{paragraph}</p>
-                        ))
-                      ) : (
-                        <p>{currentDisplayExercise.description}</p>
-                      )}
+                      <h3>DETALLES:</h3>
+                      <p>{currentDisplayExercise.description}</p>
                     </>
                   )}
 
-                  {/* PROTECCIÓN 4: Causa número 1 de pantallas blancas. Si un ejercicio no tiene 'steps', la app ya no explotará */}
-                  {currentDisplayExercise.steps && Array.isArray(currentDisplayExercise.steps) && currentDisplayExercise.steps.length > 0 && (
+                  {/* ZONA DE PASO A PASO TRADUCIDA */}
+                  {translatedSteps.length > 0 && (
                     <>
                       <h3>PASO A PASO:</h3>
-                      <ol>
-                        {currentDisplayExercise.steps.map((step, index) => (
-                          <li key={index}>{step}</li>
-                        ))}
-                      </ol>
+                      {isTranslating ? (
+                        <p style={{ color: '#001ba3', fontStyle: 'italic' }}>⏳ Traduciendo instrucciones al español...</p>
+                      ) : (
+                        <ol>
+                          {translatedSteps.map((step, index) => (
+                            <li key={index}>{step}</li>
+                          ))}
+                        </ol>
+                      )}
                     </>
                   )}
                 </div>
             </div>
 
+            {/* SECCIÓN DE REGISTRO */}
             <div className={styles.inputSection}>
               <h3>NUEVO REGISTRO:</h3>
               <div className={styles.inputForm}>

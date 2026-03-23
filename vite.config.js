@@ -10,7 +10,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'StrongToons - Tu App de Fitness',
+        name: 'StrongToons - Tu Enciclopedia Fitness',
         short_name: 'StrongToons',
         description: 'Aplicación de fitness con ejercicios y seguimiento.',
         theme_color: '#007bff',
@@ -37,10 +37,13 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,gif}']
+      },
+      // 👇 ESTO FUERZA A LA PWA A FUNCIONAR MIENTRAS PROGRAMAS
+      devOptions: {
+        enabled: true
       }
     })
   ],
-  // 👇 AQUÍ AGREGAMOS LA SOLUCIÓN PARA EL INSPECTOR DE CSS
   css: {
     devSourcemap: true,
   }

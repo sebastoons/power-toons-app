@@ -1,6 +1,7 @@
+// src/components/Home/Home.jsx
+
 import React from 'react';
 import Card from '../Shared/Card/Card';
-import Button from '../Shared/Button/Button'; // Importamos tu componente Button
 import styles from './Home.module.css';
 import { exerciseCategories } from '../../data/exercisesData';
 
@@ -9,14 +10,9 @@ const Home = ({ onSelectCategory, onOpenDashboard }) => {
     <div className={styles.homeContainer}>
       <img src="/3.svg" alt="Logo" className={styles.logo} /> 
       
-      {/* Nuevo botón para ir al Dashboard de Progreso */}
-      <div style={{ width: '100%', maxWidth: '500px', marginBottom: '20px' }}>
-        <Button onClick={onOpenDashboard} style={{ width: '100%', padding: '15px', fontSize: '1.1em', backgroundColor: '#001ba3' }}>
-          📊 VER MI PROGRESO
-        </Button>
-      </div>
-
       <div className={styles.cardGrid}>
+        
+        {/* 1. PRIMERO: Los banners de Categorías (Ejercicios) */}
         {exerciseCategories.map(category => (
           <Card
             key={category.id}
@@ -25,6 +21,14 @@ const Home = ({ onSelectCategory, onOpenDashboard }) => {
             onClick={() => onSelectCategory(category.id)}
           />
         ))}
+
+        {/* 2. SEGUNDO: El banner de Mi Progreso */}
+        <Card
+          title="📊 MI PROGRESO"
+          image="/img/progreso.jpg" // Recuerda subir tu imagen a public/img/
+          onClick={onOpenDashboard} 
+        />
+
       </div>
     </div>
   );

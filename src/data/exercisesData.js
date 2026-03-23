@@ -8,7 +8,7 @@ export const exerciseCategories = [
 export const exerciseTypes = [
   { id: 'rugby', name: 'RUGBY', image: '/img/rugby.jpg' },
   { id: 'crossfit', name: 'CROSSFIT', image: '/img/cros10.jpg' },
-  { id: 'gym', name: 'GYM', image: '/img/gym.webp' },
+  { id: 'gym', name: 'GYM', image: '/img/gym.jpg' },
   { id: 'yoga', name: 'YOGA', image: '/img/yoga.jpg' },
 ];
 
