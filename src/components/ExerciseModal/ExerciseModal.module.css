@@ -338,7 +338,8 @@
   font-weight: bold;
   color: #444;
   font-family: monospace;
-  font-size: 1em;
+  font-size: 1.1em;
+  text-transform: uppercase;
 }
 
 .inputGroup input {
@@ -347,7 +348,7 @@
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 0.9em;
+  font-size: 1.1em;
   font-family: monospace;
   transition: border-color 0.3s ease;
 }

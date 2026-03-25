@@ -1,3 +1,5 @@
+// src/App.jsx
+
 import React, { useState } from 'react';
 import Home from './components/Home/Home';
 import ExerciseTypes from './components/ExerciseTypes/ExerciseTypes';
@@ -5,16 +7,23 @@ import MuscleGroups from './components/MuscleGroups/MuscleGroups';
 import ExerciseList from './components/ExerciseList/ExerciseList';
 import CrossfitList from './components/CrossfitList/CrossfitList'; 
 import ExerciseModal from './components/ExerciseModal/ExerciseModal';
-import ProgressDashboard from './components/ProgressDashboard/ProgressDashboard'; // ¡Nuevo import del Dashboard!
+import Dashboard from './components/Dashboard/Dashboard'; 
+// 👇 Importamos el nuevo InfoModal 👇
+import InfoModal from './components/InfoModal/InfoModal'; 
 import './App.css'; // Para estilos globales
-<link href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&family=Orbitron:wght@400..900&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&family=Tektur:wght@400..900&display=swap" rel="stylesheet"></link>
 
 const App = () => {
-  // Añadimos 'dashboard' como una posible página
+  // Estado para la navegación de páginas
   const [currentPage, setCurrentPage] = useState('home'); // 'home', 'exerciseTypes', 'muscleGroups', 'exerciseList', 'crossfitList', 'dashboard'
-  const [selectedExerciseType, setSelectedExerciseType] = useState(null); // 'gym', 'rugby', 'crossfit', etc.
-  const [selectedMuscleGroup, setSelectedMuscleGroup] = useState(null); // 'biceps', 'chest', etc.
-  const [selectedExercise, setSelectedExercise] = useState(null); // Objeto del ejercicio para el modal
+  
+  // Estado para las selecciones
+  const [selectedExerciseType, setSelectedExerciseType] = useState(null); 
+  const [selectedMuscleGroup, setSelectedMuscleGroup] = useState(null); 
+  const [selectedExercise, setSelectedExercise] = useState(null); 
+
+  // 👇 🔥 NUEVO ESTADO PARA EL INFOMODAL 🔥 👇
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+  const [infoModalMessage, setInfoModalMessage] = useState('');
 
   // Funciones de navegación
   const handleSelectCategory = (categoryId) => {
@@ -23,7 +32,6 @@ const App = () => {
     }
   };
 
-  // ¡Nueva función para abrir el Dashboard!
   const handleOpenDashboard = () => {
     setCurrentPage('dashboard');
   };
@@ -36,9 +44,21 @@ const App = () => {
       setCurrentPage('crossfitList');
       setSelectedMuscleGroup(null); 
     } else {
-      alert(`Has seleccionado: ${typeId.charAt(0).toUpperCase() + typeId.slice(1)}. Implementar lista de ejercicios para este tipo.`);
-      setCurrentPage('home'); 
+      // 👇 MODIFICADO: Reemplazamos el alert por nuestro modal custom 👇
+      // 1. Preparamos el mensaje
+      const typeName = typeId.charAt(0).toUpperCase() + typeId.slice(1);
+      setInfoModalMessage(`Has seleccionado: ${typeName}. Actualmente, no tenemos una lista de ejercicios para este tipo. ¡Estamos trabajando para añadirla pronto!`);
+      // 2. Abrimos el modal
+      setIsInfoModalOpen(true);
+      // No cambiamos la página inmediatamente, el modal lo hará al cerrarse
     }
+  };
+
+  // 👇 🔥 NUEVA FUNCIÓN PARA CERRAR EL INFOMODAL Y VOLVER A INICIO 🔥 👇
+  const handleCloseInfoModal = () => {
+    setIsInfoModalOpen(false);
+    // Después de cerrar el modal, volvemos a 'home' como hacía tu alert original
+    setCurrentPage('home');
   };
 
   const handleSelectMuscleGroup = (groupId) => {
@@ -54,6 +74,11 @@ const App = () => {
     setSelectedExercise(null);
   };
 
+  // Función placeholder para la IA que usaremos en el Dashboard
+  const handleStartAICoach = () => {
+    alert("🤖 ¡Próximamente! Estamos conectando con la inteligencia artificial de entrenamiento.");
+  };
+
   const handleBack = () => {
     if (currentPage === 'exerciseTypes') {
       setCurrentPage('home');
@@ -66,22 +91,30 @@ const App = () => {
     } else if (currentPage === 'crossfitList') { 
       setCurrentPage('exerciseTypes');
       setSelectedExerciseType(null);
-    } else if (currentPage === 'dashboard') { // ¡Manejo del retroceso desde el Dashboard!
+    } else if (currentPage === 'dashboard') { 
       setCurrentPage('home');
     }
   };
 
   return (
     <div className="App">
+      {/* 👇 🔥 RENDERIZAMOS EL INFOMODAL SI ESTÁ ABIERTO 🔥 👇 */}
+      {isInfoModalOpen && (
+        <InfoModal message={infoModalMessage} onClose={handleCloseInfoModal} />
+      )}
+
       {currentPage === 'home' && (
         <Home 
           onSelectCategory={handleSelectCategory} 
-          onOpenDashboard={handleOpenDashboard} // Pasamos la prop al Home
+          onOpenDashboard={handleOpenDashboard} 
         />
       )}
 
-      {currentPage === 'dashboard' && ( // ¡Renderizamos el Dashboard!
-        <ProgressDashboard onBack={handleBack} />
+      {currentPage === 'dashboard' && ( 
+        <Dashboard 
+          onBack={handleBack} 
+          onStartAICoach={handleStartAICoach}
+        />
       )}
 
       {currentPage === 'exerciseTypes' && (

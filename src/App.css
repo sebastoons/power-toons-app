@@ -4,6 +4,7 @@ html, body {
 
 *, *::before, *::after {
   box-sizing: inherit; /* Hereda box-sizing para todos los elementos */
+  font-family: 'Quantico';
 }
 
 body {
