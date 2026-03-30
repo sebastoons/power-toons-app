@@ -84,8 +84,8 @@ export const exercises = {
   // -------------------------
   biceps: [
     {
-      id: 'Dumbbell_Bicep_Curl', // Posible ID de la API para curl con mancuernas
-      name: 'CURL CON MANCUERNAS',
+      id: 'Dumbbell_Alternate_Bicep_Curl', // Posible ID de la API para curl con mancuernas
+      name: 'CURL ALTERNO CON MANCUERNAS',
       image: '/img/gym/biceps/curl_mancuernasjpg.jpg',
       gif: '/img/gym/biceps/curl_mancuernas.gif',
     },
@@ -100,6 +100,24 @@ export const exercises = {
       name: 'CURL DE MARTILLO ALTERNO',
       image: '/img/gym/biceps/alternate_hammer_curl.jpg',
       gif: '/img/gym/biceps/alternate_hammer_curlg.gif',
+    },
+    {
+      id: 'Concentration_Curls', // Posible ID de la API para curl con mancuernas
+      name: 'CURL CONCENTRADO',
+      image: '/img/gym/biceps/concentration_curls.jpg',
+      gif: '/img/gym/biceps/concentration_curlsg.gif',
+    },
+    {
+      id: 'Dumbbell_Bicep_Curl', // Posible ID de la API para curl con mancuernas
+      name: 'CURL CON MANCUERNAS',
+      image: '/img/gym/biceps/dumbbell_bicep_curl.jpg',
+      gif: '/img/gym/biceps/dumbbell_bicep_curlg.gif',
+    },
+    {
+      id: 'Cable_Hammer_Curls_-_Rope_Attachment', // Posible ID de la API para curl con mancuernas
+      name: 'CURL DE MARTILLO CON CUERDA EN POLEA',
+      image: '/img/gym/biceps/cable_hammer_curls_rope_attachment.jpg',
+      gif: '/img/gym/biceps/cable_hammer_curls_rope_attachmentg.gif',
     },
   ],
 
