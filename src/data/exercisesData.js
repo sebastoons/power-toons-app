@@ -126,6 +126,30 @@ export const exercises = {
   // -------------------------
   triceps: [
     
+  ],
+  // -------------------------
+  // 🟦 SHOULDERS (HOMBROS)
+  // -------------------------
+  shoulders: [
+    {
+      id: 'Barbell_Shoulder_Press', // Posible ID de la API para curl con mancuernas
+      name: 'PRESS DE HOMBRO CON BARRA',
+      image: '/img/gym/biceps/Barbell_Shoulder_Press.jpg',
+      gif: '/img/gym/biceps/Barbell_Shoulder_Pressg.gif',
+    },
+    
+  ],
+  // -------------------------
+  // 🟦 QUADS (CUADRICEPS)
+  // -------------------------
+  quads: [
+    {
+      id: 'Barbell_Full_Squat', // Posible ID de la API para curl con mancuernas
+      name: 'SENTADILLA CON BARRA',
+      image: '/img/gym/biceps/Barbell_Full_Squat.jpg',
+      gif: '/img/gym/biceps/Barbell_Full_Squatg.gif',
+    },
+    
   ]
 
   // Puedes ir agregando más músculos aquí abajo según los vayas necesitando (hombro, back, legs, etc.)
