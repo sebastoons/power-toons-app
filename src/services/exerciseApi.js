@@ -1,5 +1,5 @@
 // src/services/exerciseApi.js
-import { exercises as localOverrides } from '../data/exercisesData';
+import { exercises as localOverrides, hiddenExercises } from '../data/exercisesData';
 
 const BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises.json';
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
@@ -50,6 +50,12 @@ export const fetchExercisesByMuscle = async (muscleId) => {
     }
 
     const filteredApiData = cachedExercises.filter(ex => {
+      // 1. Si el ejercicio está en tu lista negra, lo eliminamos (return false)
+      if (hiddenExercises && hiddenExercises.includes(ex.id)) {
+        return false;
+      }
+      
+      // 2. Si no está en la lista negra, revisamos que sea del músculo correcto
       return ex.primaryMuscles && ex.primaryMuscles.some(m => targetMuscles.includes(m));
     });
 

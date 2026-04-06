@@ -24,16 +24,13 @@ export const muscleGroups = [
   { id: 'hombro', name: 'HOMBROS', image: '/img/gym/hombros.jpg' },
 ];
 
-// =========================================================================
-// 🏋️‍♂️ BASE DE DATOS DE MODIFICACIONES (SOLO GYM)
-// =========================================================================
-/* INSTRUCCIONES PARA MODIFICAR UN EJERCICIO DE LA API:
-  1. Abre la app y busca el ejercicio que quieres modificar.
-  2. El 'id' de la API suele ser el nombre original en inglés con barras bajas (ej: 'barbell_bench_press').
-  3. Crea un bloque de código abajo en su grupo muscular correspondiente (chest, biceps, etc).
-  4. Pon ese 'id' exacto. 
-  5. Agrega los campos que quieras cambiar. Si NO pones un campo (ej. no pones 'image'), usará el que trae la API por defecto.
-*/
+// 🚫 LISTA NEGRA: Agrega aquí los IDs de los ejercicios de la API que no quieres que aparezcan.
+export const hiddenExercises = [
+  'Behind_Head_Chest_Stretch',
+  'Chain_Press', 
+  'ab_roller'
+  // Puedes ir agregando más IDs separados por comas
+];
 
 export const exercises = {
   // -------------------------
@@ -41,7 +38,6 @@ export const exercises = {
   // -------------------------
   chest: [
     {
-      // EJEMPLO 1: Sobrescribiendo el Press de Banca de la API con tu info
       id: 'Barbell_Bench_Press', // <- DEBE ser el ID exacto que trae la API
       name: 'PRESS BANCA PLANO CON BARRA', // Esto generará el título "BARBELL BENCH PRESS - PRESS BANCA PLANO..."
       image: '/img/gym/pecho/press_banca_plano_barra.jpg', // Reemplaza la imagen de la API
@@ -154,3 +150,4 @@ export const exercises = {
 
   // Puedes ir agregando más músculos aquí abajo según los vayas necesitando (hombro, back, legs, etc.)
 };
+
