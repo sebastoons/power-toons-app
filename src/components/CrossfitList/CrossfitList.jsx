@@ -12,8 +12,9 @@ const CrossfitList = ({ onSelectExercise, onBack }) => {
 
   return (
     <div className={styles.crossfitListContainer}>
-      <div className={styles.buttonContainer}>
-        <Button onClick={onBack}>Volver Atrás</Button>
+      <div className={styles.modernHeader}>
+        <button onClick={onBack} className={styles.backArrowBtn}>❮</button>
+        <h2 className={styles.headerTitle}>CROSSFIT</h2>
       </div>
       <h2 className={styles.title}>EJERCICIOS CROSSFIT</h2>
       {sortedCrossfitExercises.length === 0 ? (

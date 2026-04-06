@@ -1,3 +1,5 @@
+/* src/components/ExerciseList/ExerciseList.module.css */
+
 .exerciseListContainer {
   display: flex;
   flex-direction: column;
@@ -6,25 +8,69 @@
   width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
 }
 
-.buttonContainer { /* Nuevo estilo para el contenedor del botón */
+/* --- NUEVO HEADER MODERNO (Reemplaza a buttonContainer y title) --- */
+.modernHeader {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 10px 0;
   width: 100%;
-  max-width: 800px; /* Mismo max-width que el grid para alinear */
-  text-align: right; /* Alinea el botón a la izquierda dentro de su contenedor */
-  margin-bottom: 20px;
+  max-width: 800px; /* Alineado con tu cardGrid */
+  border-bottom: 1px solid #e0e0e0; /* Línea separadora muy sutil abajo */
 }
 
-.title {
-  color: #333;
-  margin-bottom: 30px;
-  margin-top: 20px;
+.backArrowBtn {
+  background-color: #2a2a2a;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backArrowBtn:hover {
+  background-color: #007bff; /* Color azul de tu app para el hover */
+  color: #fff;
+}
+
+.headerTitle {
+  margin: 0;
+  color: #333; /* Mantuve tu color original */
   font-size: 1.6em;
-  text-align: center;
-  font-family: "Quantico";
+  font-family: "Quantico", sans-serif;
   font-weight: bold;
+  text-transform: uppercase;
   text-shadow: 0 0 black;
-  text-transform: Uppercase;
 }
 
+/* --- ANIMACIÓN DE CARGA (MANCUERNA GIRANDO) --- */
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px;
+  width: 100%;
+}
+
+.spinningDumbbell {
+  font-size: 4em; 
+  display: inline-block;
+  animation: spinBounce 1.2s infinite linear; 
+}
+
+@keyframes spinBounce {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* --- TU GRID ORIGINAL (Intacto para no romper el diseño) --- */
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));

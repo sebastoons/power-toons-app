@@ -7,8 +7,9 @@ import { exerciseTypes } from '../../data/exercisesData';
 const ExerciseTypes = ({ onSelectType, onBack }) => {
   return (
     <div className={styles.exerciseTypesContainer}>
-      <div className={styles.buttonContainer}> {/* Nuevo contenedor para el botón */}
-        <Button onClick={onBack}>Volver</Button>
+      <div className={styles.modernHeader}>
+        <button onClick={onBack} className={styles.backArrowBtn}>❮</button>
+        <h2 className={styles.headerTitle}>SELECCIONA TU ENTRENAMIENTO</h2>
       </div>
       <h2 className={styles.title}>TIPOS DE EJERCICIOS</h2>
       <div className={styles.cardGrid}>

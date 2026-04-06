@@ -95,9 +95,9 @@ const Dashboard = ({ onBack, onStartAICoach }) => {
 
   return (
     <div className={styles.dashboardContainer}>
-      <div className={styles.dashboardHeader}>
-        <Button onClick={onBack} variant="secondary">Volver Atrás</Button>
-        <h1 className={styles.dashboardTitle}>Centro de Comando</h1>
+      <div className={styles.modernHeader}>
+        <button onClick={onBack} className={styles.backArrowBtn}>❮</button>
+        <h1 className={styles.headerTitle}>CENTRO DE COMANDO</h1>
       </div>
 
       <div className={styles.dashboardGrid}>

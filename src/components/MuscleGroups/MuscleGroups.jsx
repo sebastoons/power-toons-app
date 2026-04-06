@@ -7,8 +7,9 @@ import { muscleGroups } from '../../data/exercisesData';
 const MuscleGroups = ({ onSelectGroup, onBack }) => {
   return (
     <div className={styles.muscleGroupsContainer}>
-      <div className={styles.buttonContainer}> {/* Nuevo contenedor para el botón */}
-        <Button onClick={onBack}>Volver Atrás</Button>
+      <div className={styles.modernHeader}>
+        <button onClick={onBack} className={styles.backArrowBtn}>❮</button>
+        <h2 className={styles.headerTitle}>MÚSCULOS A ENTRENAR</h2>
       </div>
       <h2 className={styles.title}>GRUPOS MUSCULARES</h2>
       <div className={styles.cardGrid}>

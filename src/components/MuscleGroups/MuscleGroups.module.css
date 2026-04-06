@@ -40,3 +40,43 @@
     gap: 20px;
   }
 }
+
+/* --- HEADER MODERNO ESTILO APP NATIVA --- */
+.modernHeader {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 10px 0;
+  width: 100%;
+  max-width: 800px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.backArrowBtn {
+  background-color: #007bff; /* Tu color azul perfecto */
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  width: 40px; /* Cuadrado perfecto */
+  height: 40px;
+  border-radius: 8px; /* Bordes suaves */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.backArrowBtn:hover {
+  background-color: #0056b3;
+}
+
+.headerTitle {
+  margin: 0;
+  color: #333;
+  font-size: 1.6em;
+  font-family: "Quantico", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}

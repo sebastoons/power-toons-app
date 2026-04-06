@@ -51,3 +51,8 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); 
   letter-spacing: 1px;
 }
+
+.smallTitle {
+  font-size: 0.85em; /* Ajusta este valor si lo quieres más grande o más chico */
+  left: 15px; /* Lo acercamos un poco más al borde izquierdo */
+}

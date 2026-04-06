@@ -2,28 +2,23 @@
 
 import React, { useState, useEffect } from 'react';
 import Card from '../Shared/Card/Card';
-import Button from '../Shared/Button/Button';
 import styles from './ExerciseList.module.css';
 import { muscleGroups } from '../../data/exercisesData';
-import { fetchExercisesByMuscle } from '../../services/exerciseApi'; // Importamos nuestro nuevo servicio
+import { fetchExercisesByMuscle } from '../../services/exerciseApi'; 
 
 const ExerciseList = ({ muscleGroupId, onSelectExercise, onBack }) => {
   const [exercises, setExercises] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Estado de carga
+  const [isLoading, setIsLoading] = useState(true); 
   
   const muscleGroup = muscleGroups.find(group => group.id === muscleGroupId);
   const title = muscleGroup ? muscleGroup.name : 'EJERCICIOS';
 
   useEffect(() => {
-    // Función asíncrona para buscar los datos cuando se abre la pantalla
     const loadExercises = async () => {
-      setIsLoading(true); // Iniciamos el modo "Cargando"
-      
-      // Llamamos a nuestra API
+      setIsLoading(true); 
       const data = await fetchExercisesByMuscle(muscleGroupId);
-      
       setExercises(data);
-      setIsLoading(false); // Terminamos de cargar
+      setIsLoading(false); 
     };
 
     loadExercises();
@@ -31,15 +26,19 @@ const ExerciseList = ({ muscleGroupId, onSelectExercise, onBack }) => {
 
   return (
     <div className={styles.exerciseListContainer}>
-      <div className={styles.buttonContainer}>
-        <Button onClick={onBack}>Volver Atrás</Button>
+      
+      {/* 💥 NUEVO HEADER MODERNO EN UNA SOLA LÍNEA 💥 */}
+      <div className={styles.modernHeader}>
+        <button onClick={onBack} className={styles.backArrowBtn}>
+          ❮
+        </button>
+        <h2 className={styles.headerTitle}>{title}</h2>
       </div>
-      <h2 className={styles.title}>{title}</h2>
       
       {isLoading ? (
-        // Muestra un mensaje o un "Spinner" mientras baja los datos de internet
+        // 💥 ANIMACIÓN DE MANCUERNA GIRANDO 💥
         <div className={styles.loadingContainer}>
-          <h3 style={{ color: '#001ba3' }}>Cargando ejercicios desde la base de datos... 🏋️‍♂️</h3>
+          <div className={styles.spinningDumbbell}>🏋️‍♂️</div>
         </div>
       ) : exercises.length > 0 ? (
         <div className={styles.cardGrid}>
@@ -47,13 +46,14 @@ const ExerciseList = ({ muscleGroupId, onSelectExercise, onBack }) => {
             <Card
               key={exercise.id}
               title={exercise.name}
-              image={exercise.image || exercise.gif} // Si no hay imagen, usa el gif para la portada
+              image={exercise.image || exercise.gif} 
               onClick={() => onSelectExercise(exercise)}
+              isSmallText={true} // 👈 Activamos la letra pequeña para esta lista
             />
           ))}
         </div>
       ) : (
-        <p>No se encontraron ejercicios para este grupo muscular.</p>
+        <p style={{textAlign: 'center', color: '#fff'}}>No se encontraron ejercicios para este grupo muscular.</p>
       )}
     </div>
   );
