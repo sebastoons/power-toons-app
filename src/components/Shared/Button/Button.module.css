@@ -1,38 +1,103 @@
 .button {
-  padding: 4px 10px;
+  padding: 12px 24px;
   font-family: "Quantico";
   text-transform: uppercase;
   font-weight: bold;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.7em;
-  transition: background-color 0.3s ease;
+  font-size: 0.85em;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
 }
 
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* PRIMARY */
 .primary {
-  background-color: #005dc1;
+  background: linear-gradient(135deg, #005dc1 0%, #0056b3 100%);
   color: white;
+  border-color: #005dc1;
 }
 
 .primary:hover {
-  background-color: #00438a;
+  background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
 }
 
+/* SECONDARY */
 .secondary {
   background-color: #6c757d;
   color: white;
+  border-color: #6c757d;
 }
 
 .secondary:hover {
   background-color: #5a5a5a;
+  border-color: #5a5a5a;
 }
 
+/* DANGER */
 .danger {
-  background-color: #b60012;
+  background: linear-gradient(135deg, #b60012 0%, #8b000c 100%);
   color: white;
+  border-color: #b60012;
 }
 
 .danger:hover {
-  background-color: #73000c;
+  background: linear-gradient(135deg, #8b000c 0%, #600008 100%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .button {
+    padding: 10px 20px;
+    font-size: 0.8em;
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .button {
+    padding: 10px 16px;
+    font-size: 0.75em;
+    width: 100%;
+  }
+}
+
+/* Accesibilidad */
+.button:focus-visible {
+  outline: 3px solid #007bff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .button:hover,
+  .button:active {
+    transform: none;
+  }
 }

@@ -1,20 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
-import './index.css'; // Si tienes estilos globales en index.css
+import './index.css';
 
-// 👇 EL ASESINO DE SERVICE WORKERS EN DESARROLLO 👇
-if (import.meta.env.DEV) {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then((registrations) => {
-      for (let registration of registrations) {
-        registration.unregister();
-        console.log("🧹 Service Worker eliminado en modo desarrollo.");
-      }
+// 🔥 LIMPIEZA AGRESIVA DE SERVICE WORKERS
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    registrations.forEach((registration) => {
+      registration.unregister().then(() => {
+        console.log('✅ SW eliminado:', registration.scope);
+      });
+    });
+  });
+
+  // Limpia caché de navegador
+  if ('caches' in window) {
+    caches.keys().then((cacheNames) => {
+      cacheNames.forEach((cacheName) => {
+        caches.delete(cacheName).then(() => {
+          console.log('✅ Cache eliminado:', cacheName);
+        });
+      });
     });
   }
 }
-// 👆 FIN DEL CÓDIGO DE LIMPIEZA 👆
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

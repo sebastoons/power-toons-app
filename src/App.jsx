@@ -1,5 +1,3 @@
-// src/App.jsx
-
 import React, { useState, useEffect, useCallback } from 'react';
 import Home from './components/Home/Home';
 import ExerciseTypes from './components/ExerciseTypes/ExerciseTypes';
@@ -8,7 +6,10 @@ import ExerciseList from './components/ExerciseList/ExerciseList';
 import CrossfitList from './components/CrossfitList/CrossfitList'; 
 import ExerciseModal from './components/ExerciseModal/ExerciseModal';
 import Dashboard from './components/Dashboard/Dashboard'; 
-import InfoModal from './components/InfoModal/InfoModal'; 
+import InfoModal from './components/InfoModal/InfoModal';
+import Nutrition from './components/Nutrition/Nutrition';
+import NutritionAI from './components/NutritionAI/NutritionAI';
+import FoodPyramid from './components/FoodPyramid/FoodPyramid';
 import './App.css'; 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
 
   const handleSelectCategory = (categoryId) => {
     if (categoryId === 'exercises') setCurrentPage('exerciseTypes');
+    if (categoryId === 'nutrition') setCurrentPage('nutrition');
   };
 
   const handleOpenDashboard = () => setCurrentPage('dashboard');
@@ -32,10 +34,14 @@ const App = () => {
     } else if (typeId === 'crossfit') { 
       setCurrentPage('crossfitList');
       setSelectedMuscleGroup(null); 
-    } else {
-      const typeName = typeId.charAt(0).toUpperCase() + typeId.slice(1);
-      setInfoModalMessage(`Has seleccionado: ${typeName}. Actualmente, no tenemos una lista de ejercicios para este tipo. ¡Estamos trabajando para añadirla pronto!`);
-      setIsInfoModalOpen(true);
+    }
+  };
+
+  const handleSelectNutritionOption = (option) => {
+    if (option === 'aiNutrition') {
+      setCurrentPage('nutritionAI');
+    } else if (option === 'foodPyramid') {
+      setCurrentPage('foodPyramid');
     }
   };
 
@@ -51,9 +57,7 @@ const App = () => {
 
   const handleSelectExercise = (exercise) => setSelectedExercise(exercise);
   const handleCloseModal = () => setSelectedExercise(null);
-  const handleStartAICoach = () => alert("🤖 ¡Próximamente!");
 
-  // Usamos useCallback para que useEffect pueda usar esta función de forma segura
   const handleBack = useCallback(() => {
     if (currentPage === 'exerciseTypes') {
       setCurrentPage('home');
@@ -68,21 +72,22 @@ const App = () => {
       setSelectedExerciseType(null);
     } else if (currentPage === 'dashboard') { 
       setCurrentPage('home');
+    } else if (currentPage === 'nutrition') {
+      setCurrentPage('home');
+    } else if (currentPage === 'nutritionAI') {
+      setCurrentPage('nutrition');
+    } else if (currentPage === 'foodPyramid') {
+      setCurrentPage('nutrition');
     }
   }, [currentPage]);
 
-  // 🔥 MAGIA: INTERCEPTAR EL BOTÓN DE ATRÁS DEL CELULAR 🔥
   useEffect(() => {
-    // 1. Añadimos un registro ficticio al historial del celular
     window.history.pushState({ page: currentPage }, '');
-
-    // 2. Esta función se dispara cuando el usuario toca "Atrás" en su celular
     const handlePopState = () => {
       if (currentPage !== 'home') {
-        handleBack(); // Ejecuta tu lógica de navegación
+        handleBack();
       }
     };
-
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, [currentPage, handleBack]);
@@ -91,18 +96,14 @@ const App = () => {
     <div className="App">
       {isInfoModalOpen && <InfoModal message={infoModalMessage} onClose={handleCloseInfoModal} />}
       {currentPage === 'home' && <Home onSelectCategory={handleSelectCategory} onOpenDashboard={handleOpenDashboard} />}
-      {currentPage === 'dashboard' && <Dashboard onBack={handleBack} onStartAICoach={handleStartAICoach} />}
+      {currentPage === 'dashboard' && <Dashboard onBack={handleBack} onStartAICoach={() => alert("🤖 ¡Próximamente!")} />}
+      {currentPage === 'nutrition' && <Nutrition onSelectOption={handleSelectNutritionOption} onBack={handleBack} />}
+      {currentPage === 'foodPyramid' && <FoodPyramid onBack={handleBack} />}
+      {currentPage === 'nutritionAI' && <NutritionAI onBack={handleBack} />}
       {currentPage === 'exerciseTypes' && <ExerciseTypes onSelectType={handleSelectExerciseType} onBack={handleBack} />}
       {currentPage === 'muscleGroups' && selectedExerciseType === 'gym' && <MuscleGroups onSelectGroup={handleSelectMuscleGroup} onBack={handleBack} />}
-      
-      {currentPage === 'exerciseList' && selectedMuscleGroup && (
-        <ExerciseList muscleGroupId={selectedMuscleGroup} onSelectExercise={handleSelectExercise} onBack={handleBack} />
-      )}
-
-      {currentPage === 'crossfitList' && selectedExerciseType === 'crossfit' && ( 
-        <CrossfitList onSelectExercise={handleSelectExercise} onBack={handleBack} />
-      )}
-
+      {currentPage === 'exerciseList' && selectedMuscleGroup && <ExerciseList muscleGroupId={selectedMuscleGroup} onSelectExercise={handleSelectExercise} onBack={handleBack} />}
+      {currentPage === 'crossfitList' && selectedExerciseType === 'crossfit' && <CrossfitList onSelectExercise={handleSelectExercise} onBack={handleBack} />}
       {selectedExercise && <ExerciseModal exercise={selectedExercise} onClose={handleCloseModal} />}
     </div>
   );

@@ -1,0 +1,335 @@
+.aiContainer {
+  padding: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.backBtn {
+  background-color: #2a2a2a;
+  border: none;
+  color: #fff;
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s;
+}
+
+.backBtn:hover {
+  background-color: #007bff;
+}
+
+.header h2 {
+  margin: 0;
+  color: #333;
+  font-family: "Quantico";
+  text-transform: uppercase;
+  font-size: 1.1em;
+}
+
+.questionCard {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.question {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 20px;
+  font-family: "Quantico";
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1em;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  font-family: monospace;
+}
+
+.input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.optionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.optionBtn {
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  font-family: "Quantico";
+}
+
+.optionBtn:hover {
+  border-color: #007bff;
+  background: #f0f8ff;
+}
+
+.optionBtn.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* RESULTADOS */
+.resultsCard {
+  background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%);
+  border-radius: 12px;
+  padding: 30px;
+  color: white;
+  animation: slideIn 0.3s ease;
+}
+
+.resultsCard h3 {
+  color: #fff;
+  margin-bottom: 20px;
+  font-family: "Quantico";
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.infoBox {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #f9c388;
+}
+
+.infoBox p {
+  margin: 8px 0;
+  font-size: 0.9em;
+  color: #ccc;
+}
+
+.infoBox strong {
+  color: #f9c388;
+}
+
+.macroGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.macroBox {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+.macroLabel {
+  display: block;
+  color: #aaa;
+  font-size: 0.8em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.macroValue {
+  display: block;
+  color: #f9c388;
+  font-size: 1.8em;
+  font-weight: bold;
+  font-family: monospace;
+  margin-bottom: 5px;
+}
+
+.macroSubtext {
+  display: block;
+  color: #777;
+  font-size: 0.75em;
+}
+
+.detailsBox {
+  background: rgba(0, 123, 255, 0.1);
+  border-left: 4px solid #007bff;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.detailsBox p {
+  margin: 8px 0;
+  color: #ccc;
+  font-size: 0.9em;
+}
+
+.detailsBox strong {
+  color: #fff;
+}
+
+/* PLAN DE COMIDAS */
+.mealPlanCard {
+  background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%);
+  border-radius: 12px;
+  padding: 30px;
+  color: white;
+  animation: slideIn 0.3s ease;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.mealPlanCard h3 {
+  color: #fff;
+  margin-bottom: 25px;
+  font-family: "Quantico";
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.mealSection {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.mealTime {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid #f9c388;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mealTime h4 {
+  margin: 0 0 10px 0;
+  color: #fff;
+  font-family: "Quantico";
+  font-size: 0.95em;
+  text-transform: uppercase;
+}
+
+.mealName {
+  color: #f9c388;
+  margin: 10px 0;
+  font-size: 0.95em;
+  font-weight: bold;
+}
+
+.mealMacros {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mealMacros span {
+  color: #aaa;
+  font-size: 0.8em;
+  font-family: monospace;
+}
+
+.totalMacros {
+  background: rgba(0, 123, 255, 0.15);
+  border: 1px solid rgba(0, 123, 255, 0.3);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.totalMacros h4 {
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font-family: "Quantico";
+}
+
+.totalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.totalGrid span {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  border-radius: 6px;
+  color: #ccc;
+  font-size: 0.85em;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* SCROLLBAR PERSONALIZADA */
+.mealPlanCard::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mealPlanCard::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.mealPlanCard::-webkit-scrollbar-thumb {
+  background: rgba(249, 195, 136, 0.5);
+  border-radius: 10px;
+}
+
+.mealPlanCard::-webkit-scrollbar-thumb:hover {
+  background: rgba(249, 195, 136, 0.8);
+}
+
+@media (max-width: 600px) {
+  .aiContainer {
+    padding: 15px;
+  }
+
+  .macroGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .totalGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .optionsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .mealPlanCard {
+    padding: 20px;
+  }
+}

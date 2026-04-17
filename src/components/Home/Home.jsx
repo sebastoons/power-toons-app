@@ -1,5 +1,3 @@
-// src/components/Home/Home.jsx
-
 import React from 'react';
 import Card from '../Shared/Card/Card';
 import styles from './Home.module.css';
@@ -11,8 +9,6 @@ const Home = ({ onSelectCategory, onOpenDashboard }) => {
       <img src="/3.svg" alt="Logo" className={styles.logo} /> 
       
       <div className={styles.cardGrid}>
-        
-        {/* 1. PRIMERO: Los banners de Categorías (Ejercicios) */}
         {exerciseCategories.map(category => (
           <Card
             key={category.id}
@@ -22,13 +18,11 @@ const Home = ({ onSelectCategory, onOpenDashboard }) => {
           />
         ))}
 
-        {/* 2. SEGUNDO: El banner de Mi Progreso */}
         <Card
-          title="📊 MI PROGRESO"
-          image="/img/progreso.jpg" // Recuerda subir tu imagen a public/img/
+          title="MI PROGRESO"
+          image="/img/progreso.jpg"
           onClick={onOpenDashboard} 
         />
-
       </div>
     </div>
   );

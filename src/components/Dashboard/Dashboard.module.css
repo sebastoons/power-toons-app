@@ -1,39 +1,62 @@
 .dashboardContainer {
   padding: 20px;
-  max-width: 1200px; /* Ancho máximo para que no se vea gigante en PC */
+  max-width: 1200px;
   margin: 0 auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #fff;
-  background-color: #9d9d9d; /* Fondo ultra oscuro */
+  background-color: #9d9d9d;
   min-height: 100vh;
 }
 
-.dashboardHeader {
+.modernHeader {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   margin-bottom: 30px;
+  padding: 10px 0;
+  width: 100%;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.dashboardTitle {
-  font-size: 2.2em;
-  font-weight: bold;
-  margin: 0;
-  text-transform: uppercase;
+.backArrowBtn {
+  background-color: #007bff;
+  border: none;
   color: #fff;
-  letter-spacing: 1px;
+  font-size: 1.2em;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.backArrowBtn:hover {
+  background-color: #0056b3;
+}
+
+.headerTitle {
+  margin: 0;
+  color: #333;
+  font-size: 1.4em;
+  font-family: "Quantico";
+  font-weight: bold;
+  text-transform: uppercase;
+  flex: 1;
 }
 
 .dashboardGrid {
   display: grid;
-  grid-template-columns: 1fr; /* Por defecto, una columna para móvil */
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 
-/* COLUMNAS PARA PANTALLAS MÁS GRANDES (Tablet/PC) */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .dashboardGrid {
-    grid-template-columns: 1.2fr 1.8fr; /* La columna derecha (mapa muscular) es más ancha */
+    grid-template-columns: 1.2fr 1.8fr;
   }
 }
 
@@ -50,7 +73,7 @@
 
 /* TARJETAS GENÉRICAS */
 .dashboardCard {
-  background-color: #1f1f1f; /* Fondo de tarjeta gris oscuro */
+  background-color: #1f1f1f;
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -59,42 +82,48 @@
 }
 
 .dashboardCard h3 {
-  font-size: 1em;
-  color: #aaa; /* Color de título secundario */
+  font-size: 0.95em;
+  color: #aaa;
   text-transform: uppercase;
   margin-top: 0;
   margin-bottom: 10px;
   font-family: 'Quantico';
   font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
-/* Tarjeta de Bienvenida */
 .welcomeCard {
   display: flex;
   align-items: center;
   gap: 15px;
-  background-color: #1f1f1f; /* Tono cálido oscuro */
-  border: 1px solid #f9c38844; /* Borde naranja sutil */
+  background-color: #1f1f1f;
+  border: 1px solid #f9c38844;
 }
 
 .welcomeCard .icon {
   font-size: 2em;
+  flex-shrink: 0;
 }
 
 .welcomeCard p {
-  font-size: 1em;
+  font-size: 0.9em;
   color: #fff;
   margin: 0;
   font-family: 'Quantico';
   text-transform: uppercase;
+  line-height: 1.4;
 }
 
-/* Métricas del último entrenamiento */
 .lastWorkoutData {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  font-size: 1.1em;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.workoutDate {
+  font-size: 0.85em;
+  color: #aaa;
+  font-weight: bold;
 }
 
 .workoutMuscle {
@@ -102,100 +131,64 @@
   font-weight: bold;
   color: #fff;
   font-family: 'Quantico';
+  text-transform: uppercase;
 }
 
-.workoutDuration {
-  color: #aaa;
-}
-
-/* Cuadrícula de récords */
 .recordsGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
 
+@media (max-width: 768px) {
+  .recordsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .recordValue {
   font-size: 1.5em;
   font-weight: bold;
-  color: #f9c388; /* Color de acento naranja/amarillo de la imagen */
+  color: #f9c388;
   margin: 0;
   font-family: 'Quantico';
   text-transform: uppercase;
 }
 
 .frequentValue {
-  font-size: 1.3em;
+  font-size: 1.1em;
   font-weight: bold;
   color: #fff;
   margin: 0;
 }
 
 .frequentValue span {
-  font-size: 0.6em;
+  font-size: 0.7em;
   color: #aaa;
-}
-
-/* GRÁFICO DE BARRAS SIMPLE */
-.barChartContainer {
-  display: flex;
-  justify-content: space-between;
-  height: 120px; /* Altura del gráfico */
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.barGroup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 10%;
-}
-
-.barWrapper {
-  height: 100px; /* Altura total de la barra */
-  width: 100%;
-  background-color: #333; /* Fondo de la barra */
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-.barFill {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #f9c388; /* Color de relleno naranja de la imagen */
-  border-radius: 4px;
-  transition: height 0.3s ease;
-}
-
-.barLabel {
-  font-size: 0.8em;
-  color: #aaa;
+  display: block;
   margin-top: 5px;
 }
 
-/* 🔥 ESTILOS PARA LA IA COACH 🔥 */
 .coachAICard {
   display: flex;
   align-items: center;
   gap: 20px;
-  background-color: #1a222c; /* Tono azul oscuro sutil */
-  border: 1px solid #007bff44; /* Borde azul sutil */
+  background-color: #1a222c;
+  border: 1px solid #007bff44;
   padding: 25px;
 }
 
 .coachIcon {
-  font-size: 3em;
+  font-size: 2.5em;
+  flex-shrink: 0;
 }
 
 .coachAICard p {
   color: #aaa;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   text-transform: uppercase;
   font-size: 0.8em;
+  line-height: 1.5;
 }
 
 .coachBtn {
@@ -203,51 +196,57 @@
   margin-top: auto;
 }
 
-/* COLUMNA DERECHA: MAPA MUSCULAR (Inspirado en tu imagen) */
+/* MAPA MUSCULAR - RESPONSIVE */
 .muscleMapCard {
-  height: 100%;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  padding: 20px;
 }
 
 .muscleMapWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  flex-grow: 1; /* Para que el mapa ocupe todo el espacio disponible */
-  margin-top: 20px;
+  gap: 15px;
+  flex-grow: 1;
+  margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+  .muscleMapWrapper {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
 
 .bodyFront, .bodyBack {
   border-radius: 8px;
   padding: 10px;
   display: grid;
-  gap: 10px;
+  gap: 8px;
   position: relative;
-  background-color: #252525; /* Fondo más oscuro para el cuerpo */
+  background-color: #252525;
 }
 
 .muscleGroup {
   padding: 10px;
   border-radius: 4px;
-  font-size: 0.9em;
+  font-size: 0.8em;
   font-weight: bold;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   
-  /* Uso de la variable CSS para la intensidad de color */
   --intensity: 0;
-  background-color: rgba(249, 195, 136, calc(var(--intensity) / 100)); /* Naranja con opacidad */
-  color: rgba(255, 255, 255, calc(0.3 + var(--intensity) / 100)); /* Texto más o menos visible según intensidad */
+  background-color: rgba(249, 195, 136, calc(var(--intensity) / 100));
+  color: rgba(255, 255, 255, calc(0.3 + var(--intensity) / 100));
   
-  /* Pequeño indicador visual */
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 35px;
 }
 
-/* Indicación visual de alta intensidad */
 .muscleGroup::after {
   content: '';
   display: inline-block;
@@ -260,9 +259,123 @@
 }
 
 .mapLegend {
-  font-size: 0.8em;
+  font-size: 0.75em;
   color: #888;
   font-style: italic;
-  margin-top: 20px;
+  margin-top: 15px;
   text-align: center;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .dashboardContainer {
+    padding: 15px;
+  }
+
+  .modernHeader {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .headerTitle {
+    font-size: 1.1em;
+  }
+
+  .backArrowBtn {
+    width: 35px;
+    height: 35px;
+    font-size: 1em;
+  }
+
+  .dashboardCard {
+    padding: 15px;
+  }
+
+  .dashboardCard h3 {
+    font-size: 0.85em;
+  }
+
+  .welcomeCard {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .welcomeCard .icon {
+    font-size: 2.2em;
+  }
+
+  .welcomeCard p {
+    font-size: 0.8em;
+  }
+
+  .coachAICard {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .coachIcon {
+    font-size: 2.2em;
+  }
+
+  .coachAICard p {
+    margin: 0;
+    font-size: 0.75em;
+  }
+
+  .recordValue {
+    font-size: 1.3em;
+  }
+
+  .frequentValue {
+    font-size: 0.95em;
+  }
+
+  .muscleGroup {
+    font-size: 0.7em;
+    padding: 8px;
+    min-height: 32px;
+  }
+
+  .mapLegend {
+    font-size: 0.7em;
+    margin-top: 10px;
+  }
+
+  .dashboardGrid {
+    gap: 15px;
+  }
+
+  .leftColumn {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 400px) {
+  .dashboardContainer {
+    padding: 10px;
+  }
+
+  .headerTitle {
+    font-size: 0.95em;
+  }
+
+  .dashboardCard {
+    padding: 12px;
+  }
+
+  .muscleGroup {
+    font-size: 0.65em;
+    padding: 6px;
+    min-height: 28px;
+  }
+
+  .recordValue {
+    font-size: 1.1em;
+  }
+
+  .welcomeCard p,
+  .coachAICard p {
+    font-size: 0.7em;
+  }
 }
