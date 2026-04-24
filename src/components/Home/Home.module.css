@@ -1,56 +1,32 @@
 .homeContainer {
   display: flex; flex-direction: column; align-items: center;
-  padding: 16px 16px 30px; width: 100%;
-  min-height: 100vh; background: #04080f;
+  padding: 16px 16px 80px; width: 100%;
+  min-height: 100vh; background: var(--bg);
 }
 .logo {
-  max-width: 220px; height: auto;
-  margin: 8px 0 20px;
+  max-width: 220px; height: auto; margin: 8px 0 20px;
   animation: bounceIn .9s ease-out;
-  filter: drop-shadow(0 0 20px rgba(116,185,255,0.3));
+  filter: drop-shadow(0 0 20px rgba(116,185,255,0.25));
 }
 .cardGrid {
   display: grid; grid-template-columns: 1fr;
   gap: 14px; width: 100%; max-width: 480px;
 }
-
-/* Quick Training special card */
 .quickCard {
   border-radius: 14px; overflow: hidden; cursor: pointer;
-  background: linear-gradient(135deg, #0d1f3c 0%, #0a1525 100%);
-  border: 1px solid #1e6fff44;
-  box-shadow: 0 4px 20px rgba(30,111,255,0.15);
-  padding: 20px 20px;
+  background: var(--bg2); border: 1px solid var(--accent2);
+  box-shadow: 0 4px 20px var(--shadow);
+  padding: 18px 20px;
   display: flex; align-items: center; gap: 16px;
-  transition: transform .2s, box-shadow .2s, border-color .2s;
-  position: relative;
+  transition: transform .2s, box-shadow .2s;
 }
-.quickCard::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(30,111,255,0.06), transparent);
-  pointer-events: none;
-}
-.quickCard:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(30,111,255,0.25);
-  border-color: #1e6fff99;
-}
-.quickIcon {
-  font-size: 2.2rem; flex-shrink: 0;
-  filter: drop-shadow(0 0 8px rgba(116,185,255,0.6));
-}
+.quickCard:hover { transform: translateY(-3px); box-shadow: 0 8px 28px var(--shadow); }
+.quickIcon { font-size: 2rem; flex-shrink: 0; }
 .quickInfo { flex: 1; }
-.quickTitle {
-  margin: 0 0 4px; font-size: 1rem; font-weight: 800;
-  letter-spacing: 2px; color: #74b9ff;
-}
-.quickSub { margin: 0; font-size: .72rem; color: #4a6fa5; letter-spacing: .5px; }
-.quickArrow { color: #74b9ff; font-size: 1.5rem; opacity: .7; }
+.quickTitle { margin: 0 0 3px; font-size: .95rem; font-weight: 800; letter-spacing: 2px; color: var(--accent); }
+.quickSub   { margin: 0; font-size: .7rem; color: var(--text2); }
+.quickArrow { color: var(--accent); font-size: 1.5rem; opacity: .7; }
 
 @keyframes bounceIn {
-  0%   { opacity:0; transform:scale(.7); }
-  60%  { transform:scale(1.05); }
-  80%  { transform:scale(.97); }
-  100% { opacity:1; transform:scale(1); }
+  0%{opacity:0;transform:scale(.7)} 60%{transform:scale(1.04)} 80%{transform:scale(.98)} 100%{opacity:1;transform:scale(1)}
 }

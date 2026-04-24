@@ -1,19 +1,19 @@
 .exerciseTypesContainer {
-  display: flex; flex-direction: column; align-items: center;
-  padding: 0 16px 30px; width: 100%; min-height: 100vh; background: #04080f;
+  display:flex; flex-direction:column; align-items:center;
+  padding:0 16px 80px; width:100%; min-height:100vh; background:var(--bg);
 }
 .modernHeader {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 0 12px; width: 100%; max-width: 500px;
-  border-bottom: 1px solid #1e3a5f; margin-bottom: 24px;
+  display:flex; align-items:center; gap:14px;
+  padding:14px 0 12px; width:100%; max-width:500px;
+  border-bottom:1px solid var(--border); margin-bottom:24px;
 }
 .backArrowBtn {
-  background: #0d1f3c; border: 1px solid #1e3a5f; color: #74b9ff;
-  width: 36px; height: 36px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1em; transition: background .2s;
+  background:var(--bg2); border:1px solid var(--border); color:var(--accent);
+  width:36px; height:36px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1em; transition:background .2s;
 }
-.backArrowBtn:hover { background: #1a3a6e; }
-.headerTitle { margin: 0; color: #dce8ff; font-size: 1.05em; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
-.title { color: #4a6fa5; margin: 0 0 22px; font-size: 1em; text-align: center; letter-spacing: 3px; font-weight: 700; }
-.cardGrid { display: grid; grid-template-columns: 1fr; gap: 14px; width: 100%; max-width: 500px; }
+.backArrowBtn:hover { background:var(--bg3); }
+.headerTitle { margin:0; color:var(--text); font-size:1.05em; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+.title { color:var(--text2); margin:0 0 22px; font-size:.9em; text-align:center; letter-spacing:3px; font-weight:700; }
+.cardGrid { display:grid; grid-template-columns:1fr; gap:14px; width:100%; max-width:500px; }

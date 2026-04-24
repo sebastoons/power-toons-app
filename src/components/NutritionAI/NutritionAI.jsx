@@ -1,360 +1,276 @@
-import React, { useState } from 'react';
-import Button from '../Shared/Button/Button';
+import React, { useState, useMemo } from 'react';
 import styles from './NutritionAI.module.css';
 
+/* ── Food database (expanded) ── */
+const FOODS = {
+  desayuno: [
+    { name: 'Avena + plátano + almendras',       cal: 380, p: 14, c: 58, f: 10, goal: ['maintain','gain'], tag: 'Energía sostenida' },
+    { name: 'Huevos revueltos + pan integral',    cal: 340, p: 22, c: 32, f: 12, goal: ['maintain','gain','lose'], tag: 'Alto en proteína' },
+    { name: 'Yogur griego + granola + berries',   cal: 320, p: 20, c: 40, f: 7,  goal: ['maintain','lose'], tag: 'Probióticos' },
+    { name: 'Batido proteico + banana + chia',    cal: 290, p: 28, c: 38, f: 4,  goal: ['gain','maintain'], tag: 'Post-entreno' },
+    { name: 'Tostadas aguacate + huevo pochado',  cal: 350, p: 18, c: 30, f: 16, goal: ['maintain','lose'], tag: 'Grasas saludables' },
+    { name: 'Claras de huevo + avena + fruta',    cal: 260, p: 24, c: 36, f: 3,  goal: ['lose'], tag: 'Déficit calórico' },
+    { name: 'Panqueques de avena + miel',         cal: 420, p: 16, c: 68, f: 8,  goal: ['gain'], tag: 'Superávit' },
+  ],
+  snack: [
+    { name: 'Manzana + mantequilla de maní',      cal: 210, p: 7,  c: 26, f: 9,  goal: ['maintain','gain'], tag: 'Saciante' },
+    { name: 'Batido de proteína + leche',          cal: 200, p: 28, c: 14, f: 4,  goal: ['gain','maintain'], tag: 'Recuperación' },
+    { name: 'Almendras + nueces (30g)',            cal: 180, p: 6,  c: 6,  f: 16, goal: ['maintain','lose'], tag: 'Omega-3' },
+    { name: 'Queso cottage + frutas del bosque',  cal: 160, p: 18, c: 14, f: 2,  goal: ['lose','maintain'], tag: 'Bajo en grasa' },
+    { name: 'Hummus + zanahoria + pepino',         cal: 140, p: 6,  c: 18, f: 5,  goal: ['lose'], tag: 'Fibra' },
+    { name: 'Plátano + 2 huevos duros',            cal: 230, p: 14, c: 28, f: 8,  goal: ['gain'], tag: 'Carbos + proteína' },
+    { name: 'Arroz de tortitas + pavo',            cal: 190, p: 16, c: 22, f: 3,  goal: ['lose','maintain'], tag: 'Ligero' },
+  ],
+  almuerzo: [
+    { name: 'Pollo a la plancha + arroz integral + brócoli', cal: 560, p: 48, c: 58, f: 10, goal: ['maintain','gain'], tag: 'Clásico fitness' },
+    { name: 'Salmón al horno + batata + espárragos',         cal: 580, p: 44, c: 52, f: 18, goal: ['maintain','lose'], tag: 'Omega-3' },
+    { name: 'Carne magra + quinua + ensalada mixta',         cal: 540, p: 52, c: 46, f: 14, goal: ['gain','maintain'], tag: 'Alta proteína' },
+    { name: 'Lentejas guisadas + arroz + verduras',          cal: 490, p: 28, c: 72, f: 6,  goal: ['maintain','lose'], tag: 'Vegetariano' },
+    { name: 'Atún + pasta integral + tomate',                cal: 520, p: 40, c: 64, f: 8,  goal: ['maintain','gain'], tag: 'Energía' },
+    { name: 'Pechuga + papas hervidas + ensalada',           cal: 480, p: 44, c: 46, f: 8,  goal: ['lose','maintain'], tag: 'Equilibrado' },
+    { name: 'Bowl de bowl de arroz + edamame + aguacate',    cal: 600, p: 22, c: 70, f: 22, goal: ['gain'], tag: 'Superávit' },
+  ],
+  once: [
+    { name: 'Té + 2 tostadas integrales + palta',           cal: 250, p: 6,  c: 30, f: 12, goal: ['maintain','lose'], tag: 'Tradicional saludable' },
+    { name: 'Café + galletas de avena caseras',              cal: 220, p: 6,  c: 34, f: 6,  goal: ['maintain'], tag: 'Moderado' },
+    { name: 'Leche + pan integral + queso fresco',           cal: 280, p: 16, c: 32, f: 8,  goal: ['maintain','gain'], tag: 'Calcio + proteína' },
+    { name: 'Fruta de temporada + yogur natural',            cal: 160, p: 8,  c: 26, f: 2,  goal: ['lose'], tag: 'Ligero' },
+    { name: 'Granola + leche descremada',                    cal: 300, p: 10, c: 52, f: 5,  goal: ['maintain','gain'], tag: 'Energía' },
+    { name: 'Queso cottage + miel + nueces',                 cal: 240, p: 18, c: 20, f: 10, goal: ['maintain','lose'], tag: 'Proteína' },
+  ],
+  cena: [
+    { name: 'Pechuga a la plancha + calabacín + batata',     cal: 460, p: 42, c: 44, f: 8,  goal: ['maintain','lose'], tag: 'Digestión liviana' },
+    { name: 'Salmón + brócoli al vapor + arroz blanco',      cal: 480, p: 40, c: 48, f: 14, goal: ['maintain','gain'], tag: 'Omega-3 nocturno' },
+    { name: 'Omelette 3 claras + vegetales salteados',       cal: 320, p: 28, c: 14, f: 14, goal: ['lose'], tag: 'Déficit nocturno' },
+    { name: 'Pavo + ensalada verde + batata',                cal: 440, p: 38, c: 42, f: 8,  goal: ['maintain','lose'], tag: 'Triptófano' },
+    { name: 'Tilapia + verduras asadas + arroz integral',    cal: 490, p: 42, c: 50, f: 8,  goal: ['maintain','gain'], tag: 'Blanco de proteína' },
+    { name: 'Sopa de pollo + pan integral',                  cal: 380, p: 30, c: 40, f: 8,  goal: ['lose','maintain'], tag: 'Reconfortante' },
+    { name: 'Carne magra + quinua + espinaca salteada',      cal: 520, p: 50, c: 44, f: 14, goal: ['gain'], tag: 'Superávit' },
+  ],
+};
+
+const MEAL_LABELS = {
+  desayuno: { icon: '🌅', label: 'DESAYUNO',  pct: 0.25 },
+  snack:    { icon: '🥤', label: 'SNACK',     pct: 0.10 },
+  almuerzo: { icon: '🍽️', label: 'ALMUERZO',  pct: 0.35 },
+  once:     { icon: '☕', label: 'ONCE',      pct: 0.15 },
+  cena:     { icon: '🌙', label: 'CENA',      pct: 0.20 },
+};
+
+const GOALS_MAP = { lose: 'perder', maintain: 'mantener', gain: 'ganar' };
+
+const ACTIVITY = {
+  sedentario:    { label: 'Sedentario',    sub: 'Sin ejercicio',         mult: 1.2   },
+  ligero:        { label: 'Ligero',        sub: '1-3 días/semana',       mult: 1.375 },
+  moderado:      { label: 'Moderado',      sub: '3-5 días/semana',       mult: 1.55  },
+  activo:        { label: 'Activo',        sub: '6-7 días/semana',       mult: 1.725 },
+  muyActivo:     { label: 'Muy activo',    sub: 'Atleta / 2x día',       mult: 1.9   },
+};
+
+const STEPS = { AGE:0, WEIGHT:1, HEIGHT:2, GENDER:3, GOAL:4, ACTIVITY:5, MEAL:6, RESULT:7 };
+
 const NutritionAI = ({ onBack }) => {
-  const [step, setStep] = useState(0);
-  const [userData, setUserData] = useState({
-    age: '',
-    weight: '',
-    height: '',
-    gender: '',
-    goal: '',
-    activityLevel: '',
-  });
-  const [nutritionPlan, setNutritionPlan] = useState(null);
-  const [showMealPlan, setShowMealPlan] = useState(false);
+  const [step, setStep]     = useState(STEPS.AGE);
+  const [data, setData]     = useState({ age:'', weight:'', height:'', gender:'', goal:'', activity:'' });
+  const [mealType, setMealType] = useState('');
+  const [macros, setMacros] = useState(null);
 
-  const mealDatabase = {
-    desayuno: [
-      { name: '🥚 Huevos revueltos con pan integral', calories: 350, protein: 15, carbs: 40, fats: 12 },
-      { name: '🥣 Avena con plátano y miel', calories: 300, protein: 10, carbs: 50, fats: 6 },
-      { name: '🥑 Toast aguacate + huevo', calories: 320, protein: 16, carbs: 35, fats: 14 },
-      { name: '🍌 Smoothie proteico', calories: 280, protein: 20, carbs: 45, fats: 3 },
-      { name: '🧀 Yogur griego con granola', calories: 350, protein: 18, carbs: 42, fats: 8 },
-    ],
-    snack_mañana: [
-      { name: '🍎 Manzana + almendras', calories: 200, protein: 6, carbs: 25, fats: 9 },
-      { name: '🥜 Barrita proteica', calories: 180, protein: 15, carbs: 20, fats: 5 },
-      { name: '🥤 Batido de proteína', calories: 150, protein: 25, carbs: 10, fats: 2 },
-      { name: '🍌 Plátano + mantequilla de maní', calories: 220, protein: 8, carbs: 28, fats: 10 },
-      { name: '🧈 Queso fresco + frutas', calories: 180, protein: 12, carbs: 18, fats: 7 },
-    ],
-    almuerzo: [
-      { name: '🍗 Pollo a la plancha + arroz integral + ensalada', calories: 550, protein: 45, carbs: 55, fats: 12 },
-      { name: '🐟 Salmón + papas + verduras al vapor', calories: 580, protein: 42, carbs: 50, fats: 18 },
-      { name: '🍝 Pasta integral con pechuga de pollo', calories: 520, protein: 40, carbs: 60, fats: 10 },
-      { name: '🥩 Carne magra + quinua + brócoli', calories: 560, protein: 50, carbs: 48, fats: 14 },
-      { name: '🍲 Lentejas con verduras + pan integral', calories: 480, protein: 35, carbs: 65, fats: 8 },
-    ],
-    snack_tarde: [
-      { name: '🍎 Naranja + 10 almendras', calories: 180, protein: 5, carbs: 22, fats: 8 },
-      { name: '🥛 Leche descremada + galletas integrales', calories: 200, protein: 8, carbs: 28, fats: 4 },
-      { name: '🍌 Plátano + proteína en polvo', calories: 170, protein: 20, carbs: 25, fats: 1 },
-      { name: '🧀 Queso descremado + frutas secas', calories: 210, protein: 14, carbs: 24, fats: 8 },
-      { name: '🥒 Hummus + zanahoria + tomate', calories: 160, protein: 6, carbs: 20, fats: 6 },
-    ],
-    cena: [
-      { name: '🍗 Pechuga a la plancha + batata + ensalada', calories: 480, protein: 40, carbs: 45, fats: 10 },
-      { name: '🐟 Tilapia + brócoli + arroz blanco', calories: 450, protein: 38, carbs: 48, fats: 8 },
-      { name: '🥗 Ensalada con atún + pan tostado', calories: 420, protein: 35, carbs: 42, fats: 12 },
-      { name: '🍝 Pasta de garbanzo con tomate y pollo', calories: 470, protein: 42, carbs: 50, fats: 10 },
-      { name: '🥚 Omelette de vegetales + papas', calories: 400, protein: 30, carbs: 44, fats: 11 },
-    ],
+  const set = (k, v) => setData(p => ({ ...p, [k]: v }));
+
+  const calcMacros = (actKey) => {
+    const w = +data.weight, h = +data.height, a = +data.age;
+    const bmr = data.gender === 'male'
+      ? 88.362 + 13.397*w + 4.799*h - 5.677*a
+      : 447.593 + 9.247*w + 3.098*h - 4.330*a;
+    const tdee  = bmr * ACTIVITY[actKey].mult;
+    const delta = data.goal === 'lose' ? -500 : data.goal === 'gain' ? 500 : 0;
+    const cal   = Math.round(tdee + delta);
+    const prot  = Math.round(w * 2.2);
+    const fat   = Math.round((cal * 0.25) / 9);
+    const carb  = Math.round((cal - prot*4 - fat*9) / 4);
+    setMacros({ cal, prot, fat, carb, bmr: Math.round(bmr), tdee: Math.round(tdee) });
+    set('activity', actKey);
+    setStep(STEPS.MEAL);
   };
 
-  const handleInputChange = (field, value) => {
-    setUserData(prev => ({ ...prev, [field]: value }));
-  };
+  const recommendations = useMemo(() => {
+    if (!macros || !mealType) return [];
+    const pool = FOODS[mealType] || [];
+    const targetCal = Math.round(macros.cal * MEAL_LABELS[mealType].pct);
+    const goalKey = GOALS_MAP[data.goal] || 'mantener';
 
-  const calculateNutrition = () => {
-    const weight = parseFloat(userData.weight);
-    const height = parseFloat(userData.height);
-    const age = parseFloat(userData.age);
+    return pool
+      .filter(f => f.goal.includes(data.goal))
+      .sort((a, b) => Math.abs(a.cal - targetCal) - Math.abs(b.cal - targetCal))
+      .slice(0, 3);
+  }, [macros, mealType, data.goal]);
 
-    let bmr = userData.gender === 'male' 
-      ? 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)
-      : 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+  const inputStep = (field, next) => (
+    <div className={styles.card}>
+      <p className={styles.q}>{
+        field === 'age'    ? '¿Cuántos años tienes?' :
+        field === 'weight' ? '¿Cuánto pesas? (kg)' :
+                             '¿Cuánto mides? (cm)'
+      }</p>
+      <input
+        type="number"
+        placeholder={field === 'age' ? 'Ej: 25' : field === 'weight' ? 'Ej: 75' : 'Ej: 175'}
+        value={data[field]}
+        onChange={e => set(field, e.target.value)}
+        className={styles.input}
+      />
+      <button
+        className={styles.nextBtn}
+        onClick={() => data[field] && setStep(next)}
+        disabled={!data[field]}
+      >SIGUIENTE →</button>
+    </div>
+  );
 
-    const activityMultipliers = {
-      sedentary: 1.2,
-      light: 1.375,
-      moderate: 1.55,
-      heavy: 1.725,
-      veryheavy: 1.9
-    };
-
-    let tdee = bmr * (activityMultipliers[userData.activityLevel] || 1.55);
-
-    let calories = tdee;
-    let goalText = 'MANTENER';
-    if (userData.goal === 'lose') { 
-      calories -= 500;
-      goalText = 'PERDER PESO (-500 cal)';
-    }
-    if (userData.goal === 'gain') { 
-      calories += 500;
-      goalText = 'GANAR MASA (+500 cal)';
-    }
-
-    const protein = weight * 2.2;
-    const fats = (calories * 0.25) / 9;
-    const carbs = (calories - protein * 4 - fats * 9) / 4;
-
-    const plan = {
-      calories: Math.round(calories),
-      protein: Math.round(protein),
-      fats: Math.round(fats),
-      carbs: Math.round(carbs),
-      bmr: Math.round(bmr),
-      tdee: Math.round(tdee),
-      goalText: goalText,
-      weight: weight,
-      height: height,
-      age: age,
-      gender: userData.gender === 'male' ? 'Hombre' : 'Mujer',
-      activityLevel: userData.activityLevel
-    };
-
-    setNutritionPlan(plan);
-    setStep(6);
-  };
-
-  const generateMealPlan = () => {
-    if (!nutritionPlan) return null;
-
-    const caloriePerMeal = {
-      desayuno: Math.round(nutritionPlan.calories * 0.25),
-      snack_mañana: Math.round(nutritionPlan.calories * 0.10),
-      almuerzo: Math.round(nutritionPlan.calories * 0.35),
-      snack_tarde: Math.round(nutritionPlan.calories * 0.10),
-      cena: Math.round(nutritionPlan.calories * 0.20),
-    };
-
-    const selectMeal = (mealType) => {
-      const meals = mealDatabase[mealType];
-      const target = caloriePerMeal[mealType];
-      return meals.reduce((prev, curr) => 
-        Math.abs(curr.calories - target) < Math.abs(prev.calories - target) ? curr : prev
-      );
-    };
-
-    return {
-      desayuno: selectMeal('desayuno'),
-      snack_mañana: selectMeal('snack_mañana'),
-      almuerzo: selectMeal('almuerzo'),
-      snack_tarde: selectMeal('snack_tarde'),
-      cena: selectMeal('cena'),
-    };
-  };
-
-  const mealPlan = showMealPlan ? generateMealPlan() : null;
-
-  const questions = [
-    { field: 'age', label: '¿Cuál es tu edad?', type: 'number', placeholder: 'Ej: 25' },
-    { field: 'weight', label: '¿Cuál es tu peso (kg)?', type: 'number', placeholder: 'Ej: 75' },
-    { field: 'height', label: '¿Cuál es tu altura (cm)?', type: 'number', placeholder: 'Ej: 180' },
-  ];
-
-  const options = {
-    gender: ['Hombre', 'Mujer'],
-    goal: ['Perder Peso', 'Mantener', 'Ganar Masa'],
-    activityLevel: ['Sedentario', 'Ligero', 'Moderado', 'Pesado', 'Muy Pesado'],
-  };
+  const optStep = (q, opts, onPick) => (
+    <div className={styles.card}>
+      <p className={styles.q}>{q}</p>
+      <div className={styles.grid2}>
+        {opts.map(o => (
+          <button key={o.id} className={styles.optBtn} onClick={() => onPick(o.id)}>
+            {o.icon && <span>{o.icon}</span>}
+            <span className={styles.optLabel}>{o.label}</span>
+            {o.sub && <span className={styles.optSub}>{o.sub}</span>}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
-    <div className={styles.aiContainer}>
+    <div className={styles.container}>
       <div className={styles.header}>
-        <button onClick={onBack} className={styles.backBtn}>❮</button>
-        <h2>Asesor Nutricional IA</h2>
+        <button
+          className={styles.backBtn}
+          onClick={() => { if (step === STEPS.AGE) onBack(); else setStep(s => s - 1); }}
+        >❮</button>
+        <div>
+          <h2 className={styles.title}>🥗 ASESOR NUTRICIONAL</h2>
+          <div className={styles.progress}>
+            <div className={styles.bar} style={{ width: `${(step / 7) * 100}%` }} />
+          </div>
+        </div>
       </div>
 
-      {step < 3 && (
-        <div className={styles.questionCard}>
-          <p className={styles.question}>{questions[step].label}</p>
-          <input
-            type={questions[step].type}
-            placeholder={questions[step].placeholder}
-            value={userData[questions[step].field]}
-            onChange={(e) => handleInputChange(questions[step].field, e.target.value)}
-            className={styles.input}
-          />
-          <Button onClick={() => userData[questions[step].field] && setStep(step + 1)} variant="primary">
-            Siguiente
-          </Button>
-        </div>
-      )}
+      <div className={styles.body}>
+        {step === STEPS.AGE    && inputStep('age',    STEPS.WEIGHT)}
+        {step === STEPS.WEIGHT && inputStep('weight', STEPS.HEIGHT)}
+        {step === STEPS.HEIGHT && inputStep('height', STEPS.GENDER)}
 
-      {step === 3 && (
-        <div className={styles.questionCard}>
-          <p className={styles.question}>¿Cuál es tu género?</p>
-          <div className={styles.optionsGrid}>
-            {options.gender.map((opt, i) => (
-              <button
-                key={i}
-                className={`${styles.optionBtn} ${userData.gender === opt.toLowerCase() ? styles.active : ''}`}
-                onClick={() => {
-                  handleInputChange('gender', opt.toLowerCase());
-                  setStep(4);
-                }}
-              >
-                {opt}
+        {step === STEPS.GENDER && optStep('¿Cuál es tu sexo biológico?', [
+          { id:'male',   icon:'♂️', label:'HOMBRE' },
+          { id:'female', icon:'♀️', label:'MUJER'  },
+        ], v => { set('gender', v); setStep(STEPS.GOAL); })}
+
+        {step === STEPS.GOAL && optStep('¿Cuál es tu objetivo?', [
+          { id:'lose',     icon:'📉', label:'BAJAR PESO',    sub:'Déficit -500 kcal' },
+          { id:'maintain', icon:'⚖️', label:'MANTENERME',   sub:'Mantenimiento' },
+          { id:'gain',     icon:'📈', label:'GANAR MASA',   sub:'Superávit +500 kcal' },
+        ], v => { set('goal', v); setStep(STEPS.ACTIVITY); })}
+
+        {step === STEPS.ACTIVITY && (
+          <div className={styles.card}>
+            <p className={styles.q}>¿Cuál es tu nivel de actividad?</p>
+            <div className={styles.grid1}>
+              {Object.entries(ACTIVITY).map(([k, v]) => (
+                <button key={k} className={styles.actBtn} onClick={() => calcMacros(k)}>
+                  <span className={styles.optLabel}>{v.label}</span>
+                  <span className={styles.optSub}>{v.sub}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {step === STEPS.MEAL && macros && (
+          <div className={styles.section}>
+            {/* Macros summary */}
+            <div className={styles.macroCard}>
+              <p className={styles.macroTitle}>TUS MACROS DIARIOS</p>
+              <div className={styles.macroRow}>
+                <div className={styles.macroBadge}>
+                  <span className={styles.macroVal}>{macros.cal}</span>
+                  <span className={styles.macroLbl}>kcal</span>
+                </div>
+                <div className={styles.macroBadge}>
+                  <span className={styles.macroVal}>{macros.prot}g</span>
+                  <span className={styles.macroLbl}>proteína</span>
+                </div>
+                <div className={styles.macroBadge}>
+                  <span className={styles.macroVal}>{macros.carb}g</span>
+                  <span className={styles.macroLbl}>carbos</span>
+                </div>
+                <div className={styles.macroBadge}>
+                  <span className={styles.macroVal}>{macros.fat}g</span>
+                  <span className={styles.macroLbl}>grasas</span>
+                </div>
+              </div>
+            </div>
+
+            <p className={styles.q}>¿Qué tiempo de comida necesitas?</p>
+            <div className={styles.mealGrid}>
+              {Object.entries(MEAL_LABELS).map(([k, v]) => (
+                <button
+                  key={k}
+                  className={`${styles.mealBtn} ${mealType===k ? styles.mealActive : ''}`}
+                  onClick={() => { setMealType(k); setStep(STEPS.RESULT); }}
+                >
+                  <span className={styles.mealIcon}>{v.icon}</span>
+                  <span className={styles.mealLabel}>{v.label}</span>
+                  <span className={styles.mealPct}>{Math.round(macros.cal * v.pct)} kcal</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {step === STEPS.RESULT && macros && mealType && (
+          <div className={styles.section}>
+            <div className={styles.resultHeader}>
+              <span>{MEAL_LABELS[mealType].icon}</span>
+              <div>
+                <p className={styles.resultTitle}>{MEAL_LABELS[mealType].label}</p>
+                <p className={styles.resultSub}>
+                  ~{Math.round(macros.cal * MEAL_LABELS[mealType].pct)} kcal objetivo ·{' '}
+                  {data.goal === 'lose' ? 'Pérdida de peso' : data.goal === 'gain' ? 'Ganancia muscular' : 'Mantenimiento'}
+                </p>
+              </div>
+            </div>
+
+            {recommendations.length === 0 ? (
+              <p className={styles.empty}>Sin recomendaciones para este perfil.</p>
+            ) : (
+              recommendations.map((f, i) => (
+                <div key={i} className={`${styles.foodCard} ${i===0 ? styles.foodBest : ''}`}>
+                  {i === 0 && <span className={styles.bestBadge}>⭐ MEJOR OPCIÓN</span>}
+                  <div className={styles.foodHeader}>
+                    <p className={styles.foodName}>{f.name}</p>
+                    <span className={styles.foodTag}>{f.tag}</span>
+                  </div>
+                  <div className={styles.foodMacros}>
+                    <span className={styles.calBadge}>{f.cal} kcal</span>
+                    <span>P: <b>{f.p}g</b></span>
+                    <span>C: <b>{f.c}g</b></span>
+                    <span>G: <b>{f.f}g</b></span>
+                  </div>
+                </div>
+              ))
+            )}
+
+            <div className={styles.actions}>
+              <button className={styles.changeBtn} onClick={() => setStep(STEPS.MEAL)}>← CAMBIAR COMIDA</button>
+              <button className={styles.restartBtn} onClick={() => { setStep(STEPS.AGE); setData({age:'',weight:'',height:'',gender:'',goal:'',activity:''}); setMacros(null); setMealType(''); }}>
+                ↺ NUEVO PERFIL
               </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {step === 4 && (
-        <div className={styles.questionCard}>
-          <p className={styles.question}>¿Cuál es tu objetivo?</p>
-          <div className={styles.optionsGrid}>
-            {options.goal.map((opt, i) => (
-              <button
-                key={i}
-                className={`${styles.optionBtn} ${userData.goal === opt.toLowerCase().replace(' ', '') ? styles.active : ''}`}
-                onClick={() => {
-                  handleInputChange('goal', opt.toLowerCase().replace(' ', ''));
-                  setStep(5);
-                }}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {step === 5 && (
-        <div className={styles.questionCard}>
-          <p className={styles.question}>¿Cuál es tu nivel de actividad?</p>
-          <div className={styles.optionsGrid}>
-            {options.activityLevel.map((opt, i) => (
-              <button
-                key={i}
-                className={`${styles.optionBtn} ${userData.activityLevel === opt.toLowerCase().replace(' ', '') ? styles.active : ''}`}
-                onClick={() => {
-                  handleInputChange('activityLevel', opt.toLowerCase().replace(' ', ''));
-                  calculateNutrition();
-                }}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {step === 6 && nutritionPlan && !showMealPlan && (
-        <div className={styles.resultsCard}>
-          <h3>📊 Tu Plan Nutricional</h3>
-          
-          <div className={styles.infoBox}>
-            <p><strong>Datos:</strong> {nutritionPlan.age} años | {nutritionPlan.weight}kg | {nutritionPlan.height}cm | {nutritionPlan.gender}</p>
-            <p><strong>Objetivo:</strong> {nutritionPlan.goalText}</p>
-          </div>
-
-          <div className={styles.macroGrid}>
-            <div className={styles.macroBox}>
-              <span className={styles.macroLabel}>Calorías Diarias</span>
-              <span className={styles.macroValue}>{nutritionPlan.calories}</span>
-              <span className={styles.macroSubtext}>kcal/día</span>
-            </div>
-            <div className={styles.macroBox}>
-              <span className={styles.macroLabel}>Proteína</span>
-              <span className={styles.macroValue}>{nutritionPlan.protein}g</span>
-              <span className={styles.macroSubtext}>{Math.round((nutritionPlan.protein * 4 / nutritionPlan.calories) * 100)}% calorías</span>
-            </div>
-            <div className={styles.macroBox}>
-              <span className={styles.macroLabel}>Grasas</span>
-              <span className={styles.macroValue}>{nutritionPlan.fats}g</span>
-              <span className={styles.macroSubtext}>{Math.round((nutritionPlan.fats * 9 / nutritionPlan.calories) * 100)}% calorías</span>
-            </div>
-            <div className={styles.macroBox}>
-              <span className={styles.macroLabel}>Carbohidratos</span>
-              <span className={styles.macroValue}>{nutritionPlan.carbs}g</span>
-              <span className={styles.macroSubtext}>{Math.round((nutritionPlan.carbs * 4 / nutritionPlan.calories) * 100)}% calorías</span>
             </div>
           </div>
-
-          <div className={styles.detailsBox}>
-            <p><strong>TMB:</strong> {nutritionPlan.bmr} kcal (calorías en reposo)</p>
-            <p><strong>TDEE:</strong> {nutritionPlan.tdee} kcal (calorías totales diarias)</p>
-          </div>
-
-          <Button onClick={() => setShowMealPlan(true)} variant="primary">
-            Ver Plan de Comidas
-          </Button>
-          <Button onClick={() => { setStep(0); setNutritionPlan(null); }} variant="secondary">
-            Recalcular
-          </Button>
-        </div>
-      )}
-
-      {step === 6 && nutritionPlan && showMealPlan && mealPlan && (
-        <div className={styles.mealPlanCard}>
-          <h3>🍽️ Plan de Comidas Personalizado</h3>
-          
-          <div className={styles.mealSection}>
-            <div className={styles.mealTime}>
-              <h4>🌅 DESAYUNO ({mealPlan.desayuno.calories} cal)</h4>
-              <p className={styles.mealName}>{mealPlan.desayuno.name}</p>
-              <div className={styles.mealMacros}>
-                <span>P: {mealPlan.desayuno.protein}g</span>
-                <span>G: {mealPlan.desayuno.fats}g</span>
-                <span>C: {mealPlan.desayuno.carbs}g</span>
-              </div>
-            </div>
-
-            <div className={styles.mealTime}>
-              <h4>🥤 SNACK MAÑANA ({mealPlan.snack_mañana.calories} cal)</h4>
-              <p className={styles.mealName}>{mealPlan.snack_mañana.name}</p>
-              <div className={styles.mealMacros}>
-                <span>P: {mealPlan.snack_mañana.protein}g</span>
-                <span>G: {mealPlan.snack_mañana.fats}g</span>
-                <span>C: {mealPlan.snack_mañana.carbs}g</span>
-              </div>
-            </div>
-
-            <div className={styles.mealTime}>
-              <h4>🍽️ ALMUERZO ({mealPlan.almuerzo.calories} cal)</h4>
-              <p className={styles.mealName}>{mealPlan.almuerzo.name}</p>
-              <div className={styles.mealMacros}>
-                <span>P: {mealPlan.almuerzo.protein}g</span>
-                <span>G: {mealPlan.almuerzo.fats}g</span>
-                <span>C: {mealPlan.almuerzo.carbs}g</span>
-              </div>
-            </div>
-
-            <div className={styles.mealTime}>
-              <h4>☕ SNACK TARDE ({mealPlan.snack_tarde.calories} cal)</h4>
-              <p className={styles.mealName}>{mealPlan.snack_tarde.name}</p>
-              <div className={styles.mealMacros}>
-                <span>P: {mealPlan.snack_tarde.protein}g</span>
-                <span>G: {mealPlan.snack_tarde.fats}g</span>
-                <span>C: {mealPlan.snack_tarde.carbs}g</span>
-              </div>
-            </div>
-
-            <div className={styles.mealTime}>
-              <h4>🌙 CENA ({mealPlan.cena.calories} cal)</h4>
-              <p className={styles.mealName}>{mealPlan.cena.name}</p>
-              <div className={styles.mealMacros}>
-                <span>P: {mealPlan.cena.protein}g</span>
-                <span>G: {mealPlan.cena.fats}g</span>
-                <span>C: {mealPlan.cena.carbs}g</span>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.totalMacros}>
-            <h4>Total Diario</h4>
-            <div className={styles.totalGrid}>
-              <span>Calorías: {mealPlan.desayuno.calories + mealPlan.snack_mañana.calories + mealPlan.almuerzo.calories + mealPlan.snack_tarde.calories + mealPlan.cena.calories} kcal</span>
-              <span>Proteína: {mealPlan.desayuno.protein + mealPlan.snack_mañana.protein + mealPlan.almuerzo.protein + mealPlan.snack_tarde.protein + mealPlan.cena.protein}g</span>
-              <span>Grasas: {mealPlan.desayuno.fats + mealPlan.snack_mañana.fats + mealPlan.almuerzo.fats + mealPlan.snack_tarde.fats + mealPlan.cena.fats}g</span>
-              <span>Carbos: {mealPlan.desayuno.carbs + mealPlan.snack_mañana.carbs + mealPlan.almuerzo.carbs + mealPlan.snack_tarde.carbs + mealPlan.cena.carbs}g</span>
-            </div>
-          </div>
-
-          <Button onClick={() => setShowMealPlan(false)} variant="secondary">
-            Volver a Macros
-          </Button>
-          <Button onClick={() => { setStep(0); setNutritionPlan(null); setShowMealPlan(false); }} variant="primary">
-            Recalcular Plan
-          </Button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
