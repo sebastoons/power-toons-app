@@ -11,7 +11,6 @@ const Home = ({ onSelectCategory, onOpenDashboard, onQuickTraining }) => {
       <div className={styles.cardGrid}>
         {/* Quick Training AI — destacado */}
         <div className={styles.quickCard} onClick={onQuickTraining}>
-          <span className={styles.quickIcon}>⚡</span>
           <div className={styles.quickInfo}>
             <p className={styles.quickTitle}>ENTRENAMIENTO RÁPIDO</p>
             <p className={styles.quickSub}>IA · Plan personalizado en segundos</p>

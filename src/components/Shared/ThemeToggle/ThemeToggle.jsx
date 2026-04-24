@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './ThemeToggle.module.css';
 
 const ThemeToggle = () => {
-  const [dark, setDark] = useState(() => localStorage.getItem('theme') !== 'light');
+  const [dark, setDark] = useState(() => localStorage.getItem('theme') === 'dark');
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
@@ -15,7 +15,7 @@ const ThemeToggle = () => {
       onClick={() => setDark(d => !d)}
       title={dark ? 'Modo claro' : 'Modo oscuro'}
     >
-      {dark ? '☀️' : '🌙'}
+      {dark ? '◑' : '◐'}
     </button>
   );
 };

@@ -150,7 +150,7 @@ const NutritionAI = ({ onBack }) => {
           onClick={() => { if (step === STEPS.AGE) onBack(); else setStep(s => s - 1); }}
         >❮</button>
         <div>
-          <h2 className={styles.title}>🥗 ASESOR NUTRICIONAL</h2>
+          <h2 className={styles.title}>ASESOR NUTRICIONAL</h2>
           <div className={styles.progress}>
             <div className={styles.bar} style={{ width: `${(step / 7) * 100}%` }} />
           </div>
@@ -163,14 +163,14 @@ const NutritionAI = ({ onBack }) => {
         {step === STEPS.HEIGHT && inputStep('height', STEPS.GENDER)}
 
         {step === STEPS.GENDER && optStep('¿Cuál es tu sexo biológico?', [
-          { id:'male',   icon:'♂️', label:'HOMBRE' },
-          { id:'female', icon:'♀️', label:'MUJER'  },
+          { id:'male',   label:'HOMBRE' },
+          { id:'female', label:'MUJER'  },
         ], v => { set('gender', v); setStep(STEPS.GOAL); })}
 
         {step === STEPS.GOAL && optStep('¿Cuál es tu objetivo?', [
-          { id:'lose',     icon:'📉', label:'BAJAR PESO',    sub:'Déficit -500 kcal' },
-          { id:'maintain', icon:'⚖️', label:'MANTENERME',   sub:'Mantenimiento' },
-          { id:'gain',     icon:'📈', label:'GANAR MASA',   sub:'Superávit +500 kcal' },
+          { id:'lose',     label:'BAJAR PESO',  sub:'Déficit -500 kcal' },
+          { id:'maintain', label:'MANTENERME',  sub:'Mantenimiento' },
+          { id:'gain',     label:'GANAR MASA',  sub:'Superávit +500 kcal' },
         ], v => { set('goal', v); setStep(STEPS.ACTIVITY); })}
 
         {step === STEPS.ACTIVITY && (
@@ -247,7 +247,7 @@ const NutritionAI = ({ onBack }) => {
             ) : (
               recommendations.map((f, i) => (
                 <div key={i} className={`${styles.foodCard} ${i===0 ? styles.foodBest : ''}`}>
-                  {i === 0 && <span className={styles.bestBadge}>⭐ MEJOR OPCIÓN</span>}
+                  {i === 0 && <span className={styles.bestBadge}>MEJOR OPCIÓN</span>}
                   <div className={styles.foodHeader}>
                     <p className={styles.foodName}>{f.name}</p>
                     <span className={styles.foodTag}>{f.tag}</span>

@@ -18,31 +18,30 @@
 .stepActive { color:var(--accent); border-color:var(--accent); background:rgba(116,185,255,0.08); }
 
 .body { flex:1; overflow-y:auto; padding:20px 18px 80px; max-width:560px; width:100%; margin:0 auto; }
-.section { animation:fadeIn .25s ease; }
+.section { animation:fadeIn .25s ease; display:flex; flex-direction:column; gap:14px; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
-.question { font-size:1.1rem; font-weight:800; color:var(--text); letter-spacing:1px; margin:0 0 6px; }
-.subq { font-size:.72rem; color:var(--text2); margin:0 0 18px; }
+.question { font-size:1.1rem; font-weight:800; color:var(--text); letter-spacing:1px; margin:0; }
+.subq { font-size:.72rem; color:var(--text2); margin:0; }
 
-.typeGrid { display:flex; flex-direction:column; gap:11px; margin-bottom:20px; }
+.typeGrid { display:flex; flex-direction:column; gap:10px; }
 .typeCard {
-  display:flex; align-items:center; gap:14px;
+  display:flex; flex-direction:column; gap:3px;
   background:var(--bg2); border:1px solid var(--border);
-  border-radius:14px; padding:15px 18px; cursor:pointer;
-  transition:all .2s; text-align:left;
+  border-radius:14px; padding:16px 18px; cursor:pointer;
+  transition:all .2s; text-align:left; font-family:inherit;
 }
 .typeCard:hover { border-color:var(--accent); background:var(--bg3); transform:translateX(3px); }
 .typeSelected { border-color:var(--accent)!important; background:var(--bg3)!important; }
-.typeIcon { font-size:2rem; flex-shrink:0; }
 .typeLabel { font-size:.9rem; font-weight:800; color:var(--text); letter-spacing:2px; display:block; }
-.typeDesc { font-size:.68rem; color:var(--text2); display:block; margin-top:2px; }
+.typeDesc { font-size:.68rem; color:var(--text2); display:block; }
 
-.muscleGrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; margin-bottom:20px; }
+.muscleGrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; }
 .muscleChip {
-  display:flex; align-items:center; gap:7px;
   background:var(--bg2); border:1px solid var(--border);
   border-radius:10px; padding:10px 12px; cursor:pointer;
-  font-size:.7rem; font-weight:700; color:var(--text2); transition:all .18s;
+  font-size:.7rem; font-weight:700; color:var(--text2);
+  transition:all .18s; font-family:inherit; text-align:center;
 }
 .muscleChip:hover { border-color:var(--accent); color:var(--text); }
 .muscleSelected { border-color:var(--accent)!important; color:var(--accent)!important; background:var(--bg3)!important; }
@@ -52,16 +51,16 @@
   background:linear-gradient(135deg,var(--accent2),#0d4fd4);
   border:none; border-radius:12px;
   color:#fff; font-size:.82rem; font-weight:800; letter-spacing:2px;
-  cursor:pointer; transition:opacity .2s; margin-top:4px; font-family:inherit;
+  cursor:pointer; transition:opacity .2s; font-family:inherit;
 }
 .nextBtn:hover { opacity:.9; }
 .nextBtn:disabled { opacity:.5; cursor:not-allowed; }
 
-.timeGrid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:20px; }
+.timeGrid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
 .timeCard {
   display:flex; flex-direction:column; align-items:center; gap:3px;
   background:var(--bg2); border:1px solid var(--border);
-  border-radius:14px; padding:16px 8px; cursor:pointer; transition:all .2s;
+  border-radius:14px; padding:16px 8px; cursor:pointer; transition:all .2s; font-family:inherit;
 }
 .timeCard:hover { border-color:var(--accent); background:var(--bg3); }
 .timeSelected { border-color:var(--accent)!important; background:var(--bg3)!important; }
@@ -69,32 +68,32 @@
 .timeDesc  { font-size:.63rem; color:var(--text2); letter-spacing:1px; }
 .timeEx    { font-size:.6rem; color:var(--accent); margin-top:2px; }
 
-.goalGrid { display:flex; flex-direction:column; gap:10px; margin-bottom:16px; }
+.goalGrid { display:flex; flex-direction:column; gap:10px; }
 .goalCard {
-  display:grid; grid-template-columns:auto 1fr; column-gap:12px; row-gap:2px;
+  display:flex; flex-direction:column; gap:3px;
   background:var(--bg2); border:1px solid var(--border);
-  border-radius:14px; padding:14px 16px; cursor:pointer; transition:all .2s; text-align:left;
+  border-radius:14px; padding:14px 16px; cursor:pointer; transition:all .2s;
+  text-align:left; font-family:inherit;
 }
 .goalCard:hover { border-color:var(--accent); background:var(--bg3); }
 .goalSelected { border-color:var(--accent)!important; background:var(--bg3)!important; }
-.goalIcon { font-size:1.5rem; grid-row:span 2; align-self:center; }
-.goalLabel { font-size:.88rem; font-weight:800; color:var(--text); letter-spacing:1.5px; }
+.goalLabel  { font-size:.88rem; font-weight:800; color:var(--text); letter-spacing:1.5px; }
 .goalDetail { font-size:.68rem; color:var(--accent); font-weight:700; }
-.goalNote { grid-column:2/-1; font-size:.63rem; color:var(--text2); margin-top:2px; }
+.goalNote   { font-size:.63rem; color:var(--text2); margin-top:2px; }
 
-.loadRow { display:flex; align-items:center; gap:10px; padding:12px 0; }
+.loadRow { display:flex; align-items:center; gap:10px; padding:6px 0; color:var(--text2); font-size:.78rem; }
 .spin { width:20px; height:20px; border:2px solid var(--bg3); border-top-color:var(--accent); border-radius:50%; animation:sp .7s linear infinite; }
 @keyframes sp { to{transform:rotate(360deg)} }
 
-.planHeader { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px; }
+.planHeader { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
 .planTitle { margin:0 0 3px; font-size:1rem; font-weight:800; color:var(--accent); letter-spacing:2px; }
 .planSub { margin:0; font-size:.67rem; color:var(--text2); }
 .planBadge { display:flex; flex-direction:column; align-items:flex-end; gap:3px; flex-shrink:0; }
 .badgeSets,.badgeReps { font-size:.7rem; font-weight:700; color:var(--accent); }
 .badgeRest { font-size:.62rem; color:var(--text2); }
-.planNote { font-size:.72rem; color:var(--text2); margin:0 0 16px; padding:8px 12px; background:var(--bg2); border-radius:8px; border-left:3px solid var(--accent2); }
+.planNote { font-size:.72rem; color:var(--text2); margin:0; padding:8px 12px; background:var(--bg2); border-radius:8px; border-left:3px solid var(--accent2); }
 
-.planList { display:flex; flex-direction:column; gap:6px; margin-bottom:18px; }
+.planList { display:flex; flex-direction:column; gap:6px; }
 .planItem {
   display:flex; align-items:center; gap:12px;
   background:var(--bg2); border:1px solid var(--border);

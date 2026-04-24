@@ -13,29 +13,19 @@
 .backBtn:hover { background:var(--bg3); }
 .headerTitle { margin:0; font-size:.95rem; font-weight:800; color:var(--accent); letter-spacing:2px; }
 
-.body {
-  flex:1; overflow-y:auto; padding:18px 18px 80px;
-  max-width:560px; width:100%; margin:0 auto;
-  display:flex; flex-direction:column; gap:14px;
-}
+.body { flex:1; overflow-y:auto; padding:18px 18px 80px; max-width:560px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
 
 /* Stats row */
 .statsRow { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
 .statCard {
-  display:flex; flex-direction:column; align-items:center; gap:3px;
-  background:var(--bg2); border:1px solid var(--border); border-radius:12px;
-  padding:14px 8px;
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:14px 8px;
 }
-.statIcon { font-size:1.2rem; }
-.statVal { font-size:1.1rem; font-weight:800; color:var(--accent); font-family:monospace; line-height:1.2; }
-.statVal small { font-size:.6rem; color:var(--text2); }
+.statVal { font-size:1.05rem; font-weight:800; color:var(--accent); font-family:monospace; line-height:1.2; }
 .statLbl { font-size:.52rem; color:var(--text2); font-weight:700; letter-spacing:1px; text-align:center; }
 
 /* Generic card */
-.card {
-  background:var(--bg2); border:1px solid var(--border); border-radius:14px;
-  padding:16px 14px;
-}
+.card { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:16px 14px; }
 .cardTitle { margin:0 0 12px; font-size:.72rem; font-weight:800; color:var(--text2); letter-spacing:2px; }
 
 /* Weekly chart */
@@ -43,12 +33,26 @@
 .dayCol { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; height:100%; }
 .dayCount { font-size:.55rem; color:var(--accent); font-weight:700; min-height:10px; }
 .barWrap { flex:1; width:100%; display:flex; align-items:flex-end; }
-.dayBar {
-  width:100%; border-radius:4px 4px 0 0;
-  background:var(--bg3); transition:height .4s ease; min-height:4px;
-}
+.dayBar { width:100%; border-radius:4px 4px 0 0; background:var(--bg3); transition:height .4s ease; min-height:4px; }
 .dayBarActive { background:linear-gradient(to top, var(--accent2), var(--accent)); }
 .dayLabel { font-size:.58rem; color:var(--text2); font-weight:700; }
+
+/* Last routine */
+.routineMeta { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.routineDate { font-size:.7rem; color:var(--text2); }
+.routineProgress { font-size:.7rem; color:var(--accent); font-weight:700; }
+.routineProgressWrap { height:4px; background:var(--bg3); border-radius:2px; overflow:hidden; margin-bottom:10px; }
+.routineProgressBar { height:100%; background:linear-gradient(to right, var(--accent2), var(--accent)); border-radius:2px; transition:width .4s ease; }
+.routineList { display:flex; flex-direction:column; gap:5px; }
+.routineItem { display:flex; align-items:center; gap:8px; padding:5px 0; border-bottom:1px solid var(--border); }
+.routineItem:last-child { border-bottom:none; }
+.routineItemDone { opacity:.5; }
+.routineCheck { font-size:.7rem; color:var(--accent); font-weight:800; min-width:14px; }
+.routineItemDone .routineCheck { color:var(--accent2); }
+.routineExName { flex:1; font-size:.68rem; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.routineItemDone .routineExName { text-decoration:line-through; color:var(--text2); }
+.routineMuscle { font-size:.58rem; color:var(--text2); flex-shrink:0; }
+.routineMore { margin:6px 0 0; font-size:.63rem; color:var(--text2); text-align:center; }
 
 /* Top exercises */
 .exRow { display:flex; align-items:center; gap:10px; padding:6px 0; border-bottom:1px solid var(--border); }
@@ -60,29 +64,20 @@
 .exBar { height:100%; background:linear-gradient(to right, var(--accent2), var(--accent)); border-radius:2px; transition:width .5s ease; }
 .exCount { font-size:.65rem; color:var(--text2); font-family:monospace; min-width:20px; text-align:right; }
 
-/* Recent history */
-.recentRow {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:8px 0; border-bottom:1px solid var(--border);
-}
+/* Recent */
+.recentRow { display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); }
 .recentRow:last-child { border-bottom:none; }
 .recentInfo { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; }
 .recentName { font-size:.68rem; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .recentDate { font-size:.6rem; color:var(--text2); }
 .recentStats { display:flex; gap:5px; flex-wrap:wrap; margin-left:8px; }
-.recentBadge {
-  font-size:.6rem; font-weight:700; color:var(--accent);
-  background:rgba(116,185,255,0.1); border:1px solid var(--border);
-  border-radius:6px; padding:2px 7px; white-space:nowrap;
-}
+.recentBadge { font-size:.6rem; font-weight:700; color:var(--accent); background:rgba(116,185,255,0.1); border:1px solid var(--border); border-radius:6px; padding:2px 7px; white-space:nowrap; }
 
-/* Empty state */
-.emptyState { display:flex; flex-direction:column; align-items:center; gap:12px; padding:60px 20px; text-align:center; }
-.emptyIcon { font-size:3rem; }
+/* Empty */
+.emptyState { display:flex; flex-direction:column; align-items:center; gap:10px; padding:60px 20px; text-align:center; }
 .emptyTitle { margin:0; font-size:.9rem; font-weight:800; color:var(--accent); letter-spacing:2px; }
 .emptySub { margin:0; font-size:.7rem; color:var(--text2); line-height:1.5; max-width:260px; }
 
 @media (max-width:400px) {
   .statsRow { grid-template-columns:repeat(2,1fr); }
-  .statCard { padding:12px 6px; }
 }

@@ -8,6 +8,9 @@
   animation: bounceIn .9s ease-out;
   filter: drop-shadow(0 0 20px rgba(116,185,255,0.25));
 }
+:global([data-theme="dark"]) .logo {
+  filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(12,192,223,0.35));
+}
 .cardGrid {
   display: grid; grid-template-columns: 1fr;
   gap: 14px; width: 100%; max-width: 480px;
@@ -21,7 +24,6 @@
   transition: transform .2s, box-shadow .2s;
 }
 .quickCard:hover { transform: translateY(-3px); box-shadow: 0 8px 28px var(--shadow); }
-.quickIcon { font-size: 2rem; flex-shrink: 0; }
 .quickInfo { flex: 1; }
 .quickTitle { margin: 0 0 3px; font-size: .95rem; font-weight: 800; letter-spacing: 2px; color: var(--accent); }
 .quickSub   { margin: 0; font-size: .7rem; color: var(--text2); }

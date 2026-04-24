@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
 import Home from './components/Home/Home';
 import ExerciseTypes from './components/ExerciseTypes/ExerciseTypes';
 import GymMode from './components/GymMode/GymMode';
-import BodyMap from './components/BodyMap/BodyMap';
-import RoutineBuilder from './components/RoutineBuilder/RoutineBuilder';
 import ExerciseList from './components/ExerciseList/ExerciseList';
 import CrossfitList from './components/CrossfitList/CrossfitList';
 import ExerciseModal from './components/ExerciseModal/ExerciseModal';
@@ -15,15 +13,24 @@ import QuickTraining from './components/QuickTraining/QuickTraining';
 import ThemeToggle from './components/Shared/ThemeToggle/ThemeToggle';
 import './App.css';
 
+const BodyMap        = lazy(() => import('./components/BodyMap/BodyMap'));
+const RoutineBuilder = lazy(() => import('./components/RoutineBuilder/RoutineBuilder'));
+
+const Fallback = () => (
+  <div style={{ display:'flex', alignItems:'center', justifyContent:'center', minHeight:'100vh', background:'var(--bg)', color:'var(--text2)', fontSize:'.8rem', letterSpacing:'2px' }}>
+    CARGANDO...
+  </div>
+);
+
 const App = () => {
-  const [currentPage, setCurrentPage]           = useState('home');
+  const [currentPage, setCurrentPage]                   = useState('home');
   const [selectedExerciseType, setSelectedExerciseType] = useState(null);
   const [selectedMuscleGroup, setSelectedMuscleGroup]   = useState(null);
   const [selectedExercise, setSelectedExercise]         = useState(null);
   const [isInfoModalOpen, setIsInfoModalOpen]           = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('theme') || 'dark';
+    const saved = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', saved);
   }, []);
 
@@ -40,7 +47,7 @@ const App = () => {
 
   const handleSelectExerciseType = (id) => {
     setSelectedExerciseType(id);
-    if (id === 'gym')      setCurrentPage('gymMode');
+    if (id === 'gym')           setCurrentPage('gymMode');
     else if (id === 'crossfit') { setCurrentPage('crossfitList'); setSelectedMuscleGroup(null); }
   };
 
@@ -71,10 +78,9 @@ const App = () => {
     };
     const next = map[currentPage];
     if (!next) return;
-    if (currentPage === 'gymMode')       setSelectedExerciseType(null);
-    if (currentPage === 'muscleGroups')  { /* keep exerciseType for gymMode context */ }
-    if (currentPage === 'exerciseList')  setSelectedMuscleGroup(null);
-    if (currentPage === 'crossfitList')  setSelectedExerciseType(null);
+    if (currentPage === 'gymMode')      setSelectedExerciseType(null);
+    if (currentPage === 'exerciseList') setSelectedMuscleGroup(null);
+    if (currentPage === 'crossfitList') setSelectedExerciseType(null);
     setCurrentPage(next);
   }, [currentPage]);
 
@@ -98,10 +104,14 @@ const App = () => {
       {currentPage === 'exerciseTypes'  && <ExerciseTypes onSelectType={handleSelectExerciseType} onBack={handleBack} />}
       {currentPage === 'gymMode'        && <GymMode onLibre={handleGymLibre} onRutina={handleGymRutina} onBack={handleBack} />}
       {currentPage === 'muscleGroups'   && (
-        <BodyMap onSelectGroup={handleSelectMuscleGroup} onSelectExercise={handleSelectExercise} onBack={handleBack} />
+        <Suspense fallback={<Fallback />}>
+          <BodyMap onSelectGroup={handleSelectMuscleGroup} onSelectExercise={handleSelectExercise} onBack={handleBack} />
+        </Suspense>
       )}
       {currentPage === 'routineBuilder' && (
-        <RoutineBuilder onSelectExercise={handleSelectExercise} onBack={handleBack} />
+        <Suspense fallback={<Fallback />}>
+          <RoutineBuilder onSelectExercise={handleSelectExercise} onBack={handleBack} />
+        </Suspense>
       )}
       {currentPage === 'exerciseList'   && selectedMuscleGroup && (
         <ExerciseList muscleGroupId={selectedMuscleGroup} onSelectExercise={handleSelectExercise} onBack={handleBack} />
