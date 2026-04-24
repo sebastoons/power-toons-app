@@ -44,8 +44,8 @@ const RoutineBuilder = ({ onSelectExercise, onBack }) => {
     );
   };
 
-  const toggleDone  = id => setRoutine(p => p.map(r => r.id === id ? { ...r, done: !r.done } : r));
-  const resetDone   = () => setRoutine(p => p.map(r => ({ ...r, done: false })));
+  const toggleDone = id => setRoutine(p => p.map(r => r.id === id ? { ...r, done: !r.done } : r));
+  const resetDone  = () => setRoutine(p => p.map(r => ({ ...r, done: false })));
 
   const moveUp = i => {
     if (i === 0) return;
@@ -56,6 +56,22 @@ const RoutineBuilder = ({ onSelectExercise, onBack }) => {
       if (i >= p.length - 1) return p;
       const a = [...p]; [a[i], a[i+1]] = [a[i+1], a[i]]; return a;
     });
+  };
+
+  const saveAndExit = () => {
+    const entry = {
+      date: new Date().toISOString(),
+      muscles: selectedMuscles,
+      exercises: routine.map(r => ({ name: r.name, muscleName: r.muscleName, done: r.done })),
+      doneCount: routine.filter(r => r.done).length,
+      totalCount: routine.length,
+    };
+    try {
+      const history = JSON.parse(localStorage.getItem('routineHistory') || '[]');
+      history.unshift(entry);
+      localStorage.setItem('routineHistory', JSON.stringify(history.slice(0, 20)));
+    } catch {}
+    onBack();
   };
 
   const goBack = () => {
@@ -76,55 +92,48 @@ const RoutineBuilder = ({ onSelectExercise, onBack }) => {
       <div className={styles.header}>
         <button onClick={goBack} className={styles.backBtn}>❮</button>
         <div className={styles.headerInfo}>
-          <h2 className={styles.headerTitle}>📋 RUTINA</h2>
+          <h2 className={styles.headerTitle}>RUTINA</h2>
           {step === STEP.EXERCISES && routine.length > 0 && (
             <span className={styles.badge}>{routine.length} selec.</span>
           )}
           {step === STEP.ROUTINE && (
-            <span className={styles.badge}>{doneCount}/{routine.length} ✓</span>
+            <span className={styles.badge}>{doneCount}/{routine.length}</span>
           )}
         </div>
       </div>
 
       <div className={styles.body}>
 
-        {/* ── STEP 0: MUSCLE SELECTION ── */}
+        {/* STEP 0 — Muscle selection */}
         {step === STEP.MUSCLES && (
           <div className={styles.section}>
             <p className={styles.q}>¿Qué zonas musculares vas a entrenar?</p>
             <div className={styles.muscleGrid}>
               {muscleGroups.map(m => (
-                <button
-                  key={m.id}
+                <button key={m.id}
                   className={`${styles.chip} ${selectedMuscles.includes(m.id) ? styles.chipActive : ''}`}
-                  onClick={() => toggleMuscle(m.id)}
-                >
+                  onClick={() => toggleMuscle(m.id)}>
                   {m.name}
                 </button>
               ))}
             </div>
-            <button
-              className={styles.primaryBtn}
-              onClick={loadExercises}
-              disabled={selectedMuscles.length === 0 || loading}
-            >
+            <button className={styles.primaryBtn} onClick={loadExercises}
+              disabled={selectedMuscles.length === 0 || loading}>
               {loading ? 'CARGANDO...' : `VER EJERCICIOS (${selectedMuscles.length}) →`}
             </button>
           </div>
         )}
 
-        {/* ── STEP 1: EXERCISE SELECTION ── */}
+        {/* STEP 1 — Exercise picker */}
         {step === STEP.EXERCISES && (
           <div className={styles.section}>
             <div className={styles.tabs}>
               {selectedMuscles.map(mid => {
                 const mg = muscleGroups.find(m => m.id === mid);
                 return (
-                  <button
-                    key={mid}
+                  <button key={mid}
                     className={`${styles.tab} ${activeTab === mid ? styles.tabActive : ''}`}
-                    onClick={() => setActiveTab(mid)}
-                  >
+                    onClick={() => setActiveTab(mid)}>
                     {mg?.name || mid}
                   </button>
                 );
@@ -132,7 +141,7 @@ const RoutineBuilder = ({ onSelectExercise, onBack }) => {
             </div>
 
             {loading ? (
-              <div className={styles.loadRow}><div className={styles.spin}/><span>Cargando ejercicios...</span></div>
+              <div className={styles.loadRow}><div className={styles.spin}/><span>Cargando...</span></div>
             ) : (
               <div className={styles.exList}>
                 {tabExercises.map(ex => (
@@ -144,17 +153,13 @@ const RoutineBuilder = ({ onSelectExercise, onBack }) => {
                     <button className={styles.exName} onClick={() => onSelectExercise?.(ex)}>
                       {ex.name}
                     </button>
-                    <button
-                      className={`${styles.addBtn} ${isInRoutine(ex.id) ? styles.addBtnDone : ''}`}
-                      onClick={() => toggleInRoutine(ex)}
-                    >
+                    <button className={`${styles.addBtn} ${isInRoutine(ex.id) ? styles.addBtnDone : ''}`}
+                      onClick={() => toggleInRoutine(ex)}>
                       {isInRoutine(ex.id) ? '✓' : '+'}
                     </button>
                   </div>
                 ))}
-                {tabExercises.length === 0 && (
-                  <p className={styles.empty}>Sin ejercicios disponibles.</p>
-                )}
+                {tabExercises.length === 0 && <p className={styles.empty}>Sin ejercicios disponibles.</p>}
               </div>
             )}
 
@@ -162,18 +167,18 @@ const RoutineBuilder = ({ onSelectExercise, onBack }) => {
               <div className={styles.finalizeBar}>
                 <span className={styles.finalizeCount}>{routine.length} ejercicio{routine.length !== 1 ? 's' : ''}</span>
                 <button className={styles.finalizeBtn} onClick={() => setStep(STEP.ROUTINE)}>
-                  FINALIZAR RUTINA →
+                  ARMAR RUTINA →
                 </button>
               </div>
             )}
           </div>
         )}
 
-        {/* ── STEP 2: ROUTINE CHECKLIST ── */}
+        {/* STEP 2 — Checklist */}
         {step === STEP.ROUTINE && (
           <div className={styles.section}>
             <div className={styles.routineHeader}>
-              <p className={styles.routineTitle}>TU RUTINA</p>
+              <p className={styles.routineTitle}>RUTINA</p>
               <p className={styles.routineSub}>{doneCount} / {routine.length} completados</p>
             </div>
 
@@ -200,9 +205,13 @@ const RoutineBuilder = ({ onSelectExercise, onBack }) => {
               ))}
             </div>
 
+            <button className={styles.primaryBtn} onClick={saveAndExit}>
+              FINALIZAR Y GUARDAR
+            </button>
+
             <div className={styles.actions}>
-              <button className={styles.ghostBtn} onClick={resetDone}>↺ REINICIAR</button>
-              <button className={styles.ghostBtn} onClick={() => setStep(STEP.EXERCISES)}>✎ EDITAR</button>
+              <button className={styles.ghostBtn} onClick={resetDone}>REINICIAR</button>
+              <button className={styles.ghostBtn} onClick={() => setStep(STEP.EXERCISES)}>EDITAR</button>
             </div>
           </div>
         )}

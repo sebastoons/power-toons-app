@@ -11,7 +11,6 @@ const GymMode = ({ onLibre, onRutina, onBack }) => (
       <p className={styles.sub}>¿Cómo quieres entrenar hoy?</p>
 
       <button className={styles.modeCard} onClick={onLibre}>
-        <span className={styles.modeIcon}>🧍</span>
         <div className={styles.modeInfo}>
           <p className={styles.modeTitle}>LIBRE</p>
           <p className={styles.modeSub}>Explora el mapa corporal interactivo y busca ejercicios por zona muscular</p>
@@ -20,7 +19,6 @@ const GymMode = ({ onLibre, onRutina, onBack }) => (
       </button>
 
       <button className={styles.modeCard} onClick={onRutina}>
-        <span className={styles.modeIcon}>📋</span>
         <div className={styles.modeInfo}>
           <p className={styles.modeTitle}>RUTINA</p>
           <p className={styles.modeSub}>Elige músculos, selecciona ejercicios y crea tu checklist de entrenamiento</p>
