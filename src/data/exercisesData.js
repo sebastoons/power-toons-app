@@ -10,15 +10,18 @@ export const exerciseTypes = [
 ];
 
 export const muscleGroups = [
-  { id: 'chest', name: 'PECHO', image: '/img/gym/pecho.jpg' },
-  { id: 'biceps', name: 'BICEPS', image: '/img/gym/bicep.jpg' },
-  { id: 'triceps', name: 'TRICEPS', image: '/img/gym/tricep.jpg' },
-  { id: 'abs', name: 'ABDOMINALES', image: '/img//gym/abd.jpg' },
-  { id: 'quads', name: 'CUADRICEPS', image: '/img/gym/cuadri.jpg' },
-  { id: 'glutes', name: 'GLUTEOS', image: '/img/gym/gluteo2.jpg' },
-  { id: 'legs', name: 'PIERNAS', image: '/img/gym/piernas2.jpg' },
-  { id: 'back', name: 'ESPALDA', image: '/img/gym/espalda2.jpg' },
-  { id: 'hombro', name: 'HOMBROS', image: '/img/gym/hombros.jpg' },
+  { id: 'chest',      name: 'PECHO',          image: '/img/gym/pecho.jpg' },
+  { id: 'biceps',     name: 'BICEPS',          image: '/img/gym/bicep.jpg' },
+  { id: 'triceps',    name: 'TRICEPS',         image: '/img/gym/tricep.jpg' },
+  { id: 'abs',        name: 'ABDOMINALES',     image: '/img/gym/abd.jpg' },
+  { id: 'quads',      name: 'CUADRICEPS',      image: '/img/gym/cuadri.jpg' },
+  { id: 'glutes',     name: 'GLUTEOS',         image: '/img/gym/gluteo2.jpg' },
+  { id: 'legs',       name: 'PIERNAS',         image: '/img/gym/piernas2.jpg' },
+  { id: 'back',       name: 'ESPALDA',         image: '/img/gym/espalda2.jpg' },
+  { id: 'hombro',     name: 'HOMBROS',         image: '/img/gym/hombros.jpg' },
+  { id: 'forearms',   name: 'ANTE BRAZO',      image: '/img/gym/pecho.jpg' },
+  { id: 'neck',       name: 'CUELLO',          image: '/img/gym/pecho.jpg' },
+  { id: 'hamstrings', name: 'ISQUIOTIBIALES',  image: '/img/gym/piernas2.jpg' },
 ];
 
 export const hiddenExercises = [

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Home from './components/Home/Home';
 import ExerciseTypes from './components/ExerciseTypes/ExerciseTypes';
 import MuscleGroups from './components/MuscleGroups/MuscleGroups';
+import BodyMap from './components/BodyMap/BodyMap';
 import ExerciseList from './components/ExerciseList/ExerciseList';
 import CrossfitList from './components/CrossfitList/CrossfitList'; 
 import ExerciseModal from './components/ExerciseModal/ExerciseModal';
@@ -101,7 +102,13 @@ const App = () => {
       {currentPage === 'foodPyramid' && <FoodPyramid onBack={handleBack} />}
       {currentPage === 'nutritionAI' && <NutritionAI onBack={handleBack} />}
       {currentPage === 'exerciseTypes' && <ExerciseTypes onSelectType={handleSelectExerciseType} onBack={handleBack} />}
-      {currentPage === 'muscleGroups' && selectedExerciseType === 'gym' && <MuscleGroups onSelectGroup={handleSelectMuscleGroup} onBack={handleBack} />}
+      {currentPage === 'muscleGroups' && selectedExerciseType === 'gym' && (
+        <BodyMap
+          onSelectGroup={handleSelectMuscleGroup}
+          onSelectExercise={handleSelectExercise}
+          onBack={handleBack}
+        />
+      )}
       {currentPage === 'exerciseList' && selectedMuscleGroup && <ExerciseList muscleGroupId={selectedMuscleGroup} onSelectExercise={handleSelectExercise} onBack={handleBack} />}
       {currentPage === 'crossfitList' && selectedExerciseType === 'crossfit' && <CrossfitList onSelectExercise={handleSelectExercise} onBack={handleBack} />}
       {selectedExercise && <ExerciseModal exercise={selectedExercise} onClose={handleCloseModal} />}
