@@ -3,6 +3,7 @@ import Home from './components/Home/Home';
 import ExerciseTypes from './components/ExerciseTypes/ExerciseTypes';
 import MuscleGroups from './components/MuscleGroups/MuscleGroups';
 import BodyMap from './components/BodyMap/BodyMap';
+import QuickTraining from './components/QuickTraining/QuickTraining';
 import ExerciseList from './components/ExerciseList/ExerciseList';
 import CrossfitList from './components/CrossfitList/CrossfitList'; 
 import ExerciseModal from './components/ExerciseModal/ExerciseModal';
@@ -20,6 +21,8 @@ const App = () => {
   const [selectedExercise, setSelectedExercise] = useState(null); 
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [infoModalMessage, setInfoModalMessage] = useState('');
+
+  const handleQuickTraining = () => setCurrentPage('quickTraining');
 
   const handleSelectCategory = (categoryId) => {
     if (categoryId === 'exercises') setCurrentPage('exerciseTypes');
@@ -71,7 +74,9 @@ const App = () => {
     } else if (currentPage === 'crossfitList') { 
       setCurrentPage('exerciseTypes');
       setSelectedExerciseType(null);
-    } else if (currentPage === 'dashboard') { 
+    } else if (currentPage === 'quickTraining') {
+      setCurrentPage('home');
+    } else if (currentPage === 'dashboard') {
       setCurrentPage('home');
     } else if (currentPage === 'nutrition') {
       setCurrentPage('home');
@@ -96,7 +101,8 @@ const App = () => {
   return (
     <div className="App">
       {isInfoModalOpen && <InfoModal message={infoModalMessage} onClose={handleCloseInfoModal} />}
-      {currentPage === 'home' && <Home onSelectCategory={handleSelectCategory} onOpenDashboard={handleOpenDashboard} />}
+      {currentPage === 'home' && <Home onSelectCategory={handleSelectCategory} onOpenDashboard={handleOpenDashboard} onQuickTraining={handleQuickTraining} />}
+      {currentPage === 'quickTraining' && <QuickTraining onSelectExercise={handleSelectExercise} onBack={handleBack} />}
       {currentPage === 'dashboard' && <Dashboard onBack={handleBack} onStartAICoach={() => alert("🤖 ¡Próximamente!")} />}
       {currentPage === 'nutrition' && <Nutrition onSelectOption={handleSelectNutritionOption} onBack={handleBack} />}
       {currentPage === 'foodPyramid' && <FoodPyramid onBack={handleBack} />}
