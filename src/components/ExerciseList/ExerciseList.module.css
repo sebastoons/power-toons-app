@@ -1,88 +1,30 @@
-/* src/components/ExerciseList/ExerciseList.module.css */
-
 .exerciseListContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 10px; /* Padding horizontal para móviles */
-  width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0 16px 30px; width: 100%; min-height: 100vh; background: #04080f;
 }
-
-/* --- NUEVO HEADER MODERNO (Reemplaza a buttonContainer y title) --- */
 .modernHeader {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 25px;
-  padding: 10px 0;
-  width: 100%;
-  max-width: 800px; /* Alineado con tu cardGrid */
-  border-bottom: 1px solid #e0e0e0; /* Línea separadora muy sutil abajo */
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 0 12px; width: 100%; max-width: 800px;
+  border-bottom: 1px solid #1e3a5f; margin-bottom: 20px;
 }
-
 .backArrowBtn {
-  background-color: #2a2a2a;
-  border: none;
-  color: #fff;
-  font-size: 1em;
-  padding: 7px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #0d1f3c; border: 1px solid #1e3a5f; color: #74b9ff;
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; font-size: 1em;
+  transition: background .2s;
 }
+.backArrowBtn:hover { background: #1a3a6e; }
+.headerTitle { margin: 0; color: #dce8ff; font-size: 1.05em; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
-.backArrowBtn:hover {
-  background-color: #007bff; /* Color azul de tu app para el hover */
-  color: #fff;
-}
+.loadingContainer { display: flex; justify-content: center; align-items: center; min-height: 250px; width: 100%; }
+.spinningDumbbell { font-size: 3.5em; animation: spin 1.2s infinite linear; display: inline-block; }
+@keyframes spin { 0%{transform:rotate(0deg) scale(1)} 50%{transform:rotate(180deg) scale(1.15)} 100%{transform:rotate(360deg) scale(1)} }
 
-.headerTitle {
-  margin: 0;
-  color: #333; /* Mantuve tu color original */
-  font-size: 1.2em;
-  font-family: "Quantico", sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-shadow: 0 0 black;
-}
-
-/* --- ANIMACIÓN DE CARGA (MANCUERNA GIRANDO) --- */
-.loadingContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 250px;
-  width: 100%;
-}
-
-.spinningDumbbell {
-  font-size: 4em; 
-  display: inline-block;
-  animation: spinBounce 1.2s infinite linear; 
-}
-
-@keyframes spinBounce {
-  0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.2); }
-  100% { transform: rotate(360deg) scale(1); }
-}
-
-/* --- TU GRID ORIGINAL (Intacto para no romper el diseño) --- */
 .cardGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-  width: 100%;
-  max-width: 800px;
-  padding: 0;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px; width: 100%; max-width: 800px;
 }
-
 @media (min-width: 600px) {
-  .cardGrid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-  }
+  .cardGrid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
 }

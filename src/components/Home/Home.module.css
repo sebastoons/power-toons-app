@@ -1,61 +1,56 @@
 .homeContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 10px; /* Padding horizontal para móviles */
-  width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+  display: flex; flex-direction: column; align-items: center;
+  padding: 16px 16px 30px; width: 100%;
+  min-height: 100vh; background: #04080f;
 }
-
-/* ESTILOS PARA EL LOGO */
 .logo {
-  max-width: 250px; /* Tamaño máximo del ancho del logo */
-  height: auto; /* Mantiene la proporción de la imagen */
-  margin-bottom: 10px; /* Mismo margen inferior que el título anterior */
-  animation: bounceIn 1s ease-out; /* Mantenemos la misma animación de entrada */
-  margin-top: -20px;
+  max-width: 220px; height: auto;
+  margin: 8px 0 20px;
+  animation: bounceIn .9s ease-out;
+  filter: drop-shadow(0 0 20px rgba(116,185,255,0.3));
 }
-
 .cardGrid {
-  display: grid;
-  grid-template-columns: 1fr; /* Fuerza a que haya exactamente 1 columna vertical */
-  gap: 20px;
-  width: 100%;
-  max-width: 500px; /* Limitar ancho para que las tarjetas no se estiren demasiado en PC */
-  padding: 0;
-  margin: 0 auto; /* Centra el contenedor en la pantalla */
+  display: grid; grid-template-columns: 1fr;
+  gap: 14px; width: 100%; max-width: 480px;
 }
 
-/* Definición de la animación */
+/* Quick Training special card */
+.quickCard {
+  border-radius: 14px; overflow: hidden; cursor: pointer;
+  background: linear-gradient(135deg, #0d1f3c 0%, #0a1525 100%);
+  border: 1px solid #1e6fff44;
+  box-shadow: 0 4px 20px rgba(30,111,255,0.15);
+  padding: 20px 20px;
+  display: flex; align-items: center; gap: 16px;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  position: relative;
+}
+.quickCard::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(30,111,255,0.06), transparent);
+  pointer-events: none;
+}
+.quickCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(30,111,255,0.25);
+  border-color: #1e6fff99;
+}
+.quickIcon {
+  font-size: 2.2rem; flex-shrink: 0;
+  filter: drop-shadow(0 0 8px rgba(116,185,255,0.6));
+}
+.quickInfo { flex: 1; }
+.quickTitle {
+  margin: 0 0 4px; font-size: 1rem; font-weight: 800;
+  letter-spacing: 2px; color: #74b9ff;
+}
+.quickSub { margin: 0; font-size: .72rem; color: #4a6fa5; letter-spacing: .5px; }
+.quickArrow { color: #74b9ff; font-size: 1.5rem; opacity: .7; }
+
 @keyframes bounceIn {
-  0%, 20%, 40%, 60%, 80%, 100% {
-    -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-    transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-  }
-  0% {
-    opacity: 0;
-    -webkit-transform: scale3d(.3, .3, .3);
-    transform: scale3d(.3, .3, .3);
-  }
-  20% {
-    -webkit-transform: scale3d(1.1, 1.1, 1.1);
-    transform: scale3d(1.1, 1.1, 1.1);
-  }
-  40% {
-    -webkit-transform: scale3d(.9, .9, .9);
-    transform: scale3d(.9, .9, .9);
-  }
-  60% {
-    opacity: 1;
-    -webkit-transform: scale3d(1.03, 1.03, 1.03);
-    transform: scale3d(1.03, 1.03, 1.03);
-  }
-  80% {
-    -webkit-transform: scale3d(.97, .97, .97);
-    transform: scale3d(.97, .97, .97);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-  }
+  0%   { opacity:0; transform:scale(.7); }
+  60%  { transform:scale(1.05); }
+  80%  { transform:scale(.97); }
+  100% { opacity:1; transform:scale(1); }
 }
