@@ -7,15 +7,18 @@ const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-
 let cachedExercises = null;
 
 const muscleMap = {
-  chest: ['chest'],
-  back: ['middle back', 'lower back', 'lats', 'traps'],
-  legs: ['quadriceps', 'hamstrings', 'calves', 'glutes'],
-  biceps: ['biceps'],
-  triceps: ['triceps'],
-  hombro: ['shoulders'],
-  abs: ['abdominals'],
-  quads: ['quadriceps'],
-  glutes: ['glutes']
+  chest:      ['chest'],
+  back:       ['middle back', 'lower back', 'lats', 'traps'],
+  legs:       ['quadriceps', 'hamstrings', 'calves', 'glutes'],
+  biceps:     ['biceps'],
+  triceps:    ['triceps'],
+  hombro:     ['shoulders'],
+  abs:        ['abdominals'],
+  quads:      ['quadriceps'],
+  glutes:     ['glutes'],
+  forearms:   ['forearms'],
+  neck:       ['neck'],
+  hamstrings: ['hamstrings'],
 };
 
 // 🇪🇸 DICCIONARIO DE TRADUCCIÓN AUTOMÁTICA
