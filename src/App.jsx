@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Home from './components/Home/Home';
 import ExerciseTypes from './components/ExerciseTypes/ExerciseTypes';
+import GymMode from './components/GymMode/GymMode';
 import BodyMap from './components/BodyMap/BodyMap';
+import RoutineBuilder from './components/RoutineBuilder/RoutineBuilder';
 import ExerciseList from './components/ExerciseList/ExerciseList';
 import CrossfitList from './components/CrossfitList/CrossfitList';
 import ExerciseModal from './components/ExerciseModal/ExerciseModal';
@@ -20,7 +22,6 @@ const App = () => {
   const [selectedExercise, setSelectedExercise]         = useState(null);
   const [isInfoModalOpen, setIsInfoModalOpen]           = useState(false);
 
-  // Init theme on mount
   useEffect(() => {
     const saved = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', saved);
@@ -39,9 +40,12 @@ const App = () => {
 
   const handleSelectExerciseType = (id) => {
     setSelectedExerciseType(id);
-    if (id === 'gym')      setCurrentPage('muscleGroups');
+    if (id === 'gym')      setCurrentPage('gymMode');
     else if (id === 'crossfit') { setCurrentPage('crossfitList'); setSelectedMuscleGroup(null); }
   };
+
+  const handleGymLibre  = () => setCurrentPage('muscleGroups');
+  const handleGymRutina = () => setCurrentPage('routineBuilder');
 
   const handleSelectNutritionOption = (opt) => {
     if (opt === 'aiNutrition') setCurrentPage('nutritionAI');
@@ -54,20 +58,23 @@ const App = () => {
 
   const handleBack = useCallback(() => {
     const map = {
-      exerciseTypes: 'home',
-      muscleGroups:  'exerciseTypes',
-      exerciseList:  'muscleGroups',
-      crossfitList:  'exerciseTypes',
-      quickTraining: 'home',
-      dashboard:     'home',
-      nutrition:     'home',
-      nutritionAI:   'nutrition',
+      exerciseTypes:  'home',
+      gymMode:        'exerciseTypes',
+      muscleGroups:   'gymMode',
+      routineBuilder: 'gymMode',
+      exerciseList:   'muscleGroups',
+      crossfitList:   'exerciseTypes',
+      quickTraining:  'home',
+      dashboard:      'home',
+      nutrition:      'home',
+      nutritionAI:    'nutrition',
     };
     const next = map[currentPage];
     if (!next) return;
-    if (currentPage === 'muscleGroups') setSelectedExerciseType(null);
-    if (currentPage === 'exerciseList') setSelectedMuscleGroup(null);
-    if (currentPage === 'crossfitList') setSelectedExerciseType(null);
+    if (currentPage === 'gymMode')       setSelectedExerciseType(null);
+    if (currentPage === 'muscleGroups')  { /* keep exerciseType for gymMode context */ }
+    if (currentPage === 'exerciseList')  setSelectedMuscleGroup(null);
+    if (currentPage === 'crossfitList')  setSelectedExerciseType(null);
     setCurrentPage(next);
   }, [currentPage]);
 
@@ -83,19 +90,23 @@ const App = () => {
       <ThemeToggle />
       {isInfoModalOpen && <InfoModal onClose={handleCloseInfoModal} />}
 
-      {currentPage === 'home'          && <Home onSelectCategory={handleSelectCategory} onOpenDashboard={handleOpenDashboard} onQuickTraining={handleQuickTraining} />}
-      {currentPage === 'quickTraining' && <QuickTraining onSelectExercise={handleSelectExercise} onBack={handleBack} />}
-      {currentPage === 'dashboard'     && <Dashboard onBack={handleBack} />}
-      {currentPage === 'nutrition'     && <Nutrition onSelectOption={handleSelectNutritionOption} onBack={handleBack} />}
-      {currentPage === 'nutritionAI'   && <NutritionAI onBack={handleBack} />}
-      {currentPage === 'exerciseTypes' && <ExerciseTypes onSelectType={handleSelectExerciseType} onBack={handleBack} />}
-      {currentPage === 'muscleGroups'  && selectedExerciseType === 'gym' && (
+      {currentPage === 'home'           && <Home onSelectCategory={handleSelectCategory} onOpenDashboard={handleOpenDashboard} onQuickTraining={handleQuickTraining} />}
+      {currentPage === 'quickTraining'  && <QuickTraining onSelectExercise={handleSelectExercise} onBack={handleBack} />}
+      {currentPage === 'dashboard'      && <Dashboard onBack={handleBack} />}
+      {currentPage === 'nutrition'      && <Nutrition onSelectOption={handleSelectNutritionOption} onBack={handleBack} />}
+      {currentPage === 'nutritionAI'    && <NutritionAI onBack={handleBack} />}
+      {currentPage === 'exerciseTypes'  && <ExerciseTypes onSelectType={handleSelectExerciseType} onBack={handleBack} />}
+      {currentPage === 'gymMode'        && <GymMode onLibre={handleGymLibre} onRutina={handleGymRutina} onBack={handleBack} />}
+      {currentPage === 'muscleGroups'   && (
         <BodyMap onSelectGroup={handleSelectMuscleGroup} onSelectExercise={handleSelectExercise} onBack={handleBack} />
       )}
-      {currentPage === 'exerciseList'  && selectedMuscleGroup && (
+      {currentPage === 'routineBuilder' && (
+        <RoutineBuilder onSelectExercise={handleSelectExercise} onBack={handleBack} />
+      )}
+      {currentPage === 'exerciseList'   && selectedMuscleGroup && (
         <ExerciseList muscleGroupId={selectedMuscleGroup} onSelectExercise={handleSelectExercise} onBack={handleBack} />
       )}
-      {currentPage === 'crossfitList'  && selectedExerciseType === 'crossfit' && (
+      {currentPage === 'crossfitList'   && selectedExerciseType === 'crossfit' && (
         <CrossfitList onSelectExercise={handleSelectExercise} onBack={handleBack} />
       )}
       {selectedExercise && <ExerciseModal exercise={selectedExercise} onClose={handleCloseModal} />}
