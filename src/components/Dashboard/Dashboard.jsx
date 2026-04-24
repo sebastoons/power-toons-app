@@ -1,184 +1,174 @@
-// src/components/Dashboard/Dashboard.jsx
-
 import React, { useState, useEffect } from 'react';
-import Button from '../Shared/Button/Button';
 import styles from './Dashboard.module.css';
 
-const Dashboard = ({ onBack, onStartAICoach }) => {
-  // Estado para almacenar los datos reales calculados
-  const [realData, setRealData] = useState({
-    maxWeight: { weight: 0, name: '-' },
-    minWeight: { weight: 0, name: '-' },
-    mostFrequent: { name: '-', count: 0 },
-    lastWorkout: { date: '-', name: '-' },
+const DAYS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+
+const Dashboard = ({ onBack }) => {
+  const [stats, setStats] = useState({
     totalSeries: 0,
-    hasData: false
+    uniqueExercises: 0,
+    maxWeight: { val: 0, name: '-' },
+    weekDays: Array(7).fill(0),
+    topExercises: [],
+    recentRecords: [],
+    hasData: false,
   });
 
-  // Este efecto escanea el historial real cada vez que abres el Dashboard
   useEffect(() => {
-    let maxW = 0;
-    let maxWName = '-';
-    let minW = Infinity;
-    let minWName = '-';
-    let exerciseCounts = {};
-    let allRecords = [];
+    const allRecords = [];
+    const exerciseCounts = {};
+    let maxW = 0, maxWName = '-';
 
-    // 1. Escanear todo el localStorage buscando "exerciseData-"
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && key.startsWith('exerciseData-')) {
-        // Formateamos el ID para usarlo como nombre (ej: barbell_bench_press -> BARBELL BENCH PRESS)
-        const exerciseId = key.replace('exerciseData-', '');
-        const formattedName = exerciseId.replace(/_/g, ' ').toUpperCase();
-        
-        try {
-          const history = JSON.parse(localStorage.getItem(key));
-          if (Array.isArray(history) && history.length > 0) {
-            exerciseCounts[formattedName] = history.length; // Contamos cuántas series tiene
-            
-            history.forEach(record => {
-              allRecords.push({ ...record, name: formattedName });
-              
-              // Extraer solo los números del texto de peso (ej: "20kg" -> 20)
-              const weightMatch = record.kgLb ? String(record.kgLb).match(/[\d.]+/) : null;
-              if (weightMatch) {
-                const weight = parseFloat(weightMatch[0]);
-                if (weight > maxW) { maxW = weight; maxWName = formattedName; }
-                if (weight > 0 && weight < minW) { minW = weight; minWName = formattedName; }
-              }
-            });
-          }
-        } catch(e) {
-          console.error("Error leyendo historial:", e);
+      if (!key?.startsWith('exerciseData-')) continue;
+      const name = key.replace('exerciseData-', '').replace(/_/g, ' ').toUpperCase();
+      try {
+        const history = JSON.parse(localStorage.getItem(key));
+        if (Array.isArray(history) && history.length > 0) {
+          exerciseCounts[name] = (exerciseCounts[name] || 0) + history.length;
+          history.forEach(r => {
+            allRecords.push({ ...r, name });
+            const wm = r.kgLb ? String(r.kgLb).match(/[\d.]+/) : null;
+            if (wm) {
+              const w = parseFloat(wm[0]);
+              if (w > maxW) { maxW = w; maxWName = name; }
+            }
+          });
         }
-      }
+      } catch {}
     }
 
-    // 2. Procesar los resultados finales
-    if (allRecords.length > 0) {
-      // Ordenar por fecha (el más reciente primero)
-      allRecords.sort((a, b) => new Date(b.date) - new Date(a.date));
-      const lastW = allRecords[0];
+    if (!allRecords.length) return;
 
-      // Encontrar el más frecuente
-      let freqName = '-';
-      let freqCount = 0;
-      for (const [name, count] of Object.entries(exerciseCounts)) {
-        if (count > freqCount) {
-          freqCount = count;
-          freqName = name;
-        }
-      }
+    allRecords.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-      setRealData({
-        maxWeight: { weight: maxW, name: maxWName },
-        minWeight: { weight: minW !== Infinity ? minW : 0, name: minWName },
-        mostFrequent: { name: freqName, count: freqCount },
-        lastWorkout: { 
-          // Formato de fecha legible
-          date: new Date(lastW.date).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' }), 
-          name: lastW.name 
-        },
-        totalSeries: allRecords.length,
-        hasData: true
-      });
-    }
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const weekDays = Array(7).fill(0);
+    allRecords.forEach(r => {
+      const d = new Date(r.date); d.setHours(0, 0, 0, 0);
+      const diff = Math.floor((today - d) / 86400000);
+      if (diff >= 0 && diff < 7) weekDays[6 - diff]++;
+    });
+
+    const sorted = Object.entries(exerciseCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const maxCount = sorted[0]?.[1] || 1;
+    const topExercises = sorted.map(([name, count]) => ({ name, count, pct: Math.round((count / maxCount) * 100) }));
+
+    setStats({
+      totalSeries: allRecords.length,
+      uniqueExercises: Object.keys(exerciseCounts).length,
+      maxWeight: { val: maxW, name: maxWName },
+      weekDays,
+      topExercises,
+      recentRecords: allRecords.slice(0, 5),
+      hasData: true,
+    });
   }, []);
 
-  // Datos simulados para el mapa muscular (Fase 3)
-  const muscleStatus = {
-    pecho: realData.hasData ? 85 : 0, biceps: realData.hasData ? 70 : 0, 
-    triceps: 40, hombros: 60, abdominales: 30, cuadriceps: 90, 
-    espalda_alta: 50, gluteos: 80, pantorrillas: 20
-  };
+  const todayIdx = new Date().getDay();
+  const dayLabels = Array.from({ length: 7 }, (_, i) => DAYS[(todayIdx - 6 + i + 7) % 7]);
+  const maxWeekVal = Math.max(...stats.weekDays, 1);
 
   return (
-    <div className={styles.dashboardContainer}>
-      <div className={styles.modernHeader}>
-        <button onClick={onBack} className={styles.backArrowBtn}>❮</button>
-        <h1 className={styles.headerTitle}>CENTRO DE COMANDO</h1>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <button onClick={onBack} className={styles.backBtn}>❮</button>
+        <h2 className={styles.headerTitle}>DASHBOARD</h2>
       </div>
 
-      <div className={styles.dashboardGrid}>
-        
-        {/* COLUMNA IZQUIERDA */}
-        <div className={styles.leftColumn}>
-          
-          <div className={`${styles.dashboardCard} ${styles.welcomeCard}`}>
-            <span className={styles.icon}>🔥</span>
-            <div>
-              <h3>Tu Actividad Diaria</h3>
-              {/* Saludo personalizado */}
-              <p>¡Hola, SebasToons! Es un buen momento para romper tus récords.</p>
-            </div>
+      <div className={styles.body}>
+        {/* Stats row */}
+        <div className={styles.statsRow}>
+          <div className={styles.statCard}>
+            <span className={styles.statIcon}>🔥</span>
+            <span className={styles.statVal}>{stats.totalSeries}</span>
+            <span className={styles.statLbl}>SERIES</span>
           </div>
-
-          <div className={styles.dashboardCard}>
-            <h3>Último Ejercicio Registrado:</h3>
-            <div className={styles.lastWorkoutData}>
-              <span className={styles.workoutDate}>{realData.lastWorkout.date}</span>
-              <span className={styles.workoutMuscle}>{realData.lastWorkout.name}</span>
-            </div>
+          <div className={styles.statCard}>
+            <span className={styles.statIcon}>🏋️</span>
+            <span className={styles.statVal}>{stats.maxWeight.val}<small>kg</small></span>
+            <span className={styles.statLbl}>MAX PESO</span>
           </div>
-
-          <div className={styles.recordsGrid}>
-            <div className={styles.dashboardCard}>
-              <h3>💪 Peso más Alto:</h3>
-              <p className={styles.recordValue}>{realData.maxWeight.weight} kg</p>
-              <p style={{fontSize: '0.8em', color: '#aaa', margin: 0}}>{realData.maxWeight.name}</p>
-            </div>
-            <div className={styles.dashboardCard}>
-              <h3>📉 Peso más Bajo (Record):</h3>
-              <p className={styles.recordValue}>{realData.minWeight.weight} kg</p>
-              <p style={{fontSize: '0.8em', color: '#aaa', margin: 0}}>{realData.minWeight.name}</p>
-            </div>
+          <div className={styles.statCard}>
+            <span className={styles.statIcon}>💪</span>
+            <span className={styles.statVal}>{stats.uniqueExercises}</span>
+            <span className={styles.statLbl}>EJERCICIOS</span>
           </div>
-          
-          <div className={styles.dashboardCard}>
-            <h3>🔄 Más Frecuente últimamente:</h3>
-            <p className={styles.frequentValue}>
-              {realData.mostFrequent.name} <span>({realData.mostFrequent.count} series)</span>
-            </p>
-          </div>
-
-          <div className={`${styles.dashboardCard} ${styles.coachAICard}`}>
-            <span className={styles.coachIcon}>🤖</span>
-            <div>
-              <h3>AI Rutina Coach</h3>
-              <p>Genera tu rutina inteligente basada en tu biblioteca de ejercicios y tiempo disponible.</p>
-              <Button onClick={onStartAICoach} variant="primary" className={styles.coachBtn}>Consultar a la IA</Button>
-            </div>
-          </div>
-
-        </div>
-
-        {/* COLUMNA DERECHA: MAPA MUSCULAR */}
-        <div className={styles.rightColumn}>
-          <div className={`${styles.dashboardCard} ${styles.muscleMapCard}`}>
-            <h3>Estado Muscular Actual:</h3>
-            <div className={styles.muscleMapWrapper}>
-              
-              <div className={styles.bodyFront}>
-                <div className={`${styles.muscleGroup} ${styles.pecho}`} style={{ '--intensity': muscleStatus.pecho }}>Pectorales</div>
-                <div className={`${styles.muscleGroup} ${styles.biceps}`} style={{ '--intensity': muscleStatus.biceps }}>Bíceps</div>
-                <div className={`${styles.muscleGroup} ${styles.hombros}`} style={{ '--intensity': muscleStatus.hombros }}>Hombros</div>
-                <div className={`${styles.muscleGroup} ${styles.abdominales}`} style={{ '--intensity': muscleStatus.abdominales }}>Abdominales</div>
-                <div className={`${styles.muscleGroup} ${styles.cuadriceps}`} style={{ '--intensity': muscleStatus.cuadriceps }}>Cuádriceps</div>
-              </div>
-
-              <div className={styles.bodyBack}>
-                <div className={`${styles.muscleGroup} ${styles.espaldaAltas}`} style={{ '--intensity': muscleStatus.espalda_alta }}>Espalda</div>
-                <div className={`${styles.muscleGroup} ${styles.triceps}`} style={{ '--intensity': muscleStatus.triceps }}>Tríceps</div>
-                <div className={`${styles.muscleGroup} ${styles.gluteos}`} style={{ '--intensity': muscleStatus.gluteos }}>Glúteos</div>
-                <div className={`${styles.muscleGroup} ${styles.pantorrillas}`} style={{ '--intensity': muscleStatus.pantorrillas }}>Pantorrillas</div>
-              </div>
-
-            </div>
-            <p className={styles.mapLegend}>Los colores más intensos indican grupos musculares entrenados recientemente o con récords vigentes.</p>
+          <div className={styles.statCard}>
+            <span className={styles.statIcon}>📅</span>
+            <span className={styles.statVal}>{stats.weekDays.filter(d => d > 0).length}</span>
+            <span className={styles.statLbl}>DÍAS/SEM</span>
           </div>
         </div>
 
+        {/* Weekly activity chart */}
+        <div className={styles.card}>
+          <p className={styles.cardTitle}>ACTIVIDAD — ÚLTIMOS 7 DÍAS</p>
+          <div className={styles.weekChart}>
+            {stats.weekDays.map((count, i) => (
+              <div key={i} className={styles.dayCol}>
+                <span className={styles.dayCount}>{count > 0 ? count : ''}</span>
+                <div className={styles.barWrap}>
+                  <div
+                    className={`${styles.dayBar} ${count > 0 ? styles.dayBarActive : ''}`}
+                    style={{ height: `${(count / maxWeekVal) * 100}%` }}
+                  />
+                </div>
+                <span className={styles.dayLabel}>{dayLabels[i]}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Top exercises */}
+        {stats.topExercises.length > 0 && (
+          <div className={styles.card}>
+            <p className={styles.cardTitle}>TOP EJERCICIOS</p>
+            {stats.topExercises.map((ex, i) => (
+              <div key={i} className={styles.exRow}>
+                <span className={styles.exRank}>{i + 1}</span>
+                <div className={styles.exInfo}>
+                  <span className={styles.exName}>{ex.name}</span>
+                  <div className={styles.exBarWrap}>
+                    <div className={styles.exBar} style={{ width: `${ex.pct}%` }} />
+                  </div>
+                </div>
+                <span className={styles.exCount}>{ex.count}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Recent records */}
+        {stats.recentRecords.length > 0 && (
+          <div className={styles.card}>
+            <p className={styles.cardTitle}>HISTORIAL RECIENTE</p>
+            {stats.recentRecords.map((r, i) => (
+              <div key={i} className={styles.recentRow}>
+                <div className={styles.recentInfo}>
+                  <span className={styles.recentName}>{r.name}</span>
+                  <span className={styles.recentDate}>
+                    {new Date(r.date).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}
+                  </span>
+                </div>
+                <div className={styles.recentStats}>
+                  {r.kgLb && <span className={styles.recentBadge}>{r.kgLb}</span>}
+                  {r.reps && <span className={styles.recentBadge}>{r.reps} reps</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Empty state */}
+        {!stats.hasData && (
+          <div className={styles.emptyState}>
+            <span className={styles.emptyIcon}>📊</span>
+            <p className={styles.emptyTitle}>AÚN NO HAY DATOS</p>
+            <p className={styles.emptySub}>Registra series en tus ejercicios para ver tus estadísticas aquí.</p>
+          </div>
+        )}
       </div>
     </div>
   );

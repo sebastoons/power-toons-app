@@ -26,10 +26,12 @@ const MUSCLES = [
 ];
 
 const TIMES = [
-  { id: 15,  label: '15 min', desc: 'Express',    exCount: 3 },
-  { id: 30,  label: '30 min', desc: 'Estándar',   exCount: 5 },
-  { id: 45,  label: '45 min', desc: 'Completo',   exCount: 7 },
-  { id: 60,  label: '60 min', desc: 'Intensivo',  exCount: 10 },
+  { id: 15,  label: '15 min',    desc: 'Express',       exCount: 3  },
+  { id: 30,  label: '30 min',    desc: 'Estándar',      exCount: 5  },
+  { id: 45,  label: '45 min',    desc: 'Completo',      exCount: 7  },
+  { id: 60,  label: '1 hora',    desc: 'Intensivo',     exCount: 10 },
+  { id: 90,  label: '1h 30 min', desc: 'Avanzado',      exCount: 14 },
+  { id: 120, label: '2 horas',   desc: 'Elite',         exCount: 18 },
 ];
 
 const GOALS = [
