@@ -53,12 +53,8 @@ export const fetchExercisesByMuscle = async (muscleId) => {
     }
 
     const filteredApiData = cachedExercises.filter(ex => {
-      // 1. Si el ejercicio está en tu lista negra, lo eliminamos (return false)
-      if (hiddenExercises && hiddenExercises.includes(ex.id)) {
-        return false;
-      }
-      
-      // 2. Si no está en la lista negra, revisamos que sea del músculo correcto
+      if (hiddenExercises && hiddenExercises.includes(ex.id)) return false;
+      if (ex.equipment === 'kettlebells') return false;
       return ex.primaryMuscles && ex.primaryMuscles.some(m => targetMuscles.includes(m));
     });
 
@@ -107,7 +103,35 @@ export const fetchExercisesByMuscle = async (muscleId) => {
     return finalExercises;
 
   } catch (error) {
-    console.error("🚨 Error obteniendo ejercicios:", error);
-    return localData; 
+    console.error("Error obteniendo ejercicios:", error);
+    return localData;
+  }
+};
+
+export const fetchKettlebellExercises = async () => {
+  try {
+    if (!cachedExercises) {
+      const response = await fetch(BASE_URL);
+      if (!response.ok) throw new Error('Network error');
+      cachedExercises = await response.json();
+    }
+    return cachedExercises
+      .filter(ex => ex.equipment === 'kettlebells' && !(hiddenExercises?.includes(ex.id)))
+      .map(ex => {
+        const imgPath = ex.images?.[0] || null;
+        const musculoEn = ex.primaryMuscles?.[0] || '';
+        const musculoEs = diccionarios.musculos[musculoEn] || musculoEn.toUpperCase();
+        return {
+          id: ex.id,
+          name: ex.name.replace(/_/g, ' ').toUpperCase(),
+          image: imgPath ? `${IMAGE_BASE_URL}${imgPath}` : null,
+          gif:   imgPath ? `${IMAGE_BASE_URL}${imgPath}` : null,
+          description: `MÚSCULO PRINCIPAL: ${musculoEs} | EQUIPAMIENTO: KETTLEBELL.`,
+          steps: ex.instructions || [],
+          videoLink: null,
+        };
+      });
+  } catch {
+    return [];
   }
 };

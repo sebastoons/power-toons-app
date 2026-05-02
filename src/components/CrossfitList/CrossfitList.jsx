@@ -1,14 +1,21 @@
-import React from 'react';
-import Card from '../Shared/Card/Card'; // Ajusta la ruta si es necesario (es la correcta: ../Shared/Card/Card)
-import Button from '../Shared/Button/Button'; // Ajusta la ruta si es necesario (es la correcta: ../Shared/Button/Button)
-import styles from './CrossfitList.module.css'; // Usaremos un CSS específico para CrossfitList
-import { crossfitExercises } from '../../data/crossfitExercises'; // ¡Importa los datos de Crossfit!
+import React, { useState, useEffect } from 'react';
+import Card from '../Shared/Card/Card';
+import styles from './CrossfitList.module.css';
+import { crossfitExercises } from '../../data/crossfitExercises';
+import { fetchKettlebellExercises } from '../../services/exerciseApi';
 
 const CrossfitList = ({ onSelectExercise, onBack }) => {
-  // Ordenar los ejercicios de Crossfit alfabéticamente por nombre
-  const sortedCrossfitExercises = [...crossfitExercises].sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
+  const [kettlebell, setKettlebell] = useState([]);
+  const [loading, setLoading]       = useState(true);
+
+  useEffect(() => {
+    fetchKettlebellExercises().then(exs => {
+      setKettlebell(exs);
+      setLoading(false);
+    });
+  }, []);
+
+  const sorted = [...crossfitExercises].sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <div className={styles.crossfitListContainer}>
@@ -16,20 +23,25 @@ const CrossfitList = ({ onSelectExercise, onBack }) => {
         <button onClick={onBack} className={styles.backArrowBtn}>❮</button>
         <h2 className={styles.headerTitle}>CROSSFIT</h2>
       </div>
+
       <h2 className={styles.title}>EJERCICIOS CROSSFIT</h2>
-      {sortedCrossfitExercises.length === 0 ? (
-        <p>No hay ejercicios disponibles para Crossfit.</p>
-      ) : (
-        <div className={styles.cardGrid}>
-          {sortedCrossfitExercises.map(exercise => (
-            <Card
-              key={exercise.id}
-              title={exercise.name}
-              image={exercise.image}
-              onClick={() => onSelectExercise(exercise)}
-            />
-          ))}
-        </div>
+      <div className={styles.cardGrid}>
+        {sorted.map(ex => (
+          <Card key={ex.id} title={ex.name} image={ex.image} onClick={() => onSelectExercise(ex)} />
+        ))}
+      </div>
+
+      {loading ? (
+        <p className={styles.loading}>Cargando kettlebells...</p>
+      ) : kettlebell.length > 0 && (
+        <>
+          <h2 className={styles.title}>KETTLEBELL</h2>
+          <div className={styles.cardGrid}>
+            {kettlebell.map(ex => (
+              <Card key={ex.id} title={ex.name} image={ex.image} onClick={() => onSelectExercise(ex)} />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
