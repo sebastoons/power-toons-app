@@ -10,6 +10,7 @@ import InfoModal from './components/InfoModal/InfoModal';
 import Nutrition from './components/Nutrition/Nutrition';
 import NutritionAI from './components/NutritionAI/NutritionAI';
 import QuickTraining from './components/QuickTraining/QuickTraining';
+import YogaList from './components/YogaList/YogaList';
 import ThemeToggle from './components/Shared/ThemeToggle/ThemeToggle';
 import './App.css';
 
@@ -49,6 +50,7 @@ const App = () => {
     setSelectedExerciseType(id);
     if (id === 'gym')           setCurrentPage('gymMode');
     else if (id === 'crossfit') { setCurrentPage('crossfitList'); setSelectedMuscleGroup(null); }
+    else if (id === 'yoga')     setCurrentPage('yogaList');
   };
 
   const handleGymLibre  = () => setCurrentPage('muscleGroups');
@@ -71,6 +73,7 @@ const App = () => {
       routineBuilder: 'gymMode',
       exerciseList:   'muscleGroups',
       crossfitList:   'exerciseTypes',
+      yogaList:       'exerciseTypes',
       quickTraining:  'home',
       dashboard:      'home',
       nutrition:      'home',
@@ -116,6 +119,7 @@ const App = () => {
       {currentPage === 'exerciseList'   && selectedMuscleGroup && (
         <ExerciseList muscleGroupId={selectedMuscleGroup} onSelectExercise={handleSelectExercise} onBack={handleBack} />
       )}
+      {currentPage === 'yogaList'        && <YogaList onSelectExercise={handleSelectExercise} onBack={handleBack} />}
       {currentPage === 'crossfitList'   && selectedExerciseType === 'crossfit' && (
         <CrossfitList onSelectExercise={handleSelectExercise} onBack={handleBack} />
       )}

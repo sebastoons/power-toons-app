@@ -108,6 +108,37 @@ export const fetchExercisesByMuscle = async (muscleId) => {
   }
 };
 
+const YOGA_URL = 'https://yoga-api-nzy4.onrender.com/v1/poses';
+let cachedYoga = null;
+
+export const fetchYogaExercises = async () => {
+  try {
+    if (!cachedYoga) {
+      const res = await fetch(YOGA_URL);
+      if (!res.ok) throw new Error('Yoga API error');
+      cachedYoga = await res.json();
+    }
+    return cachedYoga.map(pose => ({
+      id: `yoga_${pose.id}`,
+      name: pose.english_name?.toUpperCase() || 'POSE',
+      image: pose.url_png || null,
+      gif:   pose.url_png || null,
+      description: [
+        pose.sanskrit_name  ? `SÁNSCRITO: ${pose.sanskrit_name}` : null,
+        pose.difficulty     ? `NIVEL: ${pose.difficulty.toUpperCase()}` : null,
+        pose.category_name  ? `CATEGORÍA: ${pose.category_name.toUpperCase()}` : null,
+        pose.pose_benefits  ? `BENEFICIOS: ${pose.pose_benefits}` : null,
+      ].filter(Boolean).join(' | '),
+      steps: pose.pose_description ? [pose.pose_description] : [],
+      category: pose.category_name || 'General',
+      difficulty: pose.difficulty || '',
+      videoLink: null,
+    }));
+  } catch {
+    return [];
+  }
+};
+
 export const fetchKettlebellExercises = async () => {
   try {
     if (!cachedExercises) {
